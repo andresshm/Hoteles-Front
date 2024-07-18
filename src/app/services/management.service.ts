@@ -10,11 +10,13 @@ import { Country } from 'app/interfaces/Country.interface';
 @Injectable({providedIn: 'root'})
 export class ManagementService {
 
-    private url = 'http://localhost:8080/';//'https://proyectohoteles-1-qtfp.onrender.com/';
+    // private url = 'https://proyectohoteles-1-qtfp.onrender.com/';
+    private url = 'http://localhost:8080/';
 
 
     constructor(private httpClient: HttpClient) { }
 
+    //GET-ALL
     public getHostsRequest(entity: string): Observable<Host[]>{
         return this.httpClient.get<Host[]>(`${this.url}${entity}`)
         .pipe(
@@ -41,6 +43,7 @@ export class ManagementService {
       }
 
       //manejar errores
+      //POST
       postNewHost(data : Host): Observable<Host> {
         return this.httpClient.post<Host>(`${this.url}huesped`, data)
         .pipe(
@@ -48,17 +51,96 @@ export class ManagementService {
         );
       }
 
+
+      postNewHotel(data : Hotel): Observable<Hotel> {
+        return this.httpClient.post<Hotel>(`${this.url}hotel`, data)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+      
+      postNewRoom(data : Room): Observable<Room> {
+        return this.httpClient.post<Room>(`${this.url}habitacion`, data)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+
+
+      postNewService(data : Service): Observable<Service> {
+        return this.httpClient.post<Service>(`${this.url}servicio`, data)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+
+
+
+
+      //PUT
+      
       putHost(id:number, data : Host): Observable<Host> {
         return this.httpClient.put<Host>(`${this.url}huesped/${id}`, data)
         .pipe(
           catchError(()=>of()),
         );
       }
+
+      putHotel(id:number, data : Hotel): Observable<Hotel> {
+        return this.httpClient.put<Hotel>(`${this.url}hotel/${id}`, data)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+     
+      putRoom(id:number, data : Room): Observable<Room> {
+        return this.httpClient.put<Room>(`${this.url}habitacion/${id}`, data)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+
+      putService(id:number, data : Service): Observable<Service> {
+        return this.httpClient.put<Service>(`${this.url}servicio/${id}`, data)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
       
+
+
+
+
+      //DELETE
       deleteHost(id:number): Observable<Host> {
         return this.httpClient.delete<Host>(`${this.url}huesped/${id}`)
         .pipe(
           catchError(()=>of()),
         );
       }
+
+      
+      deleteHotel(id:number): Observable<Hotel> {
+        return this.httpClient.delete<Hotel>(`${this.url}hotel/${id}`)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+
+      deleteRoom(id:number): Observable<Room> {
+        return this.httpClient.delete<Room>(`${this.url}habitacion/${id}`)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+
+
+      deleteService(id:number): Observable<Service> {
+        return this.httpClient.delete<Service>(`${this.url}servicio/${id}`)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+
+      
 }

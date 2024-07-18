@@ -16,7 +16,7 @@ export class UserProfileComponent implements OnInit {
   apellido='';
 
   @Input()
-  dni='';
+  dniPasaporte='';
 
   @Input()
   fechaCheckin:Date;
@@ -46,13 +46,13 @@ export class UserProfileComponent implements OnInit {
   onSubmit(){
     console.log(this.nombre);
     console.log(this.apellido);
-    console.log(this.dni);
+    console.log(this.dniPasaporte);
     console.log(this.fechaCheckin);
     console.log(this.fechaCheckout);
 
     this.data.nombre=this.nombre;
     this.data.apellido=this.apellido;
-    this.data.dniPasaporte=this.dni;
+    this.data.dniPasaporte=this.dniPasaporte;
     this.data.fechaCheckin=this.fechaCheckin;
     this.data.fechaCheckout=this.fechaCheckout;
 
@@ -64,14 +64,14 @@ export class UserProfileComponent implements OnInit {
   onSubmitPUT(){
     console.log(this.nombre);
     console.log(this.apellido);
-    console.log(this.dni);
+    console.log(this.dniPasaporte);
     console.log(this.fechaCheckin);
     console.log(this.fechaCheckout);
 
     
     this.data.nombre=this.nombre;
     this.data.apellido=this.apellido;
-    this.data.dniPasaporte=this.dni;
+    this.data.dniPasaporte=this.dniPasaporte;
     this.data.fechaCheckin=this.fechaCheckin;
     this.data.fechaCheckout=this.fechaCheckout;
 

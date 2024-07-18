@@ -1,4 +1,184 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Create a Room</h4>
+                        <p class="card-category">Complete this data</p>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-5">
+                                  <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Company (disabled)" disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Number" [(ngModel)]="numero">
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Type" type="email">
+                                    </mat-form-field>
+                                </div> -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Type" type="text" [(ngModel)]="tipo">
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Price" type="number" [(ngModel)]="precioNoche">
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-md-12">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="ID-card/Passport" type="text" [(ngModel)]="dniPasaporte">
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Check-In Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckin">
+                                  </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Check-Out Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckout">
+                                  </mat-form-field>
+                                </div> 
+                               
+                            </div>-->
+                            <div class="row">
+                               
+                            </div>
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="onSubmit()">Create Profile</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+  
+  
+  
+  
+            <div class="col-md-8">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title">Update a Room</h4>
+                      <p class="card-category">Complete this data</p>
+                  </div>
+                  <div class="card-body">
+                      <form>
+                          <div class="row">
+                              <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Company (disabled)" disabled>
+                                  </mat-form-field>
+                              </div>
+                              <div class="col-md-3">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Room ID" [(ngModel)]="selectedId">
+                                  </mat-form-field>
+                              </div>
+                              <!-- <div class="col-md-4">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Email address" type="email">
+                                  </mat-form-field>
+                              </div> -->
+                          </div>
+                          <div class="row">
+                              <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Number" type="text" [(ngModel)]="numero">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Type" type="text" [(ngModel)]="tipo">
+                                </mat-form-field>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-12">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Price" type="number" [(ngModel)]="precioNoche">
+                                </mat-form-field>
+                              </div>
+                          </div>
+                          <!-- <div class="row">
+                              <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Check-In Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckin">
+                                </mat-form-field>
+                              </div>
+                              <div class="col-md-4">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Check-Out Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckout">
+                                </mat-form-field>
+                              </div>
+                            
+                          </div> -->
+                          <div class="row">
+                             
+                          </div>
+                          <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="onSubmitPUT()">Update Profile</button>
+                          <div class="clearfix"></div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+  
+  
+  
+  
+          <div class="col-md-8">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <h4 class="card-title">Delete a Room</h4>
+                    <p class="card-category">Complete this data</p>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-5">
+                              <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Delete room" disabled>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Room ID" [(ngModel)]="selectedId">
+                                </mat-form-field>
+                            </div>
+                            
+                        
+                        </div>
+                        <div class="row">
+                
+                        </div>
+                        <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="onSubmitDEL()">Delete Profile</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
+        </div>
+    </div>
+  </div>
+  
+
+<!-- 
 <div class="main-content">
   <div class="container-fluid">
       <div class="card card-plain">
@@ -26,4 +206,4 @@
           </div>
       </div>
   </div>
-</div>
+</div> -->

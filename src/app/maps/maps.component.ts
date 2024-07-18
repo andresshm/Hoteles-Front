@@ -1,25 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
+import { Service } from "app/interfaces/service.interface";
+import { ManagementService } from "app/services/management.service";
 
 declare const google: any;
 
 interface Marker {
-lat: number;
-lng: number;
-label?: string;
-draggable?: boolean;
+  lat: number;
+  lng: number;
+  label?: string;
+  draggable?: boolean;
 }
 @Component({
-  selector: 'app-maps',
-  templateUrl: './maps.component.html',
-  styleUrls: ['./maps.component.css']
+  selector: "app-maps",
+  templateUrl: "./maps.component.html",
+  styleUrls: ["./maps.component.css"],
 })
 export class MapsComponent implements OnInit {
+  @Input()
+  nombre = "";
 
-  constructor() { }
+  @Input()
+  descripcion = "";
+
+  @Input()
+  selectedId: number = 0;
+
+  data: Service = {
+    id: 0,
+    nombre: "",
+    descripcion: "",
+    hoteles: [],
+  };
+  constructor(private managementService: ManagementService) {}
+
+  onSubmit() {
+    this.data.nombre = this.nombre;
+    this.data.descripcion = this.descripcion;
+    console.log(this.data);
+
+    this.managementService.postNewService(this.data).subscribe();
+  }
+  onSubmitPUT() {
+    this.data.nombre = this.nombre;
+    this.data.descripcion = this.descripcion;
+
+    this.managementService.putService(this.selectedId, this.data).subscribe();
+  }
+
+  onSubmitDEL() {
+    this.managementService.deleteService(this.selectedId).subscribe();
+  }
 
   ngOnInit() {
-
-    var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
+    /*var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
     var mapOptions = {
         zoom: 13,
         center: myLatlng,
@@ -119,7 +152,6 @@ export class MapsComponent implements OnInit {
     });
 
     // To add the marker to the map, call setMap();
-    marker.setMap(map);
+    marker.setMap(map);*/
   }
-
 }
