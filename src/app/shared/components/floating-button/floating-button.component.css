@@ -1,0 +1,26 @@
+.mat-button-plus {
+  position: fixed;
+  bottom: 90px; /* Ajusta la distancia desde la parte inferior */
+  right: 85px; /* Ajusta la distancia desde la parte derecha */
+  background-color: #03a9f4; /* Fondo azul claro */
+  color: #ffffff; /* Ícono blanco */
+  border-radius: 50%; /* Botón redondeado */
+  width: 56px; /* Ancho del botón (más grande) */
+  height: 56px; /* Altura del botón (más grande) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; /* Transición suave */
+  border: none; /* Quitar borde */
+}
+
+.mat-button-plus mat-icon {
+  font-size: 24px; /* Tamaño del ícono más grande */
+}
+
+.mat-button-plus:hover {
+  background-color: #039be5; /* Azul más oscuro pero aún claro al pasar el mouse */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Aumentar la sombra al pasar el mouse */
+  transform: scale(1.1); /* Aumentar el tamaño del botón al pasar el mouse */
+}

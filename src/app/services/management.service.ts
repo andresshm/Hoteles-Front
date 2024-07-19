@@ -10,7 +10,6 @@ import { Country } from 'app/interfaces/Country.interface';
 @Injectable({providedIn: 'root'})
 export class ManagementService {
 
-    // private url = 'https://proyectohoteles-1-qtfp.onrender.com/';
     private url = 'http://localhost:8080/';
 
 

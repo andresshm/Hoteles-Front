@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Country } from 'app/interfaces/Country.interface';
 import { Host } from 'app/interfaces/host.interface';
 import { Hotel } from 'app/interfaces/hotel.interface';
 import { Room } from 'app/interfaces/room.interface';
@@ -29,7 +28,7 @@ export class TableListComponent implements OnInit {
   constructor(private managementService : ManagementService) { }
 
    ngOnInit() {
-//se puede quitar
+   this.getHuespedes();
   }
 
 
@@ -37,28 +36,29 @@ export class TableListComponent implements OnInit {
    
     this.managementService.getHostsRequest('huesped')
       .subscribe(hosts => {
-        this.hosts = hosts;
+        this.hosts = hosts.sort((a, b)=>a.id-b.id);
+        //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
       });
   }
 
   getHabitaciones(){
     this.managementService.getRoomsRequest('habitacion')
       .subscribe(rooms => {
-        this.rooms=rooms;
+        this.rooms=rooms.sort((a, b)=>a.id-b.id);
       });
   }
 
   getHoteles(){
     this.managementService.getHotelsRequest('hotel')
       .subscribe(hotels => {
-        this.hotels=hotels;
+        this.hotels=hotels.sort((a, b)=>a.id-b.id);
       });
   }
 
   getServicios(){
     this.managementService.getServicesRequest('servicio')
       .subscribe(services => {
-        this.services=services;
+        this.services=services.sort((a, b)=>a.id-b.id);
       });
   }
 

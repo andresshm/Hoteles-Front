@@ -1,15 +1,102 @@
 <div class="main-content">
   <div class="container-fluid">
+
+    <div class="list-container">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Lista de Huéspedes</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item class="huesped-item">
+                <span class="matListItemTitle reduce-space">ID</span>
+                <span class="matListItemLine"><strong>Nombre</strong></span>
+                <span class="matListItemLine"><strong>Apellido</strong></span>
+                <span class="matListItemLine"><strong>DNI/Pasaporte</strong></span>
+                <span class="matListItemLine"><strong>Check-in</strong></span>
+                <span class="matListItemLine"><strong>Check-out</strong></span>
+                <div class="huesped-actions">
+                   <span class="matListItemLine">Acciones</span>
+                </div>
+              </mat-list-item>
+              <mat-list-item *ngFor="let host of hosts" class="huesped-item">
+                <span class="matListItemTitle reduce-space">{{host.id}}</span>
+                <span class="matListItemLine">{{host.nombre}}</span>
+                <span class="matListItemLine">{{host.apellido}}</span>
+                <span class="matListItemLine">{{host.dniPasaporte}}</span>
+                <span class="matListItemLine">{{host.fechaCheckin}}</span>
+                <span class="matListItemLine">{{host.fechaCheckout}}</span>
+                <div class="huesped-actions">
+                  <button mat-icon-button >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button class="botones">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      
+
+      <shared-floating-button></shared-floating-button>
+    <!-- <mat-list>
+        <mat-list-item *ngFor="let host of hosts" class="huesped-item">
+            <span class="matListItemTitle">{{host.id}}</span>
+            <span class="matListItemLine">{{host.nombre}}</span>
+            <span class="matListItemLine">{{host.apellido}}</span>
+            <span class="matListItemLine">{{host.dniPasaporte}}</span>
+            <span class="matListItemLine">{{host.fechaCheckin }}</span>
+            <span class="matListItemLine">{{host.fechaCheckout }}</span>
+            <div class="huesped-actions">
+                <button mat-icon-button >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+        </mat-list-item>
+      </mat-list>
+       -->
+    <!-- <mat-list>
+        <mat-list-item *ngFor="let host of hosts" class="huesped-item">
+          <div class="huesped-content">
+            <div class="huesped-info">
+              <span class="matListItemTitle">{{host.id}}</span>
+              <span class="matListItemLine">{{host.nombre}}</span>
+              <span class="matListItemLine">{{host.apellido}}</span>
+              <span class="matListItemLine">{{host.dniPasaporte}}</span>
+              <span class="matListItemLine">{{host.fechaCheckin}}</span>
+              <span class="matListItemLine">{{host.fechaCheckout}}</span>
+            </div>
+            <div class="huesped-actions">
+              <button mat-icon-button >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list> -->
+      
+
+
       <div class="row">
           <div class="col-md-12">
               <div class="card">
                   <!--Intento de los botones  -->
-                <div class="button-container">
+                <!-- <div class="button-container">
                     <button (click)="toggleHostTable()" class="grid-button button1">Huespedes</button>
                     <button (click)="toggleHotelTable()" class="grid-button button2">Hoteles</button>
                     <button (click)="toggleRoomTable()" class="grid-button button3">Habitaciones</button>
                     <button (click)="toggleServiceTable()" class="grid-button button4">Servicios</button>
-                  </div>
+                  </div> -->
 
                   <div *ngIf="showHostTable" class="card-header card-header-danger">
                       <h4 class="card-title ">Hosts Table</h4>

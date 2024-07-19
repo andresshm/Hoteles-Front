@@ -46,3 +46,132 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
   
+
+  /* Lista*/
+
+  .list-container {
+    max-width: 100%;
+    margin: 20px auto;
+  }
+  
+  mat-card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  mat-card-header {
+    background-color: #e1f5fe; /* Very light blue background for the header */
+  }
+  
+  mat-card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #0277bd; /* Medium blue for the title */
+  }
+  
+  mat-list {
+    margin: 0;
+    background-color: #ffffff; /* White background for the list */
+  }
+  
+  .list-header {
+    background-color: #b3e5fc; /* Light blue for header rows */
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .header-item, .matListItemLine {
+    flex: 1;
+    min-width: 120px; /* Adjusted minimum width for columns */
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .header-item:last-child, .matListItemLine:last-child {
+    border-right: none; /* Remove right border for the last item */
+  }
+  
+  .huesped-item {
+    background-color: #ffffff; /* Uniform white background for rows */
+  }
+  
+  .huesped-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the action buttons */
+  }
+  
+  .huesped-actions button {
+    margin: 0 5px; /* Horizontal spacing between buttons */
+    padding: 0;
+
+  }
+  
+  .mat-icon {
+    font-size: 20px;
+  }
+  
+  .matListItemTitle {
+    font-weight: bold;
+    color: #0277bd; /* Medium blue for the ID */
+  }
+  
+  .reduce-space {
+    padding-right: 5px; /* Reduce the space between ID and Name */
+  }
+
+  
+  
+  
+  /* .huesped-item {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .huesped-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .huesped-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .matListItemTitle {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+  
+  .matListItemLine {
+    font-size: 0.9em;
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .huesped-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .huesped-actions button {
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-item {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+    box-sizing: border-box;
+  } */

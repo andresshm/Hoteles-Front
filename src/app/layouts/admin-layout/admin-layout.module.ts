@@ -17,6 +17,12 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import {MatIconModule} from '@angular/material/icon'
+import {MatCardModule} from '@angular/material/card'
+import { SharedModule } from 'app/shared/shared.module';
+import { FloatingButtonComponent } from 'app/shared/components/floating-button/floating-button.component';
 
 @NgModule({
   imports: [
@@ -30,6 +36,14 @@ import {MatSelectModule} from '@angular/material/select';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    MatListModule,
+    MatDividerModule,
+    MatIconModule,
+    MatCardModule,
+    SharedModule
+
+
+    
   ],
   declarations: [
     DashboardComponent,
@@ -40,6 +54,7 @@ import {MatSelectModule} from '@angular/material/select';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    
   ]
 })
 
