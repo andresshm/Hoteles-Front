@@ -1,0 +1,163 @@
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button> -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar huésped </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">ID:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Apellidos:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">DNI/Pasaporte:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Fecha check-in:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Fecha check-out:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <!-- <div class="mb-3">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea class="form-control" id="message-text"></textarea>
+            </div> -->
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Actualizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar huésped</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form >
+              <div class="mb-3">
+                <!-- <label for="recipient-name" class="col-form-label">ID:</label> -->
+                <!-- <input type="number" class="form-control" id="recipient-name" > -->
+                 <p>Está a punto de borrar el huésped: {{selectedIdHijo}}</p>
+                 <p class="warn">Esta operación es irreversible</p>
+              </div>
+              <!-- <div class="mb-3">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div> -->
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Eliminar</button>
+            <!-- (click)="eliminarElemento(); onSubmitDEL(); recharge() -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- confirmacion -->
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">ATENCIÓN</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Está a punto de eliminar el huésped: {{selectedIdHijo}} de forma permanente.
+              ¿Quiere realizar la operación igualmente?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary"  data-bs-dismiss="modal">Atrás</button>
+            <button class="btn btn-primary" (click)=" onSubmitDEL(); recharge('DEL');"   data-bs-dismiss="modal">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button> -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- POST MODAL -->
+  <div class="modal fade" id="postModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear huésped</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.nombre">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Apellidos:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.apellido">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">DNI/Pasaporte:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.dniPasaporte">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Fecha check-in:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.fechaCheckin">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Fecha check-out:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.fechaCheckout">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="postNewHost(); recharge('POST');">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

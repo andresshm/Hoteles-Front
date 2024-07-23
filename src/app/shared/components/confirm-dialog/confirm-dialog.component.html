@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Confirmación de Eliminación</h1>
+<div mat-dialog-content>
+  ¿Estás seguro de que quieres eliminar este elemento con ID {{ data.id }}?
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onSubmitDEL(data.id); confirmar() ">Eliminar</button>
+</div>

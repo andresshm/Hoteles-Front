@@ -1,47 +1,68 @@
 <div class="main-content">
   <div class="container-fluid">
-
     <div class="list-container">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>Lista de Huéspedes</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-list>
-              <mat-list-item class="huesped-item">
-                <span class="matListItemTitle reduce-space">ID</span>
-                <span class="matListItemLine"><strong>Nombre</strong></span>
-                <span class="matListItemLine"><strong>Apellido</strong></span>
-                <span class="matListItemLine"><strong>DNI/Pasaporte</strong></span>
-                <span class="matListItemLine"><strong>Check-in</strong></span>
-                <span class="matListItemLine"><strong>Check-out</strong></span>
-                <div class="huesped-actions">
-                   <span class="matListItemLine">Acciones</span>
-                </div>
-              </mat-list-item>
-              <mat-list-item *ngFor="let host of hosts" class="huesped-item">
-                <span class="matListItemTitle reduce-space">{{host.id}}</span>
-                <span class="matListItemLine">{{host.nombre}}</span>
-                <span class="matListItemLine">{{host.apellido}}</span>
-                <span class="matListItemLine">{{host.dniPasaporte}}</span>
-                <span class="matListItemLine">{{host.fechaCheckin}}</span>
-                <span class="matListItemLine">{{host.fechaCheckout}}</span>
-                <div class="huesped-actions">
-                  <button mat-icon-button >
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button class="botones">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </div>
-              </mat-list-item>
-            </mat-list>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Lista de Huéspedes</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item class="huesped-item">
+              <span class="matListItemTitle reduce-space">ID</span>
+              <span class="matListItemLine"><strong>Nombre</strong></span>
+              <span class="matListItemLine"><strong>Apellido</strong></span>
+              <span class="matListItemLine"
+                ><strong>DNI/Pasaporte</strong></span
+              >
+              <span class="matListItemLine"><strong>Check-in</strong></span>
+              <span class="matListItemLine"><strong>Check-out</strong></span>
+              <div class="huesped-actions">
+                <span class="matListItemLine">Acciones</span>
+              </div>
+            </mat-list-item>
+            <mat-list-item
+              *ngFor="let host of hosts; let i = index"
+              class="huesped-item"
+            >
+              <span class="matListItemTitle reduce-space">{{ host.id }}</span>
+              <span class="matListItemLine">{{ host.nombre }}</span>
+              <span class="matListItemLine">{{ host.apellido }}</span>
+              <span class="matListItemLine">{{ host.dniPasaporte }}</span>
+              <span class="matListItemLine">{{ host.fechaCheckin }}</span>
+              <span class="matListItemLine">{{ host.fechaCheckout }}</span>
 
-      <shared-floating-button></shared-floating-button>
+              <!-- Como muevas esto una linea no funciona el hdp -->
+              <shared-pop-up
+                [selectedIdHijo]="selectedId"
+              ></shared-pop-up>
+
+              <div class="huesped-actions">
+                <button
+                  mat-icon-button
+                  (click)="setIndex(host.id)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#updateModal"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <shared-pop-up></shared-pop-up>
+                <button
+                  mat-icon-button
+                  class="botones"
+                  (click)="setIndex(host.id)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteModal"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <shared-floating-button [id]="selectedId"></shared-floating-button>
     <!-- <mat-list>
         <mat-list-item *ngFor="let host of hosts" class="huesped-item">
             <span class="matListItemTitle">{{host.id}}</span>
@@ -84,228 +105,181 @@
           <mat-divider></mat-divider>
         </mat-list-item>
       </mat-list> -->
-      
 
-
-      <div class="row">
-          <div class="col-md-12">
-              <div class="card">
-                  <!--Intento de los botones  -->
-                <!-- <div class="button-container">
+    <!-- tablas -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <!--Intento de los botones  -->
+          <!-- <div class="button-container">
                     <button (click)="toggleHostTable()" class="grid-button button1">Huespedes</button>
                     <button (click)="toggleHotelTable()" class="grid-button button2">Hoteles</button>
                     <button (click)="toggleRoomTable()" class="grid-button button3">Habitaciones</button>
                     <button (click)="toggleServiceTable()" class="grid-button button4">Servicios</button>
                   </div> -->
 
-                  <div *ngIf="showHostTable" class="card-header card-header-danger">
-                      <h4 class="card-title ">Hosts Table</h4>
-                      <p class="card-category"> Muestra información de los huéspedes</p>
-                  </div>
-
-                  
-
-
-                  <div *ngIf="showHostTable" class="card-body">
-                      <div class="table-responsive">
-                          <table class="table">
-                            
-                              <thead class=" text-primary">
-                                  <th>
-                                      ID
-                                  </th>
-                                  <th>
-                                      Name
-                                  </th>
-                                  <th>
-                                      Surname
-                                  </th>
-                                  <th>
-                                      ID-card/Passport
-                                  </th>
-                                  <th>
-                                      Check-In
-                                  </th>
-                                  <th>
-                                      Check-Out
-                                  </th>
-                              </thead>
-                              <tbody>
-                               
-                                  <tr *ngFor="let host of hosts">
-                                      <td>
-                                          {{host.id}}
-                                      </td>
-                                      <td>
-                                          {{host.nombre}}
-                                      </td>
-                                      <td>
-                                          {{host.apellido}}
-                                      </td>
-                                      <td>
-                                          {{host.dniPasaporte}}
-                                      </td>
-                                      <td>
-                                          {{host.fechaCheckin}}
-                                      </td>
-                                      <td>
-                                        {{host.fechaCheckout}}
-                                      </td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
+          <div *ngIf="showHostTable" class="card-header card-header-danger">
+            <h4 class="card-title">Hosts Table</h4>
+            <p class="card-category">Muestra información de los huéspedes</p>
           </div>
 
-         
-          <div *ngIf="showRoomTable" class="col-md-12">
-              <div class="card card-plain">
-                  <div class="card-header card-header-danger">
-                      <h4 class="card-title mt-0"> Rooms Table</h4>
-                      <p class="card-category"> Muestra información sobre las habitaciones de un hotel</p>
-                  </div>
-                  <div *ngIf="showRoomTable" class="card-body">
-                      <div class="table-responsive">
-                          <table class="table table-hover">
-                              <thead class="">
-                                  <th>
-                                      ID
-                                  </th>
-                                  <th>
-                                      Number
-                                  </th>
-                                  <th>
-                                      Type
-                                  </th>
-                                  <th>
-                                      Price
-                                  </th>
-                                 
-                              </thead>
-                              <tbody>
-                                  <tr *ngFor="let room of rooms">
-                                      <td>
-                                          {{room.id}}
-                                      </td>
-                                      <td>
-                                          {{room.numero}}
-                                      </td>
-                                      <td>
-                                          {{room.tipo}}
-                                      </td>
-                                      <td>
-                                            {{room.precioNoche}}
-                                      </td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
+          <div *ngIf="showHostTable" class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Surname</th>
+                  <th>ID-card/Passport</th>
+                  <th>Check-In</th>
+                  <th>Check-Out</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let host of hosts">
+                    <td>
+                      {{ host.id }}
+                    </td>
+                    <td>
+                      {{ host.nombre }}
+                    </td>
+                    <td>
+                      {{ host.apellido }}
+                    </td>
+                    <td>
+                      {{ host.dniPasaporte }}
+                    </td>
+                    <td>
+                      {{ host.fechaCheckin }}
+                    </td>
+                    <td>
+                      {{ host.fechaCheckout }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-
-          <div *ngIf="showHotelTable" class="col-md-12">
-            <div class="card card-plain">
-                <div class="card-header card-header-danger">
-                    <h4 class="card-title mt-0"> Hotels Table</h4>
-                    <p class="card-category"> Muestra información sobre los hoteles</p>
-                </div>
-                <div *ngIf="showHotelTable" class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="">
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    Address
-                                </th>
-                                <th>
-                                    Phone
-                                </th>
-                                <th>
-                                    Email
-                                </th>
-                                <th>
-                                    Website
-                                </th>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let hotel of hotels">
-                                    <td>
-                                        {{hotel.id}}
-                                    </td>
-                                    <td>
-                                        {{hotel.nombre}}
-                                    </td>
-                                    <td>
-                                        {{hotel.direccion}}
-                                    </td>
-                                    <td>
-                                        {{hotel.telefono}}
-                                    </td>
-                                    <td>
-                                        {{hotel.email}}
-                                    </td>
-                                    <td>
-                                        {{hotel.sitioWeb}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
         </div>
-
-
-
-        <div *ngIf="showServiceTable" class="col-md-12">
-            <div class="card card-plain">
-                <div class="card-header card-header-danger">
-                    <h4 class="card-title mt-0"> Services Table</h4>
-                    <p class="card-category"> Muestra información sobre los servicios disponibles</p>
-                </div>
-                <div *ngIf="showServiceTable" class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="">
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    Name
-                                </th>
-                                <th>
-                                    Description
-                                </th>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let serv of services">
-                                    <td>
-                                        {{serv.id}}
-                                    </td>
-                                    <td>
-                                        {{serv.nombre}}
-                                    </td>
-                                    <td>
-                                        {{serv.descripcion}}
-                                    </td>
-                                  
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
       </div>
+
+      <div *ngIf="showRoomTable" class="col-md-12">
+        <div class="card card-plain">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title mt-0">Rooms Table</h4>
+            <p class="card-category">
+              Muestra información sobre las habitaciones de un hotel
+            </p>
+          </div>
+          <div *ngIf="showRoomTable" class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="">
+                  <th>ID</th>
+                  <th>Number</th>
+                  <th>Type</th>
+                  <th>Price</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let room of rooms">
+                    <td>
+                      {{ room.id }}
+                    </td>
+                    <td>
+                      {{ room.numero }}
+                    </td>
+                    <td>
+                      {{ room.tipo }}
+                    </td>
+                    <td>
+                      {{ room.precioNoche }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="showHotelTable" class="col-md-12">
+        <div class="card card-plain">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title mt-0">Hotels Table</h4>
+            <p class="card-category">Muestra información sobre los hoteles</p>
+          </div>
+          <div *ngIf="showHotelTable" class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="">
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Website</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let hotel of hotels">
+                    <td>
+                      {{ hotel.id }}
+                    </td>
+                    <td>
+                      {{ hotel.nombre }}
+                    </td>
+                    <td>
+                      {{ hotel.direccion }}
+                    </td>
+                    <td>
+                      {{ hotel.telefono }}
+                    </td>
+                    <td>
+                      {{ hotel.email }}
+                    </td>
+                    <td>
+                      {{ hotel.sitioWeb }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="showServiceTable" class="col-md-12">
+        <div class="card card-plain">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title mt-0">Services Table</h4>
+            <p class="card-category">
+              Muestra información sobre los servicios disponibles
+            </p>
+          </div>
+          <div *ngIf="showServiceTable" class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="">
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let serv of services">
+                    <td>
+                      {{ serv.id }}
+                    </td>
+                    <td>
+                      {{ serv.nombre }}
+                    </td>
+                    <td>
+                      {{ serv.descripcion }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
