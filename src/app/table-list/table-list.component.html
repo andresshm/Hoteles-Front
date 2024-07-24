@@ -17,7 +17,7 @@
               <span class="matListItemLine"><strong>Check-in</strong></span>
               <span class="matListItemLine"><strong>Check-out</strong></span>
               <div class="huesped-actions">
-                <span class="matListItemLine">Acciones</span>
+                <span class="matListItemLine"><strong>Acciones</strong></span>
               </div>
             </mat-list-item>
             <mat-list-item
@@ -45,7 +45,7 @@
                 >
                   <mat-icon>edit</mat-icon>
                 </button>
-                <shared-pop-up></shared-pop-up>
+                <!-- <shared-pop-up></shared-pop-up> -->
                 <button
                   mat-icon-button
                   class="botones"
@@ -62,7 +62,7 @@
       </mat-card>
     </div>
 
-    <shared-floating-button [id]="selectedId"></shared-floating-button>
+    <shared-floating-button [huesped]="showButton"></shared-floating-button>
     <!-- <mat-list>
         <mat-list-item *ngFor="let host of hosts" class="huesped-item">
             <span class="matListItemTitle">{{host.id}}</span>

@@ -1,209 +1,59 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Create a Room</h4>
-                        <p class="card-category">Complete this data</p>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-md-5">
-                                  <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="Company (disabled)" disabled>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-3">
-                                    <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="Number" [(ngModel)]="numero">
-                                    </mat-form-field>
-                                </div>
-                                <!-- <div class="col-md-4">
-                                    <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="Type" type="email">
-                                    </mat-form-field>
-                                </div> -->
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Type" type="text" [(ngModel)]="tipo">
-                                  </mat-form-field>
-                                </div>
-                                <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Price" type="number" [(ngModel)]="precioNoche">
-                                  </mat-form-field>
-                                </div>
-                            </div>
-                            <!-- <div class="row">
-                                <div class="col-md-12">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="ID-card/Passport" type="text" [(ngModel)]="dniPasaporte">
-                                  </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Check-In Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckin">
-                                  </mat-form-field>
-                                </div>
-                                <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Check-Out Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckout">
-                                  </mat-form-field>
-                                </div> 
-                               
-                            </div>-->
-                            <div class="row">
-                               
-                            </div>
-                            <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="onSubmit()">Create Profile</button>
-                            <div class="clearfix"></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-  
-  
-  
-  
-            <div class="col-md-8">
-              <div class="card">
-                  <div class="card-header card-header-danger">
-                      <h4 class="card-title">Update a Room</h4>
-                      <p class="card-category">Complete this data</p>
-                  </div>
-                  <div class="card-body">
-                      <form>
-                          <div class="row">
-                              <div class="col-md-5">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Company (disabled)" disabled>
-                                  </mat-form-field>
-                              </div>
-                              <div class="col-md-3">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Room ID" [(ngModel)]="selectedId">
-                                  </mat-form-field>
-                              </div>
-                              <!-- <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Email address" type="email">
-                                  </mat-form-field>
-                              </div> -->
-                          </div>
-                          <div class="row">
-                              <div class="col-md-6">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Number" type="text" [(ngModel)]="numero">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-6">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Type" type="text" [(ngModel)]="tipo">
-                                </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-12">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Price" type="number" [(ngModel)]="precioNoche">
-                                </mat-form-field>
-                              </div>
-                          </div>
-                          <!-- <div class="row">
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Check-In Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckin">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Check-Out Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckout">
-                                </mat-form-field>
-                              </div>
-                            
-                          </div> -->
-                          <div class="row">
-                             
-                          </div>
-                          <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="onSubmitPUT()">Update Profile</button>
-                          <div class="clearfix"></div>
-                      </form>
-                  </div>
-              </div>
-          </div>
-  
-  
-  
-  
-          <div class="col-md-8">
-            <div class="card">
-                <div class="card-header card-header-danger">
-                    <h4 class="card-title">Delete a Room</h4>
-                    <p class="card-category">Complete this data</p>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-5">
-                              <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Delete room" disabled>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-3">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Room ID" [(ngModel)]="selectedId">
-                                </mat-form-field>
-                            </div>
-                            
-                        
-                        </div>
-                        <div class="row">
-                
-                        </div>
-                        <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="onSubmitDEL()">Delete Profile</button>
-                        <div class="clearfix"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        </div>
-    </div>
-  </div>
-  
-
-<!-- 
-<div class="main-content">
   <div class="container-fluid">
-      <div class="card card-plain">
-          <div class="card-header card-header-danger">
-              <h4 class="card-title">Material Design Icons</h4>
-              <p class="card-category">Handcrafted by our friends from
-                  <a target="_blank" href="https://fonts.google.com/icons">Google</a>
-              </p>
-          </div>
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="card-body">
-                      <div class="iframe-container d-none d-lg-block">
-                          <iframe src="https://material.io/design/iconography/system-icons.html#grid-and-keyline-shapes">
-                              <p>Your browser does not support iframes.</p>
-                          </iframe>
-                      </div>
-                      <div class="col-md-12 d-none d-sm-block d-md-block d-lg-none d-block d-sm-none text-center ml-auto mr-auto">
-                          <h5>The icons are visible on Desktop mode inside an iframe. Since the iframe is not working on Mobile and Tablets please visit the icons on their original page on Google. Check the
-                              <a href="https://fonts.google.com/icons" target="_blank">Material Icons</a>
-                          </h5>
-                      </div>
-                  </div>
+    <div class="list-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Lista de Habitaciones</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item class="huesped-item">
+              <span class="matListItemTitle reduce-space">ID</span>
+              <span class="matListItemLine"><strong>Número</strong></span>
+              <span class="matListItemLine"><strong>Tipo</strong></span>
+              <span class="matListItemLine"><strong>Precio/noche</strong></span>
+              <div class="huesped-actions">
+                <span class="matListItemLine"><strong>Acciones</strong></span>
               </div>
-          </div>
-      </div>
-  </div>
-</div> -->
+            </mat-list-item>
+            <mat-list-item
+              *ngFor="let room of rooms; let i = index"
+              class="huesped-item"
+            >
+              <span class="matListItemTitle reduce-space">{{ room.id }}</span>
+              <span class="matListItemLine">{{ room.numero }}</span>
+              <span class="matListItemLine">{{ room.tipo }}</span>
+              <span class="matListItemLine">{{ room.precioNoche }}</span>
+
+              <!-- Como muevas esto una linea no funciona el hdp -->
+              <shared-pop-up
+                [selectedIdHijo]="selectedId"
+              ></shared-pop-up>
+
+              <div class="huesped-actions">
+                <button
+                  mat-icon-button
+                  (click)="setIndex(room.id)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#roomUpdateModal"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <!-- <shared-pop-up></shared-pop-up> -->
+                <button
+                  mat-icon-button
+                  class="botones"
+                  (click)="setIndex(room.id)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#roomDeleteModal"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <shared-floating-button [habitacion]="showButton"></shared-floating-button>

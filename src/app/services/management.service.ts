@@ -22,6 +22,14 @@ export class ManagementService {
           catchError(()=>of([])),
         );
       }
+
+
+    public getHostById(id:number, entity: string): Observable<Host>{
+        return this.httpClient.get<Host>(`${this.url}${entity}/${id}`)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
     public getRoomsRequest(entity: string): Observable<Room[]>{
         return this.httpClient.get<Room[]>(`${this.url}${entity}`)
         .pipe(
@@ -80,6 +88,13 @@ export class ManagementService {
       
       putHost(id:number, data : Host): Observable<Host> {
         return this.httpClient.put<Host>(`${this.url}huesped/${id}`, data)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+
+      patchHost(id:number, data : Host): Observable<Host> {
+        return this.httpClient.patch<Host>(`${this.url}huesped/${id}`, data)
         .pipe(
           catchError(()=>of()),
         );

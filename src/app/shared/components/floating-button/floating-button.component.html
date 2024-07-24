@@ -1,4 +1,16 @@
-<button mat-icon-button class="mat-button-plus" data-bs-toggle="modal" data-bs-target="#postModal">
+<button *ngIf="hotel" mat-icon-button class="mat-button-plus" data-bs-toggle="modal" data-bs-target="#hotelPostModal">
+    <mat-icon>add</mat-icon>
+  </button>
+
+<button *ngIf="huesped" mat-icon-button class="mat-button-plus" data-bs-toggle="modal" data-bs-target="#postModal">
+    <mat-icon>add</mat-icon>
+  </button>
+
+<button *ngIf="servicio" mat-icon-button class="mat-button-plus" data-bs-toggle="modal" data-bs-target="#servicePostModal">
+    <mat-icon>add</mat-icon>
+  </button>
+
+<button *ngIf="habitacion" mat-icon-button class="mat-button-plus" data-bs-toggle="modal" data-bs-target="#roomPostModal">
     <mat-icon>add</mat-icon>
   </button>
   

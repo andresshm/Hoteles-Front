@@ -1,4 +1,64 @@
 <div class="main-content">
+  <div class="container-fluid">
+    <div class="list-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Lista de Servicios</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item class="huesped-item">
+              <span class="matListItemTitle reduce-space">ID</span>
+              <span class="matListItemLine"><strong>Nombre</strong></span>
+              <span class="matListItemLine"><strong>Descripción</strong></span>
+              <div class="huesped-actions">
+                <span class="matListItemLine"><strong>Acciones</strong></span>
+              </div>
+            </mat-list-item>
+            <mat-list-item
+              *ngFor="let serv of services; let i = index"
+              class="huesped-item"
+            >
+              <span class="matListItemTitle reduce-space">{{ serv.id }}</span>
+              <span class="matListItemLine">{{ serv.nombre }}</span>
+              <span class="matListItemLine">{{ serv.descripcion }}</span>
+              
+
+              <!-- Como muevas esto una linea no funciona el hdp -->
+              <shared-pop-up
+                [selectedIdHijo]="selectedId"
+              ></shared-pop-up>
+
+              <div class="huesped-actions">
+                <button
+                  mat-icon-button
+                  (click)="setIndex(serv.id)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#serviceUpdateModal"
+                  >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <!-- <shared-pop-up></shared-pop-up> -->
+                <button
+                  mat-icon-button
+                  class="botones"
+                  (click)="setIndex(serv.id)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#serviceDeleteModal"
+                  >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-list-item>
+           
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <shared-floating-button [servicio]="showButton"></shared-floating-button>
+
+<!-- <div class="main-content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
@@ -20,11 +80,7 @@
                                       <input matInput placeholder="Name" [(ngModel)]="nombre">
                                     </mat-form-field>
                                 </div>
-                                <!-- <div class="col-md-4">
-                                    <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="Type" type="email">
-                                    </mat-form-field>
-                                </div> -->
+                              
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -32,32 +88,9 @@
                                     <input matInput placeholder="Description" type="text" [(ngModel)]="descripcion">
                                   </mat-form-field>
                                 </div>
-                                <!-- <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Price" type="number" [(ngModel)]="precioNoche">
-                                  </mat-form-field>
-                                </div> -->
+                           
                             </div>
-                            <!-- <div class="row">
-                                <div class="col-md-12">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="ID-card/Passport" type="text" [(ngModel)]="dniPasaporte">
-                                  </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Check-In Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckin">
-                                  </mat-form-field>
-                                </div>
-                                <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Check-Out Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckout">
-                                  </mat-form-field>
-                                </div> 
-                               
-                            </div>-->
+                           
                             <div class="row">
                                
                             </div>
@@ -90,11 +123,7 @@
                                     <input matInput placeholder="Service ID" [(ngModel)]="selectedId">
                                   </mat-form-field>
                               </div>
-                              <!-- <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Email address" type="email">
-                                  </mat-form-field>
-                              </div> -->
+                              
                           </div>
                           <div class="row">
                               <div class="col-md-6">
@@ -102,11 +131,7 @@
                                   <input matInput placeholder="Name" type="text" [(ngModel)]="nombre">
                                 </mat-form-field>
                               </div>
-                              <!-- <div class="col-md-6">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Type" type="text" [(ngModel)]="tipo">
-                                </mat-form-field>
-                              </div> -->
+                              
                           </div>
                           <div class="row">
                               <div class="col-md-12">
@@ -115,19 +140,7 @@
                                 </mat-form-field>
                               </div>
                           </div>
-                          <!-- <div class="row">
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Check-In Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckin">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Check-Out Date: DD-MM-YYYY hh:mm" type="text" [(ngModel)]="fechaCheckout">
-                                </mat-form-field>
-                              </div>
-                            
-                          </div> -->
+                        
                           <div class="row">
                              
                           </div>
@@ -175,7 +188,7 @@
 
         </div>
     </div>
-  </div>
+  </div> -->
   
 
 

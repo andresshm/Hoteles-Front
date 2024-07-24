@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Host } from 'app/interfaces/host.interface';
 import { Hotel } from 'app/interfaces/hotel.interface';
 import { Room } from 'app/interfaces/room.interface';
@@ -32,9 +33,12 @@ export class TableListComponent implements OnInit {
   public showServiceTable = false;
 
   public selectedId: number=0;
+  public showButton: boolean = false;
  
 
-  constructor(private managementService : ManagementService) { }
+  constructor(private managementService : ManagementService,
+    private router : Router
+  ) { }
 
 
    ngOnInit() {
@@ -64,6 +68,13 @@ export class TableListComponent implements OnInit {
         break;
     }
     
+    
+    
+
+    this.router.events.subscribe(() => {
+      this.checkRoute();
+    });
+    this.checkRoute();
      
 
     // Aqui se piden los huespedes a la API
@@ -118,21 +129,9 @@ export class TableListComponent implements OnInit {
       });
   }
 
-  toggleHostTable() {
-    if(!this.showHostTable) this.getHuespedes();
-    this.showHostTable = !this.showHostTable;
-  }
-  toggleRoomTable() {
-    if(!this.showRoomTable) this.getHabitaciones();
-    this.showRoomTable = !this.showRoomTable;
-  }
-  toggleHotelTable() {
-    if(!this.showHotelTable) this.getHoteles();
-    this.showHotelTable = !this.showHotelTable;
-  }
-  toggleServiceTable() {
-    if(!this.showServiceTable) this.getServicios();
-    this.showServiceTable = !this.showServiceTable;
+  checkRoute() {
+    const currentRoute = this.router.url;
+    this.showButton = currentRoute === '/table-list';
   }
 
 

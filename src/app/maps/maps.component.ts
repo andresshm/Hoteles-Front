@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { Service } from "app/interfaces/service.interface";
 import { ManagementService } from "app/services/management.service";
 
-declare const google: any;
+// declare const google: any;
 declare var $: any;
 interface Marker {
   lat: number;
@@ -25,134 +26,111 @@ export class MapsComponent implements OnInit {
   @Input()
   selectedId: number = 0;
 
-  success: boolean=false;
-  successMsg:string='';
-  failMsg:string='';
+  showButton: boolean=false;
 
+public services : Service[] = [];
   data: Service = {
     id: 0,
     nombre: "",
     descripcion: "",
     hoteles: [],
   };
-  constructor(private managementService: ManagementService) {}
-
-  onSubmit() {
-    this.data.nombre = this.nombre;
-    this.data.descripcion = this.descripcion;
-    console.log(this.data);
+  
+  constructor(private managementService : ManagementService,
+    private router : Router
+  ) { }
 
 
-    return new Promise<void>((resolve, reject) => {
-        // Llamar al servicio y manejar la respuesta
-        this.managementService.postNewService(this.data)
-          .subscribe(
-            () => {
-              this.success = true; // Indicar que la operación fue exitosa
-              console.log('Operación exitosa:', this.success);
-              resolve(); // Resolver la promesa cuando la operación haya completado
-            }
-          );
-      });
+   ngOnInit() {
+    // Esta parte gestiona las notificaciones despues de 
+    // borrar un huesped. Se añade una señal por asi decirlo
+    // en el localStorage y si la encontramos al recargar
+    // mostramos la noti y limpiamos el historial para que no
+    // salga la noti cada vez que recargamos
+    const mensaje = localStorage.getItem('notificacion');
 
-
-    // this.managementService.postNewService(this.data)
-    // .subscribe(
-    //     ()=>{
-    //         this.success=true;
-    //         console.log(this.success);
-    //     }
-    // );
-  }
-  onSubmitPUT() {
-    this.data.nombre = this.nombre;
-    this.data.descripcion = this.descripcion;
-
-    return new Promise<void>((resolve, reject) => {
-        // Llamar al servicio y manejar la respuesta
-        this.managementService.putService(this.selectedId, this.data)
-          .subscribe(
-            () => {
-              this.success = true; // Indicar que la operación fue exitosa
-              console.log('Operación exitosa:', this.success);
-              resolve(); // Resolver la promesa cuando la operación haya completado
-            }
-          );
-      });
-
-    // this.managementService.putService(this.selectedId, this.data).subscribe();
-  }
-
-  onSubmitDEL() {
-
-    return new Promise<void>((resolve, reject) => {
-        // Llamar al servicio y manejar la respuesta
-        this.managementService.deleteService(this.selectedId)
-          .subscribe(
-            () => {
-              this.success = true; // Indicar que la operación fue exitosa
-              console.log('Operación exitosa:', this.success);
-              resolve(); // Resolver la promesa cuando la operación haya completado
-            }
-          );
-      });
-
-    // this.managementService.deleteService(this.selectedId).subscribe();
-  }
-
-  async onSubmitAndShowNotification() {
-    try {
-      this.successMsg = "Servicio creado correctamente";
-      this.failMsg = "Error al crear el servicio";
-      await this.onSubmit(); // Espera a que onSubmit se complete
-      this.showNotification('top', 'right', this.successMsg, this.failMsg); // Ejecuta showNotification después de onSubmit
-      this.success=false; // lo reinicio a false y se pondra en true de nuevo si sale todo bn
-    } catch (error) {
-      console.error('Error en onSubmit:', error);
-      // Manejar errores si es necesario
+    // mensaje es DEL/POST/PUT
+    //se podria dejar el remove para el final y no repetirlo
+    
+    if(mensaje)
+    switch(mensaje){
+      case 'DEL':
+        this.showNotification('top', 'right', 'DEL');
+        localStorage.removeItem('notificacion');
+        break;
+      case 'POST':
+        this.showNotification('top', 'right', 'POST');
+        localStorage.removeItem('notificacion');
+        break;
+      case 'PUT':
+        this.showNotification('top', 'right', 'PUT');
+        localStorage.removeItem('notificacion');
+        break;
     }
-  }
-  async onSubmitPutAndShowNotification() {
-    try {
-      this.successMsg = "Servicio actualizado correctamente";
-      this.failMsg = "Error al actualizar el servicio";
-      await this.onSubmitPUT(); // Espera a que onSubmit se complete
-      this.showNotification('top', 'right', this.successMsg, this.failMsg); // Ejecuta showNotification después de onSubmit
-      this.success=false; // lo reinicio a false y se pondra en true de nuevo si sale todo bn
-    } catch (error) {
-        console.error('Error en onSubmit: falla?', error);
-        // Manejar errores si es necesario
-        this.showNotification('top', 'right', this.successMsg, this.failMsg); // Ejecuta showNotification después de onSubmit
-    }
-  }
+    
+    
+    
 
+    this.router.events.subscribe(() => {
+      this.checkRoute();
+    });
+    this.checkRoute();
+     
 
-  async onSubmitDeleteAndShowNotification() {
-
-    try {
-      this.successMsg = "Servicio eliminado correctamente";
-      this.failMsg = "Error al eliminar el servicio";
-      await this.onSubmitDEL(); // Espera a que onSubmit se complete      
-      this.showNotification('top', 'right', this.successMsg, this.failMsg); // Ejecuta showNotification después de onSubmit
-      this.success=false; // lo reinicio a false y se pondra en true de nuevo si sale todo bn
-    } catch (error) {
-        console.error('Error en onSubmit: falla?', error);
-        // Manejar errores si es necesario
-        this.showNotification('top', 'right', this.successMsg, this.failMsg); // Ejecuta showNotification después de onSubmit
-    }
+    // Aqui se piden los huespedes a la API
+    // para generar la lista en pantalla
+   this.getServices();
   }
 
-  showNotification(from :string, align:string, successMsg: string, failMsg: string){
+ 
+
+  getServices() {
+   
+    this.managementService.getServicesRequest('servicio')
+      .subscribe(servs => {
+        this.services = servs.sort((a, b)=>a.id-b.id);
+        //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+      });
+  }
+
+  onSubmitDEL(id:number){
+    
+    this.managementService.deleteHost(id)
+    .subscribe();
+  }
+
+  setIndex(id:number){
+    this.selectedId=id;
+    console.log(this.selectedId);
+  }
+
+
+  checkRoute() {
+    const currentRoute = this.router.url;
+    this.showButton = currentRoute === '/maps';
+  }
+
+
+
+  showNotification(from :string, align:string, tipo:string){
     // const type = ['','info','success','warning','danger'];
 
     // const color = Math.floor((Math.random() * 4) + 1);
-    console.log(this.success);
+    let mensaje = '';
+
+    switch(tipo){
+      case 'DEL': mensaje = "Huésped eliminado correctamente";break;
+      case 'POST': mensaje = "Huésped creado correctamente";break;
+      case 'PUT': mensaje = "Huésped actualizado correctamente";break;
+
+    }
+    
     $.notify({
         icon: "notifications",
-        message: (this.success) ? successMsg : failMsg
+        message: mensaje
 
     },{
-        type: (this.success) ? 'success' : 'danger', //type[color],
+        type: ('success'),
         timer: 4000,
         placement: {
             from: from,
@@ -170,108 +148,4 @@ export class MapsComponent implements OnInit {
         '</div>'
     });
 }
-
-  ngOnInit() {
-    /*var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
-    var mapOptions = {
-        zoom: 13,
-        center: myLatlng,
-        scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
-        styles: [{
-            "featureType": "water",
-            "stylers": [{
-                "saturation": 43
-            }, {
-                "lightness": -11
-            }, {
-                "hue": "#0088ff"
-            }]
-        }, {
-            "featureType": "road",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                "hue": "#ff0000"
-            }, {
-                "saturation": -100
-            }, {
-                "lightness": 99
-            }]
-        }, {
-            "featureType": "road",
-            "elementType": "geometry.stroke",
-            "stylers": [{
-                "color": "#808080"
-            }, {
-                "lightness": 54
-            }]
-        }, {
-            "featureType": "landscape.man_made",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                "color": "#ece2d9"
-            }]
-        }, {
-            "featureType": "poi.park",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                "color": "#ccdca1"
-            }]
-        }, {
-            "featureType": "road",
-            "elementType": "labels.text.fill",
-            "stylers": [{
-                "color": "#767676"
-            }]
-        }, {
-            "featureType": "road",
-            "elementType": "labels.text.stroke",
-            "stylers": [{
-                "color": "#ffffff"
-            }]
-        }, {
-            "featureType": "poi",
-            "stylers": [{
-                "visibility": "off"
-            }]
-        }, {
-            "featureType": "landscape.natural",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                "visibility": "on"
-            }, {
-                "color": "#b8cb93"
-            }]
-        }, {
-            "featureType": "poi.park",
-            "stylers": [{
-                "visibility": "on"
-            }]
-        }, {
-            "featureType": "poi.sports_complex",
-            "stylers": [{
-                "visibility": "on"
-            }]
-        }, {
-            "featureType": "poi.medical",
-            "stylers": [{
-                "visibility": "on"
-            }]
-        }, {
-            "featureType": "poi.business",
-            "stylers": [{
-                "visibility": "simplified"
-            }]
-        }]
-
-    };
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        title: "Hello World!"
-    });
-
-    // To add the marker to the map, call setMap();
-    marker.setMap(map);*/
-  }
 }
