@@ -1,11 +1,109 @@
 <div class="main-content">
   <div class="container-fluid">
+
+
+    
+      <div class="button-container2">
+        <button class="search-button" (click)="toggleFilter()">
+          <mat-icon class="mr-2">search</mat-icon>
+          <span class="button-text">Buscar</span>
+        </button>
+        <button class="search-button" (click)="toggleSorter()">
+          <mat-icon class="mr-2">sort</mat-icon>
+          <span class="button-text">Ordenar</span>
+        </button>
+      </div>
+   
+
+
+
+
+    <div *ngIf="showSorters" >
+      <hr>
+      <h3>Ordenar</h3>
+      <hr>
+      <h4>Seleccione una opción</h4>
+
+      <div class="button-container2">
+        <select id="option-selector" class="selector" [(ngModel)]="selectedOption">
+          <option value="" >Seleccione...</option>
+          <option value="Nombre">Nombre</option>
+          <option value="Apellido">Apellido</option>
+          <option value="DNI/Pasaporte">DNI/Pasaporte</option>
+          <option value="Check-in">Check-in</option>
+          <option value="Check-out">Check-out</option>
+        </select>
+        <button *ngIf="selectedOption" class="search-button" (click)="handleSelection('swap')">
+          <mat-icon>swap_vert</mat-icon>
+        </button>
+      </div>
+
+
+
+
+      <button *ngIf="selectedOption" class="search-button mt-4" (click)="handleSelection()">
+        <span class="button-text ">Ordenar</span>
+        <!-- <span class="button-icon"></span> -->
+      </button>
+
+    </div>
+
+
+
+
+
+    <div *ngIf="showFilters" class="filter-form-container">
+      <hr>
+      <h3>Filtrar</h3>
+      <hr>
+      <form >
+        <mat-form-field class="full-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput placeholder="Nombre" name="name" [(ngModel)]="name">
+        </mat-form-field>
+    
+        <mat-form-field class="full-width">
+          <mat-label>Apellidos</mat-label>
+          <input matInput type="text" placeholder="Apellidos" name="age" [(ngModel)]="surname">
+        </mat-form-field>
+      
+        <mat-form-field class="full-width">
+          <mat-label>DNI/Pasaporte</mat-label>
+          <input matInput type="text" placeholder="DNI/Pasaporte" name="age" [(ngModel)]="dni">
+        </mat-form-field>
+    
+        <mat-form-field class="full-width">
+          <mat-label>Check-IN</mat-label>
+          <input matInput type="text" placeholder="check-in"  name="check-in"  [(ngModel)]="checkin">
+        </mat-form-field>
+    
+        <mat-form-field class="full-width">
+          <mat-label>Check-OUT</mat-label>
+          <input matInput type="text" placeholder="check-out"  name="check-out" [(ngModel)]="checkout">
+        </mat-form-field>
+    
+      </form>
+      <div class="centrar">
+        <button class="mr-4 search-button" color="primary" type="submit" (click)="filter(name, surname, dni, checkin, checkout)">
+          <mat-icon class="mr-2">filter_list</mat-icon>
+          Filtrar 
+        </button>
+        <button class="search-button" color="primary" type="submit" (click)="getHuespedes()">
+          <mat-icon class="mr-2">restart_alt</mat-icon>
+          Reestablecer
+        </button>
+      </div>
+    </div>
+
+
     <div class="list-container">
       <mat-card>
         <mat-card-header>
           <mat-card-title>Lista de Huéspedes</mat-card-title>
         </mat-card-header>
         <mat-card-content>
+         
+
           <mat-list>
             <mat-list-item class="huesped-item">
               <span class="matListItemTitle reduce-space">ID</span>
@@ -58,228 +156,19 @@
               </div>
             </mat-list-item>
           </mat-list>
+
+
+          <!-- <mat-paginator 
+          [length]="hosts.length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          (page)="handlePageEvent($event)">
+        </mat-paginator> -->
+
+
         </mat-card-content>
       </mat-card>
     </div>
 
     <shared-floating-button [huesped]="showButton"></shared-floating-button>
-    <!-- <mat-list>
-        <mat-list-item *ngFor="let host of hosts" class="huesped-item">
-            <span class="matListItemTitle">{{host.id}}</span>
-            <span class="matListItemLine">{{host.nombre}}</span>
-            <span class="matListItemLine">{{host.apellido}}</span>
-            <span class="matListItemLine">{{host.dniPasaporte}}</span>
-            <span class="matListItemLine">{{host.fechaCheckin }}</span>
-            <span class="matListItemLine">{{host.fechaCheckout }}</span>
-            <div class="huesped-actions">
-                <button mat-icon-button >
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button >
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-        </mat-list-item>
-      </mat-list>
-       -->
-    <!-- <mat-list>
-        <mat-list-item *ngFor="let host of hosts" class="huesped-item">
-          <div class="huesped-content">
-            <div class="huesped-info">
-              <span class="matListItemTitle">{{host.id}}</span>
-              <span class="matListItemLine">{{host.nombre}}</span>
-              <span class="matListItemLine">{{host.apellido}}</span>
-              <span class="matListItemLine">{{host.dniPasaporte}}</span>
-              <span class="matListItemLine">{{host.fechaCheckin}}</span>
-              <span class="matListItemLine">{{host.fechaCheckout}}</span>
-            </div>
-            <div class="huesped-actions">
-              <button mat-icon-button >
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-          <mat-divider></mat-divider>
-        </mat-list-item>
-      </mat-list> -->
-
-    <!-- tablas -->
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <!--Intento de los botones  -->
-          <!-- <div class="button-container">
-                    <button (click)="toggleHostTable()" class="grid-button button1">Huespedes</button>
-                    <button (click)="toggleHotelTable()" class="grid-button button2">Hoteles</button>
-                    <button (click)="toggleRoomTable()" class="grid-button button3">Habitaciones</button>
-                    <button (click)="toggleServiceTable()" class="grid-button button4">Servicios</button>
-                  </div> -->
-
-          <div *ngIf="showHostTable" class="card-header card-header-danger">
-            <h4 class="card-title">Hosts Table</h4>
-            <p class="card-category">Muestra información de los huéspedes</p>
-          </div>
-
-          <div *ngIf="showHostTable" class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead class="text-primary">
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Surname</th>
-                  <th>ID-card/Passport</th>
-                  <th>Check-In</th>
-                  <th>Check-Out</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let host of hosts">
-                    <td>
-                      {{ host.id }}
-                    </td>
-                    <td>
-                      {{ host.nombre }}
-                    </td>
-                    <td>
-                      {{ host.apellido }}
-                    </td>
-                    <td>
-                      {{ host.dniPasaporte }}
-                    </td>
-                    <td>
-                      {{ host.fechaCheckin }}
-                    </td>
-                    <td>
-                      {{ host.fechaCheckout }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="showRoomTable" class="col-md-12">
-        <div class="card card-plain">
-          <div class="card-header card-header-danger">
-            <h4 class="card-title mt-0">Rooms Table</h4>
-            <p class="card-category">
-              Muestra información sobre las habitaciones de un hotel
-            </p>
-          </div>
-          <div *ngIf="showRoomTable" class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="">
-                  <th>ID</th>
-                  <th>Number</th>
-                  <th>Type</th>
-                  <th>Price</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let room of rooms">
-                    <td>
-                      {{ room.id }}
-                    </td>
-                    <td>
-                      {{ room.numero }}
-                    </td>
-                    <td>
-                      {{ room.tipo }}
-                    </td>
-                    <td>
-                      {{ room.precioNoche }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="showHotelTable" class="col-md-12">
-        <div class="card card-plain">
-          <div class="card-header card-header-danger">
-            <h4 class="card-title mt-0">Hotels Table</h4>
-            <p class="card-category">Muestra información sobre los hoteles</p>
-          </div>
-          <div *ngIf="showHotelTable" class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="">
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Address</th>
-                  <th>Phone</th>
-                  <th>Email</th>
-                  <th>Website</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let hotel of hotels">
-                    <td>
-                      {{ hotel.id }}
-                    </td>
-                    <td>
-                      {{ hotel.nombre }}
-                    </td>
-                    <td>
-                      {{ hotel.direccion }}
-                    </td>
-                    <td>
-                      {{ hotel.telefono }}
-                    </td>
-                    <td>
-                      {{ hotel.email }}
-                    </td>
-                    <td>
-                      {{ hotel.sitioWeb }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="showServiceTable" class="col-md-12">
-        <div class="card card-plain">
-          <div class="card-header card-header-danger">
-            <h4 class="card-title mt-0">Services Table</h4>
-            <p class="card-category">
-              Muestra información sobre los servicios disponibles
-            </p>
-          </div>
-          <div *ngIf="showServiceTable" class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class="">
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let serv of services">
-                    <td>
-                      {{ serv.id }}
-                    </td>
-                    <td>
-                      {{ serv.nombre }}
-                    </td>
-                    <td>
-                      {{ serv.descripcion }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  

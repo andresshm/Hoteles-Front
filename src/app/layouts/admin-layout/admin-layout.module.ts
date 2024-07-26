@@ -22,6 +22,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon'
 import {MatCardModule} from '@angular/material/card'
 import {MatDialogModule} from '@angular/material/dialog'
+import {MatPaginatorModule} from '@angular/material/paginator'
 import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
@@ -41,6 +42,7 @@ import { SharedModule } from 'app/shared/shared.module';
     MatIconModule,
     MatCardModule,
     MatDialogModule,
+    MatPaginatorModule,
     SharedModule
 
 

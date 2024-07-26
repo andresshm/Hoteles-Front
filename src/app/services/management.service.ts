@@ -23,13 +23,15 @@ export class ManagementService {
         );
       }
 
-
+//get by id
     public getHostById(id:number, entity: string): Observable<Host>{
         return this.httpClient.get<Host>(`${this.url}${entity}/${id}`)
         .pipe(
           catchError(()=>of()),
         );
       }
+
+
     public getRoomsRequest(entity: string): Observable<Room[]>{
         return this.httpClient.get<Room[]>(`${this.url}${entity}`)
         .pipe(
@@ -153,6 +155,39 @@ export class ManagementService {
         return this.httpClient.delete<Service>(`${this.url}servicio/${id}`)
         .pipe(
           catchError(()=>of()),
+        );
+      }
+
+
+
+
+      //filter
+      filterHost(name:string, surname:string, dni:string, checkin:string, checkout:string) : Observable<Host[]>{
+
+
+    const formData = {
+      nombre: name.trim(),
+      apellido: surname.trim(),
+      documento: dni.trim(),
+      checkIn: checkin.trim(),
+      checkOut: checkout.trim()
+    };
+    
+    let params = Object.keys(formData)
+      .filter(key => formData[key])  // Include only non-empty values
+      .map(key => `${key}=${encodeURIComponent(formData[key])}`) // Encode and concatenate
+      .join('&');  // Join all parameters with '&'
+    
+    if (params) {
+      params = '?' + params;
+    }
+
+
+
+
+        return this.httpClient.get<Host[]>(`${this.url}huesped/filter${params}`)
+        .pipe(
+          catchError(()=>of([])),
         );
       }
 

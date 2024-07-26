@@ -122,56 +122,155 @@
   }
 
   
-  
-  
-  /* .huesped-item {
-    display: flex;
-    align-items: center;
-    background-color: #f9f9f9;
-    margin-bottom: 10px;
-    border-radius: 5px;
+  /*Filtros*/
+  /* .filter-form-container {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
   
-  .huesped-content {
-    display: flex;
-    justify-content: space-between;
+  .full-width {
     width: 100%;
-    padding: 10px;
+    margin-bottom: 20px;
   }
   
-  .huesped-info {
+  @media (max-width: 600px) {
+    .filter-form-container {
+      padding: 10px;
+    }
+  } */
+
+
+
+   .filter-container {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    padding: 20px;
   }
   
-  .matListItemTitle {
-    font-weight: bold;
-    font-size: 1.2em;
+  /* Fila de checkboxes */
+  .checkbox-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
   }
   
-  .matListItemLine {
-    font-size: 0.9em;
-    flex: 1;
+  /* Estilo para los campos de texto */
+  input[type="text"] {
+    width: 100%;
     padding: 10px;
-    text-align: center;
-    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
   
-  .huesped-actions {
+  /* Estilo para los checkboxes */
+  input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  /* Estilo general para labels */
+  label {
+    font-size: 16px;
     display: flex;
     align-items: center;
   }
+
+
+
+  .centrar{
+      display: flex;
+      justify-content: center; /* Centra el div horizontalmente */
+      align-items: center; /* Centra el div verticalmente */
+      margin: 0; /* Elimina el margen por defecto */
+  }
+
+
+
+  /* boton de buscar */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; Ocupa el 100% de la altura de la ventana */
+    margin: 0;
+  }
+  .button-container2 {
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* height: 100vh; Ocupa el 100% de la altura de la ventana */
+    margin: 0;
+    gap: 8px;
+  }
+
   
-  .huesped-actions button {
-    margin-left: 5px;
+  /* Estilo para el botón de búsqueda */
+  .search-button {
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    /* font-weight: bold; */
+    border: none;
+    border-radius: 25px;
+    background-color: #007bff; /* Tonalidad azul */
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   }
   
-  .header-item {
-    flex: 1;
-    padding: 10px;
-    text-align: center;
-    border-bottom: 2px solid #ccc;
-    box-sizing: border-box;
-  } */
+  .search-button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el cursor */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05); /* Efecto de aumento al pasar el cursor */
+  }
+  
+  .search-button:focus {
+    outline: none; /* Elimina el contorno al hacer clic */
+  }
+
+  /* selector */
+  /* Estilo para el encabezado */
+h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilo para el selector */
+.selector {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Estilo para el selector al pasar el cursor */
+.selector:hover {
+  border-color: #007bff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para el selector cuando está enfocado */
+.selector:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+/* pagi */
+.pagination {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

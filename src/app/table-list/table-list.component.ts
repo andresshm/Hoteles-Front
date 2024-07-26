@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Host } from 'app/interfaces/host.interface';
 import { Hotel } from 'app/interfaces/hotel.interface';
@@ -7,7 +8,7 @@ import { Room } from 'app/interfaces/room.interface';
 import { Service } from 'app/interfaces/service.interface';
 import { ManagementService } from 'app/services/management.service';
 import { PopUpComponent } from 'app/shared/components/pop-up/pop-up.component';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 
 declare var $: any;
 
@@ -26,6 +27,13 @@ export class TableListComponent implements OnInit {
   public hotels: Hotel[]= [];
   public services: Service[]= [];
 
+  public name:string=''
+  public surname:string=''
+  public dni:string=''
+  public checkin:string=''
+  public checkout:string=''
+  
+
 
   public showHostTable = false;
   public showRoomTable = false;
@@ -34,11 +42,27 @@ export class TableListComponent implements OnInit {
 
   public selectedId: number=0;
   public showButton: boolean = false;
+  public showFilters: boolean = false;
+  public showSorters: boolean = false;
+  public invertirSeleccion: boolean = false;
+ public selectedOption:string='';
+
+
+ displayedHosts: Host[] = [];
+ pageSize: number = 10;
+ currentPage: number = 0;
+
+ @ViewChild(MatPaginator) paginator: MatPaginator;
  
+
+
 
   constructor(private managementService : ManagementService,
     private router : Router
   ) { }
+
+
+
 
 
    ngOnInit() {
@@ -77,9 +101,21 @@ export class TableListComponent implements OnInit {
     this.checkRoute();
      
 
+
+   
+
+
+
+
     // Aqui se piden los huespedes a la API
     // para generar la lista en pantalla
    this.getHuespedes();
+
+
+
+
+    //paginasion
+   this.loadData();
   }
 
  
@@ -89,6 +125,7 @@ export class TableListComponent implements OnInit {
     this.managementService.getHostsRequest('huesped')
       .subscribe(hosts => {
         this.hosts = hosts.sort((a, b)=>a.id-b.id);
+        // this.displayedHosts=hosts.sort((a, b)=>a.id-b.id);
         //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
       });
   }
@@ -104,9 +141,123 @@ export class TableListComponent implements OnInit {
     console.log(this.selectedId);
   }
 
-  get selectedID(){
-    return this.selectedId;
+
+  toggleFilter(){
+    console.log(this.hosts.length)
+
+    this.showFilters = !this.showFilters;
   }
+
+  toggleSorter(){
+    this.showSorters = !this.showSorters;
+  }
+
+  //A priori funciona bn
+  handleSelection(swap?:string) {
+    if(swap)
+      this.invertirSeleccion = !this.invertirSeleccion;
+    else
+      this.invertirSeleccion = false
+  
+    console.log(this.selectedOption)
+    switch(this.selectedOption){
+      case 'Nombre':
+        this.hosts= this.hosts.sort((a, b)=>{
+          const nameA = a.nombre.toLowerCase();
+          const nameB = b.nombre.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+      case 'Apellido':
+        this.hosts= this.hosts.sort((a, b)=>{
+          const nameA = a.apellido.toLowerCase();
+          const nameB = b.apellido.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+
+      case 'DNI/Pasaporte':
+
+      this.hosts= this.hosts.sort((a, b)=>{
+        const nameA = a.dniPasaporte.toLowerCase();
+        const nameB = b.dniPasaporte.toLowerCase();
+        
+        if(this.invertirSeleccion){
+          if (nameA < nameB) return 1;
+          if (nameA > nameB) return -1;
+
+       }else{
+
+         if (nameA < nameB) return -1;
+         if (nameA > nameB) return 1;
+       }
+        return 0;
+      });
+      break;
+
+
+      case 'Check-in':
+        this.hosts= this.hosts.sort((a, b) => {
+          const parseDate = (dateString: string): number => {
+            const [day, month, year, time] = dateString.split(/[- :]/);
+            return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
+          };
+        
+          const dateA = parseDate(a.fechaCheckin.toString());
+          const dateB = parseDate(b.fechaCheckin.toString());
+
+          if(this.invertirSeleccion)
+            return dateB - dateA; // Ordenar de más reciente a más antiguo
+          else
+            return dateA - dateB; // Ordenar de más reciente a más antiguo
+        });
+        break;
+
+
+      case 'Check-out':
+        this.hosts= this.hosts.sort((a, b) => {
+          const parseDate = (dateString: string): number => {
+            const [day, month, year, time] = dateString.split(/[- :]/);
+            return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
+          };
+        
+          const dateA = parseDate(a.fechaCheckout.toString());
+          const dateB = parseDate(b.fechaCheckout.toString());
+
+          if(this.invertirSeleccion)
+            return dateB - dateA; // Ordenar de más reciente a más antiguo
+          else
+            return dateA - dateB; // Ordenar de más reciente a más antiguo
+        });
+        break;
+
+
+    }
+    this.managementService.getHostsRequest('huesped').subscribe();
+
+  }
+
 
   getHabitaciones(){
     this.managementService.getRoomsRequest('habitacion')
@@ -129,10 +280,53 @@ export class TableListComponent implements OnInit {
       });
   }
 
+
+  filter(name:string, apellido:string, dni:string, checkIn:string, checkOut:string){
+    this.managementService.filterHost(name, apellido, dni, checkIn, checkOut).subscribe(matchHosts => this.hosts = matchHosts);
+
+    
+  }
+
+
+
   checkRoute() {
     const currentRoute = this.router.url;
     this.showButton = currentRoute === '/table-list';
   }
+
+
+
+  //paginator
+  loadData() {
+    // Simula la carga de datos
+
+    this.managementService.getHostsRequest('huesped')
+    .subscribe(hosts => {
+      this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
+      // this.displayedHosts=hosts.sort((a, b)=>a.id-b.id);
+      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+    });
+
+
+    // this.displayedHosts = this.hosts;
+    this.updateDisplayedHosts();
+  }
+
+  updateDisplayedHosts() {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedHosts = this.hosts.slice(startIndex, endIndex);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updateDisplayedHosts();
+  }
+
+
+
+
 
 
 

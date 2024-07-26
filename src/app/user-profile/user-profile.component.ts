@@ -15,18 +15,12 @@ export class UserProfileComponent implements OnInit {
 
 
   public hosts: Host[]= [];
-
-
-  public showHostTable = false;
-  public showRoomTable = false;
-  public showHotelTable = false;
-  public showServiceTable = false;
-
   public selectedId: number=0;
   public showButton: boolean = false;
  
 
-  constructor(private managementService : ManagementService,
+  constructor(
+    private managementService : ManagementService,
     private router : Router
   ) { }
 
@@ -60,7 +54,7 @@ export class UserProfileComponent implements OnInit {
     
     
     
-
+/* Checkeo de rutas*/
     this.router.events.subscribe(() => {
       this.checkRoute();
     });
@@ -84,22 +78,18 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmitDEL(id:number){
-    
-    this.managementService.deleteHost(id)
-    .subscribe();
+    this.managementService.deleteHost(id).subscribe();
   }
 
+  /* pone el indice de la fila en la que clico*/
   setIndex(id:number){
     this.selectedId=id;
     console.log(this.selectedId);
   }
 
-  get selectedID(){
-    return this.selectedId;
-  }
 
-
-
+/* Comprueba donde estoy para que el boton flotante que es comun a todas
+   las paginas sepa que cuadro de dialogo mostrar*/
   checkRoute() {
     const currentRoute = this.router.url;
     this.showButton = currentRoute === '/user-profile';
@@ -108,9 +98,6 @@ export class UserProfileComponent implements OnInit {
 
 
   showNotification(from :string, align:string, tipo:string){
-    // const type = ['','info','success','warning','danger'];
-
-    // const color = Math.floor((Math.random() * 4) + 1);
     let mensaje = '';
 
     switch(tipo){
