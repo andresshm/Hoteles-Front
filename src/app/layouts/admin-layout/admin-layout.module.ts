@@ -14,7 +14,7 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatRippleModule} from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatFormFieldModule, MatHint} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
@@ -23,6 +23,9 @@ import {MatIconModule} from '@angular/material/icon'
 import {MatCardModule} from '@angular/material/card'
 import {MatDialogModule} from '@angular/material/dialog'
 import {MatPaginatorModule} from '@angular/material/paginator'
+import { MatDatepicker, MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
+
+
 import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
@@ -43,6 +46,8 @@ import { SharedModule } from 'app/shared/shared.module';
     MatCardModule,
     MatDialogModule,
     MatPaginatorModule,
+    MatDatepickerModule,
+  
     SharedModule
 
 
@@ -58,7 +63,8 @@ import { SharedModule } from 'app/shared/shared.module';
     NotificationsComponent,
     UpgradeComponent,
     
-  ]
+  ],
+  // exports:[AdminLayoutModule]
 })
 
 export class AdminLayoutModule {}

@@ -162,15 +162,60 @@ export class ManagementService {
 
 
       //filter
-      filterHost(name:string, surname:string, dni:string, checkin:string, checkout:string) : Observable<Host[]>{
+      filterHost(name:string, surname:string, dni:string, procedencia:string, checkinD:string, checkinH:string, checkoutD:string, checkoutH:string) : Observable<Host[]>{
+        let checkinDateD = '';
+        let checkinDateH = '';
+        let checkoutDateD = '';
+        let checkoutDateH = '';
+       
+        
+        
+        if(checkinD){
+        let date = '';
+        date = checkinD.replace(/-/g,'/');
+        let [year, month, day] = date.split('/');
+        let formattedDate = `${day}/${month}/${year}`;
+        checkinDateD = `${formattedDate} 00:00`
+        }
+        
 
+        if(checkinH){
+        let date = '';
+        date = checkinH.replace(/-/g,'/');
+        let [year, month, day] = date.split('/');
+        let formattedDate = `${day}/${month}/${year}`;
+        checkinDateH = `${formattedDate} 00:00`
+        }
+        
+        
+        if(checkoutD){
+        let  date = '';
+        date = checkoutD.replace(/-/g,'/');
+        let[year, month, day] = date.split('/');
+        let formattedDate = `${day}/${month}/${year}`;
+        checkoutDateD = `${formattedDate} 00:00`
+        }
+       
+       
+        if(checkoutH){
+        let   date = '';
+        date = checkoutH.replace(/-/g,'/');
+        let [year, month, day] = date.split('/');
+        let formattedDate = `${day}/${month}/${year}`;
+        checkoutDateH = `${formattedDate} 00:00`
+        }
+                
+      
 
     const formData = {
       nombre: name.trim(),
       apellido: surname.trim(),
       documento: dni.trim(),
-      checkIn: checkin.trim(),
-      checkOut: checkout.trim()
+      procedencia: procedencia.trim(),
+      checkInD: checkinDateD,//checkinD.trim(),
+      checkInH: checkinDateH,//checkinH.trim(),
+      checkOutD: checkoutDateD,//checkoutD.trim(),
+      checkOutH: checkoutDateH,//checkoutH.trim()
     };
     
     let params = Object.keys(formData)
@@ -191,5 +236,36 @@ export class ManagementService {
         );
       }
 
+
+      filterHotel(name:string, direccion:string, telefono:string, email:string, sitioWeb:string) : Observable<Hotel[]>{
+        
+        const formData = {
+          nombre: name,
+          direccion: direccion,
+          telefono: telefono.trim(),
+          email: email.trim(),
+          web: sitioWeb.trim()
+
+        };
+        
+        let params = Object.keys(formData)
+        .filter(key => formData[key])  // Include only non-empty values
+        .map(key => `${key}=${encodeURIComponent(formData[key])}`) // Encode and concatenate
+        .join('&');  // Join all parameters with '&'
+      
+      if (params) {
+        params = '?' + params;
+      }
+  
+  
+  
+  
+          return this.httpClient.get<Hotel[]>(`${this.url}hotel/filter${params}`)
+          .pipe(
+            catchError(()=>of([])),
+          );
+      }
+
       
 }
+

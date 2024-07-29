@@ -10,10 +10,12 @@
         </div>
         <div class="modal-body">
           <form >
+            <!-- [formGroup]="huespedForm" -->
             <!-- <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">ID:</label>
-              <input type="text" class="form-control" id="recipient-name">
+              <label for="recipient-name" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" id="recipient-name" formControlName="nombre" [(ngModel)]="host.nombre">
             </div> -->
+
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Nombre:</label>
               <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.nombre">
@@ -27,6 +29,10 @@
               <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.dniPasaporte">
             </div>
             <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Procedencia:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.procedencia">
+            </div>
+            <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Fecha check-in:</label>
               <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.fechaCheckin">
             </div>
@@ -34,6 +40,9 @@
               <label for="recipient-name" class="col-form-label">Fecha check-out:</label>
               <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.fechaCheckout">
             </div>
+
+
+
             <!-- <div class="mb-3">
               <label for="message-text" class="col-form-label">Message:</label>
               <textarea class="form-control" id="message-text"></textarea>
@@ -41,7 +50,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onSubmitPatch(1)">Cancelar</button>
           <button type="button" class="btn btn-primary" (click)="onSubmitPut('HOS'); recharge('PUT')">Actualizar</button>
         </div>
       </div>
@@ -139,18 +148,52 @@
               <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.dniPasaporte">
             </div>
             <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Procedencia:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.procedencia">
+            </div>
+            <!-- <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Fecha check-in:</label>
               <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.fechaCheckin">
             </div>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label">Fecha check-out:</label>
               <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.fechaCheckout">
+            </div> -->
+           
+           
+            <div class="button-container2">
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Fecha check-in:</label>
+                <input matInput type="date" class="form-control" id="recipient-name" placeholder="dd/MM/yyyy HH:mm"  name="date-in" [(ngModel)]="dateIn">
+              </div>
+              
+              
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Hora</label>
+                <input matInput placeholder="HH:mm" class="form-control" id="recipient-name"  name="time-in" [(ngModel)]="timeIn" type="time">
+              </div>
             </div>
+            
+            
+            <div class="button-container2">
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Fecha check-out:</label>
+                <input matInput type="date" class="form-control" id="recipient-name" name="date-out" placeholder="dd/MM/yyyy HH:mm" [(ngModel)]="dateOut">
+              </div>
+              
+              
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Hora</label>
+                <input matInput placeholder="HH:mm" class="form-control" id="recipient-name" name="time-out" [(ngModel)]="timeOut" type="time">
+              </div>
+            </div>
+
+
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="postNewHost('HOS'); recharge('POST');">Guardar</button>
+          <button type="button" class="btn btn-primary" (click)="postNewHost('HOS'); recharge('POS')">Guardar</button>
         </div>
       </div>
     </div>

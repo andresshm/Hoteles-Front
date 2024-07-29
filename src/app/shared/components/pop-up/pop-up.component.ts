@@ -24,6 +24,7 @@ export class PopUpComponent implements OnInit {
   @Input()
   public selectedIdHijo: number = 0;
 
+
   //host
   public host: Host = {
     id: 0,
@@ -31,8 +32,21 @@ export class PopUpComponent implements OnInit {
     nombre: "",
     apellido: "",
     dniPasaporte: "",
+    procedencia: "",
     fechaCheckin: undefined,
     fechaCheckout: undefined,
+  };
+
+  
+  public hostAux: Host= {
+    id: 0,
+    idHabitacion: 0,
+    nombre: "",
+    apellido: "",
+    dniPasaporte: "",
+    fechaCheckin: undefined,
+    fechaCheckout: undefined,
+    procedencia: ""
   };
 
   //hotel
@@ -67,7 +81,24 @@ export class PopUpComponent implements OnInit {
     hoteles: [],
   };
 
-  huespedForm: FormGroup;
+  public huespedForm: FormGroup = this.fb.group({
+    nombre: [''],
+    apellido: [''],
+    dniPasaporte: [''],
+    procedencia: [''],
+    fechaCheckin: [''],
+    fechaCheckout: ['']
+  });
+
+
+
+
+  public dateIn : string;
+  public dateOut : string;
+
+
+  public timeIn : string;
+  public timeOut : string;
 
   constructor(
     private managementService: ManagementService,
@@ -76,18 +107,23 @@ export class PopUpComponent implements OnInit {
   {}
 
   ngOnInit(): void {
-    // this.huespedForm = this.fb.group({
-    //   nombre: [''],
-    //   apellido: [''],
-    //   dniPasaporte: [''],
-    //   fechaCheckin: [''],
-    //   fechaCheckout: ['']
-    // });
-
-    // // Fetch the guest data and populate the form
-    // this.managementService.getHostById(this.selectedIdHijo, 'huesped').subscribe(data => {
-    //   this.huespedForm.patchValue(data);
-    // });
+    //   let host: Host = {
+    //   id: 0,
+    //   idHabitacion: 0,
+    //   nombre: "",
+    //   apellido: "",
+    //   dniPasaporte: "",
+    //   fechaCheckin: undefined,
+    //   fechaCheckout: undefined,
+    // };
+    // console.log(this.selectedIdHijo)
+    
+    // Fetch the guest data and populate the form
+    // if(this.selectedIdHijo)
+    //   this.managementService.getHostById(this.selectedIdHijo, 'huesped').subscribe(host => this.hostAux = host);
+    // console.log(this.hostAux.nombre);
+    
+     this.huespedForm.reset(this.hostAux);
   }
 
   onSubmitDEL(entity: string) {
@@ -114,6 +150,23 @@ export class PopUpComponent implements OnInit {
         this.managementService.postNewHotel(this.hotel).subscribe();
         break;
       case "HOS":
+ 
+      
+        this.dateOut = this.dateOut.replace(/-/g,'/');
+        let [year, month, day] = this.dateOut.split('/');
+        let formattedDateOut = `${day}/${month}/${year}`;
+        const s = `${formattedDateOut} ${this.timeOut}`
+        
+        
+        this.dateIn = this.dateIn.replace(/-/g,'/');
+        let [yearIn, monthIn, dayIn] = this.dateIn.split('/');
+        let formattedDateIn = `${dayIn}/${monthIn}/${yearIn}`;
+        const sIn = `${formattedDateIn} ${this.timeIn}`
+        
+        this.host.fechaCheckout =  (s);
+        this.host.fechaCheckin =  (sIn);
+
+
         this.managementService.postNewHost(this.host).subscribe();
         break;
       case "ROO":
@@ -152,7 +205,12 @@ export class PopUpComponent implements OnInit {
 
   //no se usa. se pueden hacer cosas con formularios reactivos si da tiempo
   onSubmitPatch(id: number) {
-    this.managementService.patchHost(id, this.host).subscribe();
+    // this.managementService.patchHost(id, this.host).subscribe();
+
+    this.managementService.getHostById(this.selectedIdHijo, 'huesped').subscribe(host => this.hostAux = host);
+    console.log(this.hostAux.nombre);
+    console.log(this.selectedIdHijo);
+
   }
 
   recharge(op: string) {

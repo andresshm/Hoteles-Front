@@ -4,6 +4,9 @@ export interface Host {
     nombre: string;
     apellido: string;
     dniPasaporte:string;
-    fechaCheckin: Date;
-    fechaCheckout: Date;
+    procedencia:string;
+    fechaCheckin: string;
+    fechaCheckout: string;
+    // fechaCheckin: Date;
+    // fechaCheckout: Date;
 }

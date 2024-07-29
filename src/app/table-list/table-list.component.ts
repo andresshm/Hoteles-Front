@@ -52,10 +52,10 @@ export class TableListComponent implements OnInit {
  pageSize: number = 10;
  currentPage: number = 0;
 
- @ViewChild(MatPaginator) paginator: MatPaginator;
+//  @ViewChild(MatPaginator) paginator: MatPaginator;
  
 
-
+public host: Host;
 
   constructor(private managementService : ManagementService,
     private router : Router
@@ -259,30 +259,11 @@ export class TableListComponent implements OnInit {
   }
 
 
-  getHabitaciones(){
-    this.managementService.getRoomsRequest('habitacion')
-      .subscribe(rooms => {
-        this.rooms=rooms.sort((a, b)=>a.id-b.id);
-      });
-  }
 
-  getHoteles(){
-    this.managementService.getHotelsRequest('hotel')
-      .subscribe(hotels => {
-        this.hotels=hotels.sort((a, b)=>a.id-b.id);
-      });
-  }
-
-  getServicios(){
-    this.managementService.getServicesRequest('servicio')
-      .subscribe(services => {
-        this.services=services.sort((a, b)=>a.id-b.id);
-      });
-  }
 
 
   filter(name:string, apellido:string, dni:string, checkIn:string, checkOut:string){
-    this.managementService.filterHost(name, apellido, dni, checkIn, checkOut).subscribe(matchHosts => this.hosts = matchHosts);
+    // this.managementService.filterHost(name, apellido, dni, checkIn, checkOut).subscribe(matchHosts => this.hosts = matchHosts);
 
     
   }

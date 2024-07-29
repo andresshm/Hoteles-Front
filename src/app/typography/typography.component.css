@@ -120,3 +120,101 @@
   .reduce-space {
     padding-right: 5px; /* Reduce the space between ID and Name */
   }
+
+
+
+
+  /* boton de buscar */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; Ocupa el 100% de la altura de la ventana */
+    margin: 0;
+  }
+  .button-container2 {
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* height: 100vh; Ocupa el 100% de la altura de la ventana */
+    margin: 0;
+    gap: 8px;
+  }
+
+  
+  /* Estilo para el botón de búsqueda */
+  .search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    /* font-weight: bold; */
+    border: none;
+    border-radius: 25px;
+    background-color: #007bff; /* Tonalidad azul */
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .search-button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el cursor */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05); /* Efecto de aumento al pasar el cursor */
+  }
+  
+  .search-button:focus {
+    outline: none; /* Elimina el contorno al hacer clic */
+  }
+
+  /* selector */
+  /* Estilo para el encabezado */
+h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilo para el selector */
+.selector {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Estilo para el selector al pasar el cursor */
+.selector:hover {
+  border-color: #007bff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para el selector cuando está enfocado */
+.selector:focus {
+  border-color: #0056b3;
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+  
+
+.button-container2 {
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* height: 100vh; Ocupa el 100% de la altura de la ventana */
+  margin: 0;
+  gap: 8px;
+}
+
+
+.centrar{
+  display: flex;
+  justify-content: center; /* Centra el div horizontalmente */
+  align-items: center; /* Centra el div verticalmente */
+  margin: 0; /* Elimina el margen por defecto */
+}

@@ -1,5 +1,128 @@
 <div class="main-content">
   <div class="container-fluid">
+
+
+
+
+
+    
+    <div class="button-container2">
+      <button class="search-button" (click)="toggleFilter()">
+        <mat-icon class="mr-2">search</mat-icon>
+        <span class="button-text">Buscar</span>
+      </button>
+      <button class="search-button" (click)="toggleSorter()">
+        <mat-icon class="mr-2">sort</mat-icon>
+        <span class="button-text">Ordenar</span>
+      </button>
+    </div>
+ 
+
+
+
+
+  <div *ngIf="showSorters" >
+    <hr>
+    <h3>Ordenar</h3>
+    <hr>
+    <h4>Seleccione una opción</h4>
+
+    <div class="button-container2">
+      <select id="option-selector" class="selector" [(ngModel)]="selectedOption">
+        <option value="" >Seleccione...</option>
+        <option value="Nombre">Nombre</option>
+        <option value="Apellido">Apellido</option>
+        <option value="DNI/Pasaporte">DNI/Pasaporte</option>
+        <option value="Procedencia">Procedencia</option>
+        <option value="Check-in">Check-in</option>
+        <option value="Check-out">Check-out</option>
+      </select>
+      <button *ngIf="selectedOption" class="search-button" (click)="handleSelection('swap')">
+        <mat-icon>swap_vert</mat-icon>
+      </button>
+    </div>
+
+
+
+
+    <button *ngIf="selectedOption" class="search-button mt-4" (click)="handleSelection()">
+      <span class="button-text ">Ordenar</span>
+      <!-- <span class="button-icon"></span> -->
+    </button>
+
+  </div>
+
+
+
+
+
+  <div *ngIf="showFilters" class="filter-form-container">
+    <hr>
+    <h3>Filtrar</h3>
+    <hr>
+    <form >
+      <mat-form-field class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre" name="name" [(ngModel)]="name">
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <mat-label>Apellidos</mat-label>
+        <input matInput type="text" placeholder="Apellidos" name="surnames" [(ngModel)]="surname">
+      </mat-form-field>
+    
+      <mat-form-field class="full-width">
+        <mat-label>DNI/Pasaporte</mat-label>
+        <input matInput type="text" placeholder="DNI/Pasaporte" name="document" [(ngModel)]="dni">
+      </mat-form-field>
+    
+      <mat-form-field class="full-width">
+        <mat-label>Procedencia</mat-label>
+        <input matInput type="text" placeholder="Procedencia" name="procedence" [(ngModel)]="procedencia">
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <mat-label>Check-IN - desde</mat-label>
+        <input matInput type="date" placeholder="Desde"  name="check-in"  [(ngModel)]="checkinD">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Check-IN - hasta</mat-label>
+        <input matInput type="date" placeholder="Hasta"  name="check-in"  [(ngModel)]="checkinH">
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <mat-label>Check-OUT - desde</mat-label>
+        <input matInput type="date" placeholder="check-out"  name="check-out" [(ngModel)]="checkoutD">
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <mat-label>Check-OUT -hasta</mat-label>
+        <input matInput type="date" placeholder="check-out"  name="check-out" [(ngModel)]="checkoutH">
+      </mat-form-field>
+  
+    </form>
+    <div class="centrar">
+      <button class="mr-4 search-button" color="primary" type="submit" (click)="filter(name, surname, dni, procedencia, checkinD, checkinH, checkoutD, checkoutH)">
+        <mat-icon class="mr-2">filter_list</mat-icon>
+        Filtrar 
+      </button>
+      <button class="search-button" color="primary" type="submit" (click)="getHuespedes()">
+        <mat-icon class="mr-2">restart_alt</mat-icon>
+        Reestablecer
+      </button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
     <div class="list-container">
       <mat-card>
         <mat-card-header>
@@ -11,9 +134,8 @@
               <span class="matListItemTitle reduce-space">ID</span>
               <span class="matListItemLine"><strong>Nombre</strong></span>
               <span class="matListItemLine"><strong>Apellido</strong></span>
-              <span class="matListItemLine"
-                ><strong>DNI/Pasaporte</strong></span
-              >
+              <span class="matListItemLine"><strong>DNI/Pasaporte</strong></span>
+              <span class="matListItemLine"><strong>Procedencia</strong></span>
               <span class="matListItemLine"><strong>Check-in</strong></span>
               <span class="matListItemLine"><strong>Check-out</strong></span>
               <div class="huesped-actions">
@@ -28,6 +150,7 @@
               <span class="matListItemLine">{{ host.nombre }}</span>
               <span class="matListItemLine">{{ host.apellido }}</span>
               <span class="matListItemLine">{{ host.dniPasaporte }}</span>
+              <span class="matListItemLine">{{ host.procedencia }}</span>
               <span class="matListItemLine">{{ host.fechaCheckin }}</span>
               <span class="matListItemLine">{{ host.fechaCheckout }}</span>
 
@@ -39,7 +162,7 @@
               <div class="huesped-actions">
                 <button
                   mat-icon-button
-                  (click)="setIndex(host.id)"
+                  (click)="setIndex(host.id); "
                   data-bs-toggle="modal"
                   data-bs-target="#updateModal"
                 >
@@ -55,12 +178,13 @@
                 >
                   <mat-icon>delete</mat-icon>
                 </button>
+
               </div>
             </mat-list-item>
           </mat-list>
         </mat-card-content>
-      </mat-card>
-    </div>
-
+    </mat-card>
+  </div>
+    
     <shared-floating-button [huesped]="showButton"></shared-floating-button>
    

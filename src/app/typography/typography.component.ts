@@ -12,23 +12,38 @@ declare var $: any;
 })
 export class TypographyComponent implements OnInit {
 
-  @Input()
-  nombre = '';
+  // @Input()
+  // nombre = '';
   
-  @Input()
-  direccion='';
+  // @Input()
+  // direccion='';
 
-  @Input()
-  telefono='';
+  // @Input()
+  // telefono='';
 
-  @Input()
-  email='';
+  // @Input()
+  // email='';
 
-  @Input()
-  sitioWeb= '';
+  // @Input()
+  // sitioWeb= '';
 
   @Input()
   selectedId: number = 0;
+
+
+  
+  public nombre: string = '';  
+  public direccion: string='';  
+  public telefono: string='';  
+  public email: string='';  
+  public sitioWeb: string= '';
+
+
+
+  public showFilters: boolean = false;
+  public showSorters: boolean = false;
+  public invertirSeleccion: boolean = false;
+ public selectedOption:string='';
 
   public showButton = false;
   public hotels: Hotel[]= [];
@@ -153,6 +168,140 @@ export class TypographyComponent implements OnInit {
     const currentRoute = this.router.url;
     this.showButton = currentRoute === '/typography';
   }
+
+
+
+  toggleFilter(){
+    console.log(this.hotels.length)
+
+    this.showFilters = !this.showFilters;
+  }
+
+  toggleSorter(){
+    this.showSorters = !this.showSorters;
+  }
+
+
+  filter(name:string, direccion:string, telefono:string, email:string, sitioWeb:string){
+    this.managementService.filterHotel(name, direccion, telefono, email, sitioWeb).subscribe(matchHotels => this.hotels = matchHotels);    
+  }
+
+
+
+  //A priori funciona bn
+  handleSelection(swap?:string) {
+    if(swap)
+      this.invertirSeleccion = !this.invertirSeleccion;
+    else
+      this.invertirSeleccion = false
+  
+    console.log(this.selectedOption)
+    switch(this.selectedOption){
+      case 'Nombre':
+        this.hotels= this.hotels.sort((a, b)=>{
+          const nameA = a.nombre.toLowerCase();
+          const nameB = b.nombre.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+      case 'Direccion':
+        this.hotels= this.hotels.sort((a, b)=>{
+          const nameA = a.direccion.toLowerCase();
+          const nameB = b.direccion.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+
+      case 'Telefono':
+
+      this.hotels= this.hotels.sort((a, b)=>{
+        const nameA = a.telefono.toLowerCase();
+        const nameB = b.telefono.toLowerCase();
+        
+        if(this.invertirSeleccion){
+          if (nameA < nameB) return 1;
+          if (nameA > nameB) return -1;
+
+       }else{
+
+         if (nameA < nameB) return -1;
+         if (nameA > nameB) return 1;
+       }
+        return 0;
+      });
+      break;
+    
+      case 'Email':
+
+      this.hotels= this.hotels.sort((a, b)=>{
+        const nameA = a.email.toLowerCase();
+        const nameB = b.email.toLowerCase();
+        
+        if(this.invertirSeleccion){
+          if (nameA < nameB) return 1;
+          if (nameA > nameB) return -1;
+
+       }else{
+
+         if (nameA < nameB) return -1;
+         if (nameA > nameB) return 1;
+       }
+        return 0;
+      });
+      break;
+
+
+      case 'Sitio-Web':
+        this.hotels= this.hotels.sort((a, b)=>{
+          const nameA = a.sitioWeb.toLowerCase();
+          const nameB = b.sitioWeb.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+  
+         }else{
+  
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+
+    }
+    this.managementService.getHostsRequest('huesped').subscribe();
+
+  }
+
+
+
+
+
+
+
 
   showNotification(from :string, align:string, tipo:string){
     // const type = ['','info','success','warning','danger'];

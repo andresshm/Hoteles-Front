@@ -19,3 +19,12 @@
     text-align: center;
   }
   
+
+  .button-container2 {
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* height: 100vh; Ocupa el 100% de la altura de la ventana */
+    margin: 0;
+    gap: 70px;
+  }

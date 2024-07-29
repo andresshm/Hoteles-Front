@@ -1,7 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Host } from 'app/interfaces/host.interface';
+import { NotificationsComponent } from 'app/notifications/notifications.component';
 import { ManagementService } from 'app/services/management.service';
+import { PopUpComponent } from 'app/shared/components/pop-up/pop-up.component';
+import { ControllerComponent } from 'app/shared/controller/controller.component';
 
 
 declare var $: any;
@@ -15,13 +19,28 @@ export class UserProfileComponent implements OnInit {
 
 
   public hosts: Host[]= [];
+
+  public name:string=''
+  public surname:string=''
+  public dni:string=''
+  public procedencia:string=''
+  public checkinD:string=''
+  public checkinH:string=''
+  public checkoutD:string=''
+  public checkoutH:string=''
+
   public selectedId: number=0;
   public showButton: boolean = false;
  
+  public showFilters: boolean = false;
+  public showSorters: boolean = false;
+  public invertirSeleccion: boolean = false;
+ public selectedOption:string='';
 
   constructor(
     private managementService : ManagementService,
-    private router : Router
+    private router : Router,
+    private _dialog: MatDialog,
   ) { }
 
 
@@ -81,6 +100,23 @@ export class UserProfileComponent implements OnInit {
     this.managementService.deleteHost(id).subscribe();
   }
 
+
+  openEditForm(data: any) {
+    const dialogRef = this._dialog.open(NotificationsComponent, {
+      data,
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if (val) {
+          this.getHuespedes();
+        }
+      },
+    });
+  }
+
+
+
   /* pone el indice de la fila en la que clico*/
   setIndex(id:number){
     this.selectedId=id;
@@ -94,6 +130,153 @@ export class UserProfileComponent implements OnInit {
     const currentRoute = this.router.url;
     this.showButton = currentRoute === '/user-profile';
   }
+
+
+  toggleFilter(){
+    console.log(this.hosts.length)
+
+    this.showFilters = !this.showFilters;
+  }
+
+  toggleSorter(){
+    this.showSorters = !this.showSorters;
+  }
+
+
+  filter(name:string, apellido:string, dni:string, procedencia:string, checkInD:string, checkInH:string, checkOutD:string, checkOutH:string){
+    this.managementService.filterHost(name, apellido, dni, procedencia, checkInD, checkInH, checkOutD, checkOutH).subscribe(matchHosts => this.hosts = matchHosts);
+
+    
+  }
+
+
+
+  //A priori funciona bn
+  handleSelection(swap?:string) {
+    if(swap)
+      this.invertirSeleccion = !this.invertirSeleccion;
+    else
+      this.invertirSeleccion = false
+  
+    console.log(this.selectedOption)
+    switch(this.selectedOption){
+      case 'Nombre':
+        this.hosts= this.hosts.sort((a, b)=>{
+          const nameA = a.nombre.toLowerCase();
+          const nameB = b.nombre.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+      case 'Apellido':
+        this.hosts= this.hosts.sort((a, b)=>{
+          const nameA = a.apellido.toLowerCase();
+          const nameB = b.apellido.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+
+      case 'DNI/Pasaporte':
+
+      this.hosts= this.hosts.sort((a, b)=>{
+        const nameA = a.dniPasaporte.toLowerCase();
+        const nameB = b.dniPasaporte.toLowerCase();
+        
+        if(this.invertirSeleccion){
+          if (nameA < nameB) return 1;
+          if (nameA > nameB) return -1;
+
+       }else{
+
+         if (nameA < nameB) return -1;
+         if (nameA > nameB) return 1;
+       }
+        return 0;
+      });
+      break;
+    
+      case 'Procedencia':
+
+      this.hosts= this.hosts.sort((a, b)=>{
+        const nameA = a.procedencia.toLowerCase();
+        const nameB = b.procedencia.toLowerCase();
+        
+        if(this.invertirSeleccion){
+          if (nameA < nameB) return 1;
+          if (nameA > nameB) return -1;
+
+       }else{
+
+         if (nameA < nameB) return -1;
+         if (nameA > nameB) return 1;
+       }
+        return 0;
+      });
+      break;
+
+
+      case 'Check-in':
+        this.hosts= this.hosts.sort((a, b) => {
+          const parseDate = (dateString: string): number => {
+            const [day, month, year, time] = dateString.split(/[- :]/);
+            return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
+          };
+        
+          const dateA = parseDate(a.fechaCheckin.toString());
+          const dateB = parseDate(b.fechaCheckin.toString());
+
+          if(this.invertirSeleccion)
+            return dateB - dateA; // Ordenar de más reciente a más antiguo
+          else
+            return dateA - dateB; // Ordenar de más reciente a más antiguo
+        });
+        break;
+
+
+      case 'Check-out':
+        this.hosts= this.hosts.sort((a, b) => {
+          const parseDate = (dateString: string): number => {
+            const [day, month, year, time] = dateString.split(/[- :]/);
+            return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
+          };
+        
+          const dateA = parseDate(a.fechaCheckout.toString());
+          const dateB = parseDate(b.fechaCheckout.toString());
+
+          if(this.invertirSeleccion)
+            return dateB - dateA; // Ordenar de más reciente a más antiguo
+          else
+            return dateA - dateB; // Ordenar de más reciente a más antiguo
+        });
+        break;
+
+
+    }
+    this.managementService.getHostsRequest('huesped').subscribe();
+
+  }
+
+
 
 
 
