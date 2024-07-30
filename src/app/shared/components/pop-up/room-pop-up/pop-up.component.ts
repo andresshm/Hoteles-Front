@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { ManagementService } from "app/services/management.service";
-import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { Host } from "app/interfaces/host.interface";
 import { Hotel } from "app/interfaces/hotel.interface";
@@ -9,11 +8,11 @@ import { Service } from "app/interfaces/service.interface";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
-  selector: "shared-pop-up",
+  selector: "room-pop-up",
   templateUrl: "./pop-up.component.html",
   styleUrls: ["./pop-up.component.css"],
 })
-export class PopUpComponent implements OnInit, OnChanges{
+export class RoomPopUpComponent implements OnInit, OnChanges{
   // Lo suyo seria emitir un evento para que lo elimine table list, pero no funciona
   @Output()
   public onDeleteId: EventEmitter<number> = new EventEmitter();
@@ -118,29 +117,11 @@ export class PopUpComponent implements OnInit, OnChanges{
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes && this.selectedIdHijo!==0 && this.hostAux){
+   
+    if(changes && this.selectedIdHijo!==0 && this.roomAux){
+      this.managementService.getRoomById(this.selectedIdHijo, 'habitacion').subscribe(room => this.roomAux = room);
 
-      console.log(this.selectedIdHijo);
-      this.managementService.getHostById(this.selectedIdHijo, 'huesped').subscribe(host => this.hostAux = host);
-      
-      let originalDate = this.hostAux.fechaCheckin;
-      let parts = originalDate.split(" ")[0].split("/"); // Split the date and then the parts
-      let formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-      this.dateIn = formattedDate;
-      console.log(this.dateIn);
-      this.timeIn = originalDate.split(" ")[1];
-
-
-      originalDate = this.hostAux.fechaCheckout;
-      parts = originalDate.split(" ")[0].split("/"); // Split the date and then the parts
-      formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-      this.dateOut = formattedDate;
-      this.timeOut = originalDate.split(" ")[1];
     }
-    /*if(changes && this.selectedIdHijo!==0 && this.hotelAux){
-      this.managementService.getHotelById(this.selectedIdHijo, 'hotel').subscribe(hotel => this.hotelAux = hotel);
-
-    }*/
   }
 
   ngOnInit(): void {
@@ -227,7 +208,7 @@ export class PopUpComponent implements OnInit, OnChanges{
         break;
       case "ROO":
         this.managementService
-          .putRoom(this.selectedIdHijo, this.room)
+          .putRoom(this.selectedIdHijo, this.roomAux)
           .subscribe();
         break;
       case "SER":

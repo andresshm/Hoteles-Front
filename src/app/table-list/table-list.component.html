@@ -119,7 +119,7 @@
               </div>
             </mat-list-item>
             <mat-list-item
-              *ngFor="let host of hosts; let i = index"
+              *ngFor="let host of displayedHosts; let i = index"
               class="huesped-item"
             >
               <span class="matListItemTitle reduce-space">{{ host.id }}</span>
@@ -162,12 +162,12 @@
           </mat-list>
 
 
-          <!-- <mat-paginator 
+          <mat-paginator 
           [length]="hosts.length"
           [pageSize]="pageSize"
           [pageSizeOptions]="[5, 10, 25, 100]"
           (page)="handlePageEvent($event)">
-        </mat-paginator> -->
+        </mat-paginator>
 
 
         </mat-card-content>

@@ -52,7 +52,7 @@ export class TableListComponent implements OnInit {
  pageSize: number = 10;
  currentPage: number = 0;
 
-//  @ViewChild(MatPaginator) paginator: MatPaginator;
+ @ViewChild(MatPaginator) paginator: MatPaginator;
  
 
 public host: Host;

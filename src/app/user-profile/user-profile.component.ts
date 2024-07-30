@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Host } from 'app/interfaces/host.interface';
 import { NotificationsComponent } from 'app/notifications/notifications.component';
@@ -19,6 +20,7 @@ export class UserProfileComponent implements OnInit {
 
 
   public hosts: Host[]= [];
+  public host: Host;
 
   public name:string=''
   public surname:string=''
@@ -35,7 +37,11 @@ export class UserProfileComponent implements OnInit {
   public showFilters: boolean = false;
   public showSorters: boolean = false;
   public invertirSeleccion: boolean = false;
- public selectedOption:string='';
+  public selectedOption:string='';
+
+  displayedHosts: Host[] = [];
+  pageSize: number = 10;
+  currentPage: number = 0;
 
   constructor(
     private managementService : ManagementService,
@@ -83,6 +89,10 @@ export class UserProfileComponent implements OnInit {
     // Aqui se piden los huespedes a la API
     // para generar la lista en pantalla
    this.getHuespedes();
+
+
+   //paginasion
+   this.loadData();
   }
 
  
@@ -101,26 +111,14 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-  openEditForm(data: any) {
-    const dialogRef = this._dialog.open(NotificationsComponent, {
-      data,
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getHuespedes();
-        }
-      },
-    });
-  }
-
 
 
   /* pone el indice de la fila en la que clico*/
   setIndex(id:number){
     this.selectedId=id;
     console.log(this.selectedId);
+    this.managementService.getHostById(id, 'huesped').subscribe(host => this.host = host);
+
   }
 
 
@@ -277,6 +275,35 @@ export class UserProfileComponent implements OnInit {
   }
 
 
+
+
+  //paginator
+  loadData() {
+    // Simula la carga de datos
+
+    this.managementService.getHostsRequest('huesped')
+    .subscribe(hosts => {
+      this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
+      // this.displayedHosts=hosts.sort((a, b)=>a.id-b.id);
+      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+    });
+
+
+    // this.displayedHosts = this.hosts;
+    this.updateDisplayedHosts();
+  }
+
+  updateDisplayedHosts() {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedHosts = this.hosts.slice(startIndex, endIndex);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updateDisplayedHosts();
+  }
 
 
 

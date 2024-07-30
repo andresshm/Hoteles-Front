@@ -1,5 +1,98 @@
 <div class="main-content">
   <div class="container-fluid">
+
+
+
+
+
+
+    <div class="button-container2">
+      <button class="search-button" (click)="toggleFilter()">
+        <mat-icon class="mr-2">search</mat-icon>
+        <span class="button-text">Buscar</span>
+      </button>
+      <button class="search-button" (click)="toggleSorter()">
+        <mat-icon class="mr-2">sort</mat-icon>
+        <span class="button-text">Ordenar</span>
+      </button>
+    </div>
+ 
+
+
+
+
+  <div *ngIf="showSorters" >
+    <hr>
+    <h3>Ordenar</h3>
+    <hr>
+    <h4>Seleccione una opción</h4>
+
+    <div class="button-container2">
+      <select id="option-selector" class="selector" [(ngModel)]="selectedOption">
+        <option value="" >Seleccione...</option>
+        <option value="Nombre">Nombre</option>
+        <option value="Descripcion">Descripción</option>
+      </select>
+      <button *ngIf="selectedOption" class="search-button" (click)="handleSelection('swap')">
+        <mat-icon>swap_vert</mat-icon>
+      </button>
+    </div>
+
+
+
+
+    <button *ngIf="selectedOption" class="search-button mt-4" (click)="handleSelection()">
+      <span class="button-text ">Ordenar</span>
+      <!-- <span class="button-icon"></span> -->
+    </button>
+
+  </div>
+
+
+
+
+
+  <div *ngIf="showFilters" class="filter-form-container">
+    <hr>
+    <h3>Filtrar</h3>
+    <hr>
+    <form >
+      <mat-form-field class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" placeholder="Nombre" name="nombre" [(ngModel)]="nombre">
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <mat-label>Descripción</mat-label>
+        <input matInput type="text" placeholder="descripcion" name="descripcion" [(ngModel)]="descripcion">
+      </mat-form-field>
+ 
+    
+  
+
+  
+    </form>
+    <div class="centrar">
+      <button class="mr-4 search-button" color="primary" type="submit" (click)="filter(nombre, descripcion)">
+        <mat-icon class="mr-2">filter_list</mat-icon>
+        Filtrar 
+      </button>
+      <button class="search-button" color="primary" type="submit" (click)="getServices()">
+        <mat-icon class="mr-2">restart_alt</mat-icon>
+        Reestablecer
+      </button>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
     <div class="list-container">
       <mat-card>
         <mat-card-header>
@@ -16,7 +109,7 @@
               </div>
             </mat-list-item>
             <mat-list-item
-              *ngFor="let serv of services; let i = index"
+              *ngFor="let serv of displayedServices; let i = index"
               class="huesped-item"
             >
               <span class="matListItemTitle reduce-space">{{ serv.id }}</span>
@@ -25,9 +118,10 @@
               
 
               <!-- Como muevas esto una linea no funciona el hdp -->
-              <shared-pop-up
+              <service-pop-up
                 [selectedIdHijo]="selectedId"
-              ></shared-pop-up>
+                [serviceAux]="service"
+              ></service-pop-up>
 
               <div class="huesped-actions">
                 <button
@@ -52,6 +146,17 @@
             </mat-list-item>
            
           </mat-list>
+
+
+          <mat-paginator 
+          [length]="services.length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          (page)="handlePageEvent($event)">
+        </mat-paginator>
+
+
+
         </mat-card-content>
       </mat-card>
     </div>

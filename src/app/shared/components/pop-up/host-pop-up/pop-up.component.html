@@ -1,0 +1,213 @@
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar huésped: {{selectedIdHijo}} </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form >
+
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Nombre: -- </label>
+              <!-- <input type="text" class="form-control" id="recipient-name" [value]="hostAux.nombre" [(ngModel)]="hostAux.nombre"> -->
+              <input type="text" class="form-control" id="recipient-name" [value]="hostAux.nombre" [(ngModel)]="host.nombre">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-surname" class="col-form-label" >Apellidos: -- {{hostAux.apellido}}</label>
+              <!-- <input type="text" class="form-control" id="recipient-surname" [(ngModel)]="hostAux.apellido"> -->
+              <input type="text" class="form-control" id="recipient-surname"  [value]="hostAux.apellido">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-dni" class="col-form-label">DNI/Pasaporte: -- {{hostAux.dniPasaporte}}</label>
+              <!-- <input type="text" class="form-control" id="recipient-dni" [(ngModel)]="hostAux.dniPasaporte"> -->
+              <input type="text" class="form-control" id="recipient-dni"  [value]="hostAux.dniPasaporte">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-procedence" class="col-form-label">Procedencia: -- {{hostAux.procedencia}}</label>
+              <!-- <input type="text" class="form-control" id="recipient-procedence" [(ngModel)]="hostAux.procedencia"> -->
+              <input type="text" class="form-control" id="recipient-procedence"  [value]="hostAux.procedencia">
+            </div>
+
+            <div class="button-container2">
+              <div class="mb-3">
+                <label for="recipient-checkin" class="col-form-label">Fecha check-in:</label>
+                <input matInput type="date" class="form-control" id="recipient-checkin" placeholder="dd/MM/yyyy HH:mm"  name="date-in" [(ngModel)]="dateIn">
+                <!-- <input matInput type="date" class="form-control" id="recipient-checkin" placeholder="dd/MM/yyyy HH:mm"  name="date-in" [value]="dateIn"> -->
+              </div>
+              
+              
+              <div class="mb-3">
+                <label for="recipient-timein" class="col-form-label">Hora</label>
+                <input matInput placeholder="HH:mm" class="form-control" id="recipient-timein"  name="time-in" [(ngModel)]="timeIn" type="time">
+                <!-- <input matInput placeholder="HH:mm" class="form-control" id="recipient-timein"  name="time-in" [value]="timeIn" type="time"> -->
+              </div>
+            </div>
+            
+            
+            <div class="button-container2">
+              <div class="mb-3">
+                <label for="recipient-checkout" class="col-form-label">Fecha check-out:</label>
+                <input matInput type="date" class="form-control" id="recipient-checkout" name="date-out" placeholder="dd/MM/yyyy HH:mm" [(ngModel)]="dateOut">
+                <!-- <input matInput type="date" class="form-control" id="recipient-checkout" name="date-out" placeholder="dd/MM/yyyy HH:mm" [value]="dateOut"> -->
+              </div>
+              
+              
+              <div class="mb-3">
+                <label for="recipient-timeout" class="col-form-label">Hora</label>
+                <input matInput placeholder="HH:mm" class="form-control" id="recipient-timeout" name="time-out" [(ngModel)]="timeOut" type="time">
+                <!-- <input matInput placeholder="HH:mm" class="form-control" id="recipient-timeout" name="time-out" [value]="timeOut" type="time"> -->
+              </div>
+            </div>
+         
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="onSubmitPut('HOS'); recharge('PUT')">Actualizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar huésped</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form >
+              <div class="mb-3">
+                <!-- <label for="recipient-name" class="col-form-label">ID:</label> -->
+                <!-- <input type="number" class="form-control" id="recipient-name" > -->
+                 <p>Está a punto de borrar el huésped: {{selectedIdHijo}}</p>
+                 <p class="warn">Esta operación es irreversible</p>
+              </div>
+              <!-- <div class="mb-3">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div> -->
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Eliminar</button>
+            <!-- (click)="eliminarElemento(); onSubmitDEL(); recharge() -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- confirmacion -->
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">ATENCIÓN</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Está a punto de eliminar el huésped: {{selectedIdHijo}} de forma permanente.
+              ¿Quiere realizar la operación igualmente?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary"  data-bs-dismiss="modal">Atrás</button>
+            <button class="btn btn-primary" (click)=" onSubmitDEL('HOS'); recharge('DEL');"   data-bs-dismiss="modal">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<!-- POST MODAL -->
+  <div class="modal fade" id="postModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear huésped</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.nombre">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Apellidos:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.apellido">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">DNI/Pasaporte:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.dniPasaporte">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Procedencia:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.procedencia">
+            </div>
+            <!-- <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Fecha check-in:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.fechaCheckin">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Fecha check-out:</label>
+              <input type="text" class="form-control" id="recipient-name" [(ngModel)]="host.fechaCheckout">
+            </div> -->
+           
+           
+            <div class="button-container2">
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Fecha check-in:</label>
+                <input matInput type="date" class="form-control" id="recipient-name" placeholder="dd/MM/yyyy HH:mm"  name="date-in" [(ngModel)]="dateIn">
+              </div>
+              
+              
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Hora</label>
+                <input matInput placeholder="HH:mm" class="form-control" id="recipient-name"  name="time-in" [(ngModel)]="timeIn" type="time">
+              </div>
+            </div>
+            
+            
+            <div class="button-container2">
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Fecha check-out:</label>
+                <input matInput type="date" class="form-control" id="recipient-name" name="date-out" placeholder="dd/MM/yyyy HH:mm" [(ngModel)]="dateOut">
+              </div>
+              
+              
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Hora</label>
+                <input matInput placeholder="HH:mm" class="form-control" id="recipient-name" name="time-out" [(ngModel)]="timeOut" type="time">
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="postNewHost('HOS'); recharge('POS')">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+

@@ -1,4 +1,5 @@
 import { Component, Host, Input, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Room } from 'app/interfaces/room.interface';
 import { ManagementService } from 'app/services/management.service';
@@ -12,19 +13,37 @@ declare var $: any;
 })
 export class IconsComponent implements OnInit {
 
-  @Input()
-  numero = '';
+  // @Input()
+  // numero = '';
   
-  @Input()
-  tipo='';
+  // @Input()
+  // tipo='';
 
-  @Input()
-  precioNoche=0;
+  // @Input()
+  // precioNoche=0;
 
   @Input()
   selectedId : number = 0;
 
+
+  public numero:string  = '';
+  public tipo:string ='';
+  public precioNoche:number =0;
+
+
+  public showFilters: boolean = false;
+  public showSorters: boolean = false;
+  public invertirSeleccion: boolean = false;
+  public selectedOption:string='';
+
+
+ displayedRooms: Room[] = [];
+ pageSize: number = 10;
+ currentPage: number = 0;
+
   public rooms : Room[] = [];
+  public room : Room;
+
   data: Room = {
     id: 0,
     idHotel: 0,
@@ -81,6 +100,10 @@ export class IconsComponent implements OnInit {
     // Aqui se piden los huespedes a la API
     // para generar la lista en pantalla
    this.getHabitaciones();
+
+
+    //paginasion
+    this.loadData();
   }
 
  
@@ -103,6 +126,8 @@ export class IconsComponent implements OnInit {
   setIndex(id:number){
     this.selectedId=id;
     console.log(this.selectedId);
+    this.managementService.getRoomById(id, 'habitacion').subscribe(room => this.room = room);
+
   }
 
 
@@ -110,6 +135,135 @@ export class IconsComponent implements OnInit {
     const currentRoute = this.router.url;
     this.showButton = currentRoute === '/icons';
   }
+
+
+
+  toggleFilter(){
+    console.log(this.rooms.length)
+
+    this.showFilters = !this.showFilters;
+  }
+
+  toggleSorter(){
+    this.showSorters = !this.showSorters;
+  }
+
+
+  filter(numero:string, precioNoche:number, tipo:string){
+    this.managementService.filterRoom(numero, precioNoche, tipo).subscribe(matchRooms => this.rooms = matchRooms);    
+  }
+
+
+
+  //A priori funciona bn
+  handleSelection(swap?:string) {
+    if(swap)
+      this.invertirSeleccion = !this.invertirSeleccion;
+    else
+      this.invertirSeleccion = false
+  
+    console.log(this.selectedOption)
+    switch(this.selectedOption){
+      case 'Numero':
+        this.rooms= this.rooms.sort((a, b)=>{
+          const nameA = a.numero.toLowerCase();
+          const nameB = b.numero.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+      case 'Tipo':
+        this.rooms= this.rooms.sort((a, b)=>{
+          const nameA = a.tipo.toLowerCase();
+          const nameB = b.tipo.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+
+      case 'Precio':
+
+      this.rooms= this.rooms.sort((a, b)=>{
+        const nameA = a.precioNoche;
+        const nameB = b.precioNoche;
+        
+
+        if(this.invertirSeleccion)
+          return nameB - nameA; // Ordenar de más reciente a más antiguo
+        else
+          return nameA - nameB; // Ordenar de más reciente a más antiguo
+      });
+      //   if(this.invertirSeleccion){
+      //     if (nameA - nameB) return 1;
+      //     if (nameA - nameB) return -1;
+
+      //  }else{
+
+      //    if (nameA - nameB) return -1;
+      //    if (nameA - nameB) return 1;
+      //  }
+      //   return 0;
+      // });
+      break;
+
+    }
+
+    this.managementService.getRoomsRequest('habitacion').subscribe();
+
+  }
+
+
+
+
+  //paginator
+  loadData() {
+    // Simula la carga de datos
+
+    this.managementService.getRoomsRequest('habitacion')
+    .subscribe(rooms => {
+      this.displayedRooms = rooms.sort((a, b)=>a.id-b.id);
+      // this.displayedRooms=hosts.sort((a, b)=>a.id-b.id);
+      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+    });
+
+
+    // this.displayedRooms = this.hosts;
+    this.updateDisplayedHosts();
+  }
+
+  updateDisplayedHosts() {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedRooms = this.rooms.slice(startIndex, endIndex);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updateDisplayedHosts();
+  }
+
+
+
 
 
 

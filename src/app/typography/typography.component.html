@@ -129,7 +129,7 @@
                 </div>
               </mat-list-item>
               <mat-list-item
-                *ngFor="let hotel of hotels; let i = index"
+                *ngFor="let hotel of displayedHotels; let i = index"
                 class="huesped-item"
               >
                 <span class="matListItemTitle reduce-space">{{ hotel.id }}</span>
@@ -141,9 +141,11 @@
                 
   
                 <!-- Como muevas esto una linea no funciona el hdp -->
-                <shared-pop-up
+                <hotel-pop-up
                   [selectedIdHijo]="selectedId"
-                ></shared-pop-up>
+                  
+                  [hotelAux]="hotel"
+                  ></hotel-pop-up>
   
                 <div class="huesped-actions">
                   <button
@@ -168,6 +170,16 @@
               </mat-list-item>
              
             </mat-list>
+
+
+            <mat-paginator 
+            [length]="hotels.length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            (page)="handlePageEvent($event)">
+          </mat-paginator>
+
+
           </mat-card-content>
         </mat-card>
       </div>

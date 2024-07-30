@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { ManagementService } from "app/services/management.service";
-import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { Host } from "app/interfaces/host.interface";
 import { Hotel } from "app/interfaces/hotel.interface";
@@ -9,11 +8,11 @@ import { Service } from "app/interfaces/service.interface";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
-  selector: "shared-pop-up",
+  selector: "host-pop-up",
   templateUrl: "./pop-up.component.html",
   styleUrls: ["./pop-up.component.css"],
 })
-export class PopUpComponent implements OnInit, OnChanges{
+export class HostPopUpComponent implements OnInit, OnChanges{
   // Lo suyo seria emitir un evento para que lo elimine table list, pero no funciona
   @Output()
   public onDeleteId: EventEmitter<number> = new EventEmitter();

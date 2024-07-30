@@ -30,6 +30,24 @@ export class ManagementService {
           catchError(()=>of()),
         );
       }
+    public getHotelById(id:number, entity: string): Observable<Hotel>{
+        return this.httpClient.get<Hotel>(`${this.url}${entity}/${id}`)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+    public getRoomById(id:number, entity: string): Observable<Room>{
+        return this.httpClient.get<Room>(`${this.url}${entity}/${id}`)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
+    public getServiceById(id:number, entity: string): Observable<Service>{
+        return this.httpClient.get<Service>(`${this.url}${entity}/${id}`)
+        .pipe(
+          catchError(()=>of()),
+        );
+      }
 
 
     public getRoomsRequest(entity: string): Observable<Room[]>{
@@ -261,6 +279,55 @@ export class ManagementService {
   
   
           return this.httpClient.get<Hotel[]>(`${this.url}hotel/filter${params}`)
+          .pipe(
+            catchError(()=>of([])),
+          );
+      }
+
+
+
+
+      filterRoom(numero:string, precio:number, type:string) : Observable<Room[]>{
+        
+        const formData = {
+          numero,
+          precio,
+          tipo: type.trim(),
+        };
+        
+        let params = Object.keys(formData)
+        .filter(key => formData[key])  // Include only non-empty values
+        .map(key => `${key}=${encodeURIComponent(formData[key])}`) // Encode and concatenate
+        .join('&');  // Join all parameters with '&'
+      
+      if (params) {
+        params = '?' + params;
+      }
+  
+          return this.httpClient.get<Room[]>(`${this.url}habitacion/filter${params}`)
+          .pipe(
+            catchError(()=>of([])),
+          );
+      }
+
+
+      filterService(nombre:string, descripcion:string) : Observable<Service[]>{
+        
+        const formData = {
+          nombre,
+          descripcion: descripcion,
+        };
+        
+        let params = Object.keys(formData)
+        .filter(key => formData[key])  // Include only non-empty values
+        .map(key => `${key}=${encodeURIComponent(formData[key])}`) // Encode and concatenate
+        .join('&');  // Join all parameters with '&'
+      
+      if (params) {
+        params = '?' + params;
+      }
+  
+          return this.httpClient.get<Service[]>(`${this.url}servicio/filter${params}`)
           .pipe(
             catchError(()=>of([])),
           );

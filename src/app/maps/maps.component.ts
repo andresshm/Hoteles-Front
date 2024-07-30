@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { PageEvent } from "@angular/material/paginator";
 import { Router } from "@angular/router";
 import { Service } from "app/interfaces/service.interface";
 import { ManagementService } from "app/services/management.service";
@@ -17,18 +18,34 @@ interface Marker {
   styleUrls: ["./maps.component.css"],
 })
 export class MapsComponent implements OnInit {
-  @Input()
-  nombre = "";
+  // @Input()
+  // nombre = "";
 
-  @Input()
-  descripcion = "";
+  // @Input()
+  // descripcion = "";
 
   @Input()
   selectedId: number = 0;
 
+ 
+  public nombre:string = ""; 
+  public descripcion:string = "";
+
+
+  public showFilters: boolean = false;
+  public showSorters: boolean = false;
+  public invertirSeleccion: boolean = false;
+  public selectedOption:string='';
+
+  displayedServices: Service[] = [];
+  pageSize: number = 10;
+  currentPage: number = 0;
+
   showButton: boolean=false;
 
 public services : Service[] = [];
+public service : Service;
+
   data: Service = {
     id: 0,
     nombre: "",
@@ -80,6 +97,11 @@ public services : Service[] = [];
     // Aqui se piden los huespedes a la API
     // para generar la lista en pantalla
    this.getServices();
+
+
+
+    //paginasion
+    this.loadData();
   }
 
  
@@ -95,13 +117,14 @@ public services : Service[] = [];
 
   onSubmitDEL(id:number){
     
-    this.managementService.deleteHost(id)
+    this.managementService.deleteService(id)
     .subscribe();
   }
 
   setIndex(id:number){
     this.selectedId=id;
     console.log(this.selectedId);
+    this.managementService.getServiceById(id, 'servicio').subscribe(service => this.service = service);
   }
 
 
@@ -112,6 +135,106 @@ public services : Service[] = [];
 
 
 
+  toggleFilter(){
+    console.log(this.services.length)
+
+    this.showFilters = !this.showFilters;
+  }
+
+  toggleSorter(){
+    this.showSorters = !this.showSorters;
+  }
+
+
+  filter(nombre:string, descripcion:string){
+    this.managementService.filterService(nombre, descripcion).subscribe(matchServices => this.services = matchServices);
+  }
+
+
+
+  //A priori funciona bn
+  handleSelection(swap?:string) {
+    if(swap)
+      this.invertirSeleccion = !this.invertirSeleccion;
+    else
+      this.invertirSeleccion = false
+  
+    console.log(this.selectedOption)
+    switch(this.selectedOption){
+      case 'Nombre':
+        this.services= this.services.sort((a, b)=>{
+          const nameA = a.nombre.toLowerCase();
+          const nameB = b.nombre.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+      case 'Descripcion':
+        this.services= this.services.sort((a, b)=>{
+          const nameA = a.descripcion.toLowerCase();
+          const nameB = b.descripcion.toLowerCase();
+          
+          if(this.invertirSeleccion){
+            if (nameA < nameB) return 1;
+            if (nameA > nameB) return -1;
+
+         }else{
+
+           if (nameA < nameB) return -1;
+           if (nameA > nameB) return 1;
+         }
+          return 0;
+        });
+        break;
+
+    }
+
+    this.managementService.getServicesRequest('servicio').subscribe();
+
+  }
+
+
+
+  //paginator
+  loadData() {
+    // Simula la carga de datos
+
+    this.managementService.getServicesRequest('servicio')
+    .subscribe(services => {
+      this.displayedServices = services.sort((a, b)=>a.id-b.id);
+      // this.displayedServices=hosts.sort((a, b)=>a.id-b.id);
+      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+    });
+
+
+    // this.displayedServices = this.hosts;
+    this.updateDisplayedHosts();
+  }
+
+  updateDisplayedHosts() {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedServices = this.services.slice(startIndex, endIndex);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updateDisplayedHosts();
+  }
+
+
+
+
   showNotification(from :string, align:string, tipo:string){
     // const type = ['','info','success','warning','danger'];
 
@@ -119,9 +242,9 @@ public services : Service[] = [];
     let mensaje = '';
 
     switch(tipo){
-      case 'DEL': mensaje = "Huésped eliminado correctamente";break;
-      case 'POST': mensaje = "Huésped creado correctamente";break;
-      case 'PUT': mensaje = "Huésped actualizado correctamente";break;
+      case 'DEL': mensaje = "Servicio eliminado correctamente";break;
+      case 'POST': mensaje = "Servicio creado correctamente";break;
+      case 'PUT': mensaje = "Servicio actualizado correctamente";break;
 
     }
     

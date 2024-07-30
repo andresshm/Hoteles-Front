@@ -1,4 +1,5 @@
-import { Component, Host, Input, OnInit } from '@angular/core';
+import { Component, Host, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Hotel } from 'app/interfaces/hotel.interface';
 import { ManagementService } from 'app/services/management.service';
@@ -47,6 +48,13 @@ export class TypographyComponent implements OnInit {
 
   public showButton = false;
   public hotels: Hotel[]= [];
+  public hotel: Hotel;
+
+
+
+  displayedHotels: Hotel[] = [];
+  pageSize: number = 10;
+  currentPage: number = 0;
 
   data : Hotel = {
     id: 0,
@@ -64,6 +72,7 @@ export class TypographyComponent implements OnInit {
     private router : Router
   ) { }
 
+
   get ruta():string{
     return this.router.url;
   }
@@ -71,6 +80,8 @@ export class TypographyComponent implements OnInit {
   setIndex(id:number){
     this.selectedId=id;
     console.log(this.selectedId);
+    this.managementService.getHotelById(id, 'hotel').subscribe(hotel => this.hotel = hotel);
+
   }
 
   onSubmit(){
@@ -161,6 +172,10 @@ export class TypographyComponent implements OnInit {
 
 
     this.getHoteles();
+
+
+    //paginasion
+   this.loadData();
   }
 
 
@@ -292,13 +307,40 @@ export class TypographyComponent implements OnInit {
 
 
     }
-    this.managementService.getHostsRequest('huesped').subscribe();
+    this.managementService.getHotelsRequest('hotel').subscribe();
 
   }
 
 
 
 
+  //paginator
+  loadData() {
+    // Simula la carga de datos
+
+    this.managementService.getHotelsRequest('hotel')
+    .subscribe(hotels => {
+      this.displayedHotels = hotels.sort((a, b)=>a.id-b.id);
+      // this.displayedHotels=hosts.sort((a, b)=>a.id-b.id);
+      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+    });
+
+
+    // this.displayedHotels = this.hosts;
+    this.updateDisplayedHosts();
+  }
+
+  updateDisplayedHosts() {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedHotels = this.hotels.slice(startIndex, endIndex);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updateDisplayedHosts();
+  }
 
 
 

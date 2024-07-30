@@ -1,0 +1,153 @@
+
+ 
+
+
+
+  <!-- Hotel -->
+   <!-- delete modal -->
+  <div class="modal fade" id="hotelDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar hotel</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form >
+              <div class="mb-3">
+                <!-- <label for="recipient-name" class="col-form-label">ID:</label> -->
+                <!-- <input type="number" class="form-control" id="recipient-name" > -->
+                 <p>Está a punto de borrar el hotel: {{selectedIdHijo}}</p>
+                 <p class="warn">Esta operación es irreversible</p>
+              </div>
+              <!-- <div class="mb-3">
+                <label for="message-text" class="col-form-label">Message:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div> -->
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2H" data-bs-toggle="modal">Eliminar</button>
+            <!-- (click)="eliminarElemento(); onSubmitDEL(); recharge() -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- confirmacion -->
+    <div class="modal fade" id="exampleModalToggle2H" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">ATENCIÓN</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Está a punto de eliminar el hotel: {{selectedIdHijo}} de forma permanente.
+              ¿Quiere realizar la operación igualmente?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary"  data-bs-dismiss="modal">Atrás</button>
+            <button class="btn btn-primary" (click)=" onSubmitDEL('HOT'); recharge('DEL');"   data-bs-dismiss="modal">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<!-- post -->
+    <div class="modal fade" id="hotelPostModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear hotel</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                <input type="text" class="form-control" id="recipient-name" [value]="hotel.nombre">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-address" class="col-form-label">Dirección:</label>
+                <input type="text" class="form-control" id="recipient-address" [value]="hotel.direccion">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-phone" class="col-form-label">Teléfono:</label>
+                <input type="text" class="form-control" id="recipient-phone" [value]="hotel.telefono">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-email" class="col-form-label">Email:</label>
+                <input type="text" class="form-control" id="recipient-email" [value]="hotel.email">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-web" class="col-form-label">Sitio Web:</label>
+                <input type="text" class="form-control" id="recipient-web" [value]="hotel.sitioWeb">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="postNewHost('HOT'); recharge('POST');">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- put -->
+    <div class="modal fade" id="hotelUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar hotel: {{selectedIdHijo}} </h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <!-- <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">ID:</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div> -->
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                <!-- <input type="text" class="form-control" id="recipient-name" [(ngmodel)]="hotel.nombre"> -->
+                <input type="text" class="form-control" id="recipient-name" [value]="hotelAux.nombre">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label" >Dirección</label>
+                <input type="text" class="form-control" id="recipient-name" [value]="hotelAux.direccion">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Teléfono:</label>
+                <input type="text" class="form-control" id="recipient-name" [value]="hotelAux.telefono">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Email:</label>
+                <input type="text" class="form-control" id="recipient-name" [value]="hotelAux.email">
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Sitio Web:</label>
+                <input type="text" class="form-control" id="recipient-name" [value]="hotelAux.sitioWeb">
+              </div>
+              
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="onSubmitPut('HOT'); recharge('PUT')">Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
