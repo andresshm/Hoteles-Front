@@ -12,21 +12,14 @@
           <div class="modal-body">
             <form >
               <div class="mb-3">
-                <!-- <label for="recipient-name" class="col-form-label">ID:</label> -->
-                <!-- <input type="number" class="form-control" id="recipient-name" > -->
                  <p>Está a punto de borrar el servicio: {{selectedIdHijo}}</p>
                  <p class="warn">Esta operación es irreversible</p>
               </div>
-              <!-- <div class="mb-3">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
-              </div> -->
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2S" data-bs-toggle="modal">Eliminar</button>
-            <!-- (click)="eliminarElemento(); onSubmitDEL(); recharge() -->
           </div>
         </div>
       </div>
@@ -104,17 +97,16 @@
           </div>
           <div class="modal-body">
             <form>
-              <!-- <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">ID:</label>
-                <input type="text" class="form-control" id="recipient-name">
-              </div> -->
               <div *ngIf="serviceAux" class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nombre: {{serviceAux.nombre}}</label>
-                <input type="text" class="form-control" id="recipient-name" [value]="serviceAux.nombre">
+                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                <input type="text" #myInput class="form-control" id="recipient-name" [value]="serviceAux.nombre" >
               </div>
               <div *ngIf="serviceAux" class="mb-3">
                 <label for="recipient-desc" class="col-form-label" >Descripción</label>
-                <input type="text" class="form-control" id="recipient-desc" [value]="serviceAux.descripcion">
+                <!-- Aqui abajo puedo dejar el ngmodel porque es la ultima propiedad
+                 que no se porque pero si pongo ngmodel a todas las props en los inputs aparece el 
+                 valor de la ultima prop -->
+                <input type="text" class="form-control" id="recipient-desc"  [(ngModel)]="serviceAux.descripcion">
               </div>
               
               <!-- <div class="mb-3">

@@ -1,6 +1,7 @@
-import { Component, Host, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+
 import { Room } from 'app/interfaces/room.interface';
 import { ManagementService } from 'app/services/management.service';
 
@@ -13,51 +14,31 @@ declare var $: any;
 })
 export class IconsComponent implements OnInit {
 
-  // @Input()
-  // numero = '';
-  
-  // @Input()
-  // tipo='';
-
-  // @Input()
-  // precioNoche=0;
 
   @Input()
-  selectedId : number = 0;
+  public selectedId : number = 0;
 
+  public numero     :string = '';
+  public tipo       :string = '';
+  public precioNoche:number = 0;
 
-  public numero:string  = '';
-  public tipo:string ='';
-  public precioNoche:number =0;
-
-
-  public showFilters: boolean = false;
-  public showSorters: boolean = false;
+  public showFilters      : boolean = false;
+  public showSorters      : boolean = false;
   public invertirSeleccion: boolean = false;
-  public selectedOption:string='';
+  public selectedOption   : string  = '';
 
-
- displayedRooms: Room[] = [];
- pageSize: number = 10;
- currentPage: number = 0;
+  displayedRooms: Room[] = [];
+  pageSize      : number = 10;
+  currentPage   : number =  0;
 
   public rooms : Room[] = [];
-  public room : Room;
-
-  data: Room = {
-    id: 0,
-    idHotel: 0,
-    numero: '',
-    tipo: '',
-    precioNoche: 0,
-    huespedes: [],
-    hotel: undefined
-  };
+  public room  : Room;
 
   public showButton: boolean = false;
   
-  constructor(private managementService : ManagementService,
-    private router : Router
+  constructor(
+    private managementService : ManagementService,
+    private router            : Router
   ) { }
 
 
@@ -119,16 +100,12 @@ export class IconsComponent implements OnInit {
   }
 
   onSubmitDEL(id:number){
-    
-    this.managementService.deleteRoom(id)
-    .subscribe();
+    this.managementService.deleteRoom(id).subscribe();
   }
 
   setIndex(id:number){
     this.selectedId=id;
-    console.log(this.selectedId);
     this.managementService.getRoomById(id, 'habitacion').subscribe(room => this.room = room);
-
   }
 
 
@@ -140,8 +117,6 @@ export class IconsComponent implements OnInit {
 
 
   toggleFilter(){
-    console.log(this.rooms.length)
-
     this.showFilters = !this.showFilters;
   }
 
@@ -159,14 +134,13 @@ export class IconsComponent implements OnInit {
 
 
 
-  //A priori funciona bn
+  
   handleSelection(swap?:string) {
     if(swap)
       this.invertirSeleccion = !this.invertirSeleccion;
     else
       this.invertirSeleccion = false
   
-    console.log(this.selectedOption)
     switch(this.selectedOption){
       case 'Numero':
         this.displayedRooms= this.rooms.sort((a, b)=>{
@@ -220,8 +194,6 @@ export class IconsComponent implements OnInit {
 
     }
 
-    // this.managementService.getRoomsRequest('habitacion').subscribe();
-
   }
 
 
@@ -234,12 +206,8 @@ export class IconsComponent implements OnInit {
     this.managementService.getRoomsRequest('habitacion')
     .subscribe(rooms => {
       this.displayedRooms = rooms.sort((a, b)=>a.id-b.id);
-      // this.displayedRooms=hosts.sort((a, b)=>a.id-b.id);
       //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
     });
-
-
-    // this.displayedRooms = this.hosts;
     this.updateDisplayedHosts();
   }
 
@@ -261,16 +229,12 @@ export class IconsComponent implements OnInit {
 
 
   showNotification(from :string, align:string, tipo:string){
-    // const type = ['','info','success','warning','danger'];
-
-    // const color = Math.floor((Math.random() * 4) + 1);
     let mensaje = '';
 
     switch(tipo){
       case 'DEL': mensaje = "Habitación eliminada correctamente";break;
       case 'POST': mensaje = "Habitación creada correctamente";break;
       case 'PUT': mensaje = "Habitación actualizada correctamente";break;
-
     }
     
     $.notify({
@@ -296,7 +260,5 @@ export class IconsComponent implements OnInit {
         '</div>'
     });
 }
-
-
 
 }

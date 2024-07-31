@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
 import { ManagementService } from "app/services/management.service";
 import { MatDialog } from "@angular/material/dialog";
 import { Host } from "app/interfaces/host.interface";
@@ -13,21 +13,21 @@ import { FormBuilder, FormGroup } from "@angular/forms";
   styleUrls: ["./pop-up.component.css"],
 })
 export class HostPopUpComponent implements OnInit, OnChanges{
-  // Lo suyo seria emitir un evento para que lo elimine table list, pero no funciona
-  @Output()
-  public onDeleteId: EventEmitter<number> = new EventEmitter();
+  
+
+  @ViewChild('inputName') inputName!: ElementRef;
+  @ViewChild('inputSurname') inputSurname!: ElementRef;
+  @ViewChild('inputDni') inputDni!: ElementRef;
+  @ViewChild('inputOrigin') inputOrigin!: ElementRef;
+  @ViewChild('inputDateIn') inputDateIn!: ElementRef;
+  @ViewChild('inputTimeIn') inputTimeIn!: ElementRef;
+  @ViewChild('inputDateOut') inputDateOut!: ElementRef;
+  @ViewChild('inputTimeOut') inputTimeOut!: ElementRef;
+
+
 
   @Input()
   public hostAux: Host;
-
-  @Input()
-  public hotelAux: Hotel;
-
-  @Input()
-  public roomAux: Room;
-
-  @Input()
-  public serviceAux: Service;
 
 
   @Input()
@@ -46,49 +46,7 @@ export class HostPopUpComponent implements OnInit, OnChanges{
     fechaCheckout: undefined,
   };
 
-  
-  // public hostAux: Host= {
-  //   id: 0,
-  //   idHabitacion: 0,
-  //   nombre: "",
-  //   apellido: "",
-  //   dniPasaporte: "",
-  //   fechaCheckin: undefined,
-  //   fechaCheckout: undefined,
-  //   procedencia: ""
-  // };
 
-  //hotel
-  public hotel: Hotel = {
-    id: 0,
-    nombre: "",
-    direccion: "",
-    telefono: "",
-    email: "",
-    sitioWeb: "",
-    services: [],
-    servicios: [],
-    habitaciones: [],
-  };
-
-  //habitacion
-  public room: Room = {
-    id: 0,
-    idHotel: 0,
-    numero: "",
-    tipo: "",
-    precioNoche: 0,
-    huespedes: [],
-    hotel: undefined,
-  };
-
-  //servicio
-  public service: Service = {
-    id: 0,
-    nombre: "",
-    descripcion: "",
-    hoteles: [],
-  };
 
   public huespedForm: FormGroup = this.fb.group({
     nombre: [''],
@@ -166,9 +124,7 @@ export class HostPopUpComponent implements OnInit, OnChanges{
 
   postNewHost(entity: string) {
     switch (entity) {
-      case "HOT":
-        this.managementService.postNewHotel(this.hotel).subscribe();
-        break;
+    
       case "HOS":
  
       
@@ -189,23 +145,14 @@ export class HostPopUpComponent implements OnInit, OnChanges{
 
         this.managementService.postNewHost(this.host).subscribe();
         break;
-      case "ROO":
-        this.managementService.postNewRoom(this.room).subscribe();
-        break;
-      case "SER":
-        this.managementService.postNewService(this.service).subscribe();
-        break;
+     
     }
   }
 
   onSubmitPut(entity: string) {
     switch (entity) {
-      case "HOT":
-        this.managementService
-          .putHotel(this.selectedIdHijo, this.hotel)
-          .subscribe();
-        break;
-      case "HOS":
+      
+      case 'HOS':
         this.dateOut = this.dateOut.replace(/-/g,'/');
         let [year, month, day] = this.dateOut.split('/');
         let formattedDateOut = `${day}/${month}/${year}`;
@@ -220,30 +167,23 @@ export class HostPopUpComponent implements OnInit, OnChanges{
         this.hostAux.fechaCheckout =  (s);
         this.hostAux.fechaCheckin =  (sIn);
 
+        
+        this.hostAux.nombre=this.inputName.nativeElement.value;
+        this.hostAux.apellido=this.inputSurname.nativeElement.value;
+        this.hostAux.dniPasaporte=this.inputDni.nativeElement.value;
+        this.hostAux.procedencia=this.inputOrigin.nativeElement.value;
+
         this.managementService
           .putHost(this.selectedIdHijo, this.hostAux)
           .subscribe();
         break;
-      case "ROO":
-        this.managementService
-          .putRoom(this.selectedIdHijo, this.room)
-          .subscribe();
-        break;
-      case "SER":
-        this.managementService
-          .putService(this.selectedIdHijo, this.service)
-          .subscribe();
-        break;
+    
     }
   }
 
   //no se usa. se pueden hacer cosas con formularios reactivos si da tiempo
   onSubmitPatch(id: number) {
-    // this.managementService.patchHost(id, this.host).subscribe();
 
-    // this.managementService.getHostById(this.selectedIdHijo, 'huesped').subscribe(host => this.hostAux = host);
-    console.log(this.hostAux.nombre);
-    console.log(this.selectedIdHijo);
 
   }
 

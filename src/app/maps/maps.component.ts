@@ -6,55 +6,39 @@ import { ManagementService } from "app/services/management.service";
 
 // declare const google: any;
 declare var $: any;
-interface Marker {
-  lat: number;
-  lng: number;
-  label?: string;
-  draggable?: boolean;
-}
+
 @Component({
   selector: "app-maps",
   templateUrl: "./maps.component.html",
   styleUrls: ["./maps.component.css"],
 })
 export class MapsComponent implements OnInit {
-  // @Input()
-  // nombre = "";
 
-  // @Input()
-  // descripcion = "";
 
   @Input()
   selectedId: number = 0;
-
  
-  public nombre:string = ""; 
+  public nombre     :string = ""; 
   public descripcion:string = "";
 
-
-  public showFilters: boolean = false;
-  public showSorters: boolean = false;
+  public showFilters      : boolean = false;
+  public showSorters      : boolean = false;
   public invertirSeleccion: boolean = false;
-  public selectedOption:string='';
+  public selectedOption   : string  =    '';
 
-  displayedServices: Service[] = [];
-  pageSize: number = 10;
-  currentPage: number = 0;
+  displayedServices : Service[] = [];
+  pageSize          : number    = 10;
+  currentPage       : number    =  0;
 
   showButton: boolean=false;
 
-public services : Service[] = [];
-public service : Service;
+  public services : Service[] = [];
+  public service  : Service;
 
-  data: Service = {
-    id: 0,
-    nombre: "",
-    descripcion: "",
-    hoteles: [],
-  };
   
-  constructor(private managementService : ManagementService,
-    private router : Router
+  constructor(
+    private managementService : ManagementService,
+    private router            : Router
   ) { }
 
 
@@ -117,14 +101,11 @@ public service : Service;
   }
 
   onSubmitDEL(id:number){
-    
-    this.managementService.deleteService(id)
-    .subscribe();
+    this.managementService.deleteService(id).subscribe();
   }
 
   setIndex(id:number){
     this.selectedId=id;
-    console.log(this.selectedId);
     this.managementService.getServiceById(id, 'servicio').subscribe(service => this.service = service);
   }
 
@@ -137,8 +118,6 @@ public service : Service;
 
 
   toggleFilter(){
-    console.log(this.services.length)
-
     this.showFilters = !this.showFilters;
   }
 
@@ -163,7 +142,6 @@ public service : Service;
     else
       this.invertirSeleccion = false
   
-    console.log(this.selectedOption)
     switch(this.selectedOption){
       case 'Nombre':
         this.displayedServices= this.services.sort((a, b)=>{
@@ -202,7 +180,6 @@ public service : Service;
 
     }
 
-    // this.managementService.getServicesRequest('servicio').subscribe();
 
   }
 
@@ -215,12 +192,8 @@ public service : Service;
     this.managementService.getServicesRequest('servicio')
     .subscribe(services => {
       this.displayedServices = services.sort((a, b)=>a.id-b.id);
-      // this.displayedServices=hosts.sort((a, b)=>a.id-b.id);
       //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
     });
-
-
-    // this.displayedServices = this.hosts;
     this.updateDisplayedHosts();
   }
 
@@ -240,9 +213,6 @@ public service : Service;
 
 
   showNotification(from :string, align:string, tipo:string){
-    // const type = ['','info','success','warning','danger'];
-
-    // const color = Math.floor((Math.random() * 4) + 1);
     let mensaje = '';
 
     switch(tipo){

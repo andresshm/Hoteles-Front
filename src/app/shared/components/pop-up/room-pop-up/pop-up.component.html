@@ -111,15 +111,15 @@
               </div> -->
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Número:</label>
-                <input type="text" class="form-control" id="recipient-name" [value]="roomAux.numero">
+                <input #inputNumber type="text" class="form-control" id="recipient-name" [value]="roomAux.numero">
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label" >Tipo</label>
-                <input type="text" class="form-control" id="recipient-name" [value]="roomAux.tipo">
+                <input #inputType type="text" class="form-control" id="recipient-name" [value]="roomAux.tipo">
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label" >Precio/noche</label>
-                <input type="text" class="form-control" id="recipient-name" [value]="roomAux.precioNoche">
+                <input #inputPrice type="text" class="form-control" id="recipient-name" [value]="roomAux.precioNoche">
               </div>
               
               <!-- <div class="mb-3">
