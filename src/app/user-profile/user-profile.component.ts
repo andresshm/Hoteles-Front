@@ -102,6 +102,7 @@ export class UserProfileComponent implements OnInit {
     this.managementService.getHostsRequest('huesped')
       .subscribe(hosts => {
         this.hosts = hosts.sort((a, b)=>a.id-b.id);
+        this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
         //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
       });
   }
@@ -142,7 +143,10 @@ export class UserProfileComponent implements OnInit {
 
 
   filter(name:string, apellido:string, dni:string, procedencia:string, checkInD:string, checkInH:string, checkOutD:string, checkOutH:string){
-    this.managementService.filterHost(name, apellido, dni, procedencia, checkInD, checkInH, checkOutD, checkOutH).subscribe(matchHosts => this.hosts = matchHosts);
+    this.managementService.filterHost(name, apellido, dni, procedencia, checkInD, checkInH, checkOutD, checkOutH).subscribe(matchHosts => {
+      this.displayedHosts = matchHosts;
+      this.hosts = matchHosts
+    });
 
     
   }
@@ -159,7 +163,7 @@ export class UserProfileComponent implements OnInit {
     console.log(this.selectedOption)
     switch(this.selectedOption){
       case 'Nombre':
-        this.hosts= this.hosts.sort((a, b)=>{
+        this.displayedHosts= this.hosts.sort((a, b)=>{
           const nameA = a.nombre.toLowerCase();
           const nameB = b.nombre.toLowerCase();
           
@@ -176,7 +180,7 @@ export class UserProfileComponent implements OnInit {
         break;
 
       case 'Apellido':
-        this.hosts= this.hosts.sort((a, b)=>{
+        this.displayedHosts= this.hosts.sort((a, b)=>{
           const nameA = a.apellido.toLowerCase();
           const nameB = b.apellido.toLowerCase();
           
@@ -196,7 +200,7 @@ export class UserProfileComponent implements OnInit {
 
       case 'DNI/Pasaporte':
 
-      this.hosts= this.hosts.sort((a, b)=>{
+      this.displayedHosts= this.hosts.sort((a, b)=>{
         const nameA = a.dniPasaporte.toLowerCase();
         const nameB = b.dniPasaporte.toLowerCase();
         
@@ -215,7 +219,7 @@ export class UserProfileComponent implements OnInit {
     
       case 'Procedencia':
 
-      this.hosts= this.hosts.sort((a, b)=>{
+      this.displayedHosts= this.hosts.sort((a, b)=>{
         const nameA = a.procedencia.toLowerCase();
         const nameB = b.procedencia.toLowerCase();
         
@@ -234,7 +238,7 @@ export class UserProfileComponent implements OnInit {
 
 
       case 'Check-in':
-        this.hosts= this.hosts.sort((a, b) => {
+        this.displayedHosts= this.hosts.sort((a, b) => {
           const parseDate = (dateString: string): number => {
             const [day, month, year, time] = dateString.split(/[- :]/);
             return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
@@ -252,7 +256,7 @@ export class UserProfileComponent implements OnInit {
 
 
       case 'Check-out':
-        this.hosts= this.hosts.sort((a, b) => {
+        this.displayedHosts= this.hosts.sort((a, b) => {
           const parseDate = (dateString: string): number => {
             const [day, month, year, time] = dateString.split(/[- :]/);
             return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
@@ -270,7 +274,7 @@ export class UserProfileComponent implements OnInit {
 
 
     }
-    this.managementService.getHostsRequest('huesped').subscribe();
+    // this.managementService.getHostsRequest('huesped').subscribe();
 
   }
 

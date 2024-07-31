@@ -118,10 +118,10 @@ export class ServicePopUpComponent implements OnInit, OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if(changes && this.selectedIdHijo!==0 && this.serviceAux){
-      this.managementService.getServiceById(this.selectedIdHijo, 'servicio').subscribe(service => this.serviceAux = service);
+    // if(changes && this.selectedIdHijo!==0 && this.serviceAux){
+    //   this.managementService.getServiceById(this.selectedIdHijo, 'servicio').subscribe(service => this.serviceAux = service);
 
-    }
+    // }
   }
 
   ngOnInit(): void {

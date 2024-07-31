@@ -127,6 +127,7 @@ export class TypographyComponent implements OnInit {
     this.managementService.getHotelsRequest('hotel')
       .subscribe(hotels => {
         this.hotels = hotels.sort((a, b)=>a.id-b.id);
+        this.displayedHotels = hotels.sort((a, b)=>a.id-b.id);
         //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
       });
   }
@@ -198,7 +199,7 @@ export class TypographyComponent implements OnInit {
 
 
   filter(name:string, direccion:string, telefono:string, email:string, sitioWeb:string){
-    this.managementService.filterHotel(name, direccion, telefono, email, sitioWeb).subscribe(matchHotels => this.hotels = matchHotels);    
+    this.managementService.filterHotel(name, direccion, telefono, email, sitioWeb).subscribe(matchHotels => this.displayedHotels = matchHotels);    
   }
 
 
@@ -213,7 +214,7 @@ export class TypographyComponent implements OnInit {
     console.log(this.selectedOption)
     switch(this.selectedOption){
       case 'Nombre':
-        this.hotels= this.hotels.sort((a, b)=>{
+        this.displayedHotels= this.hotels.sort((a, b)=>{
           const nameA = a.nombre.toLowerCase();
           const nameB = b.nombre.toLowerCase();
           
@@ -230,7 +231,7 @@ export class TypographyComponent implements OnInit {
         break;
 
       case 'Direccion':
-        this.hotels= this.hotels.sort((a, b)=>{
+        this.displayedHotels= this.hotels.sort((a, b)=>{
           const nameA = a.direccion.toLowerCase();
           const nameB = b.direccion.toLowerCase();
           
@@ -250,7 +251,7 @@ export class TypographyComponent implements OnInit {
 
       case 'Telefono':
 
-      this.hotels= this.hotels.sort((a, b)=>{
+      this.displayedHotels= this.hotels.sort((a, b)=>{
         const nameA = a.telefono.toLowerCase();
         const nameB = b.telefono.toLowerCase();
         
@@ -269,7 +270,7 @@ export class TypographyComponent implements OnInit {
     
       case 'Email':
 
-      this.hotels= this.hotels.sort((a, b)=>{
+      this.displayedHotels= this.hotels.sort((a, b)=>{
         const nameA = a.email.toLowerCase();
         const nameB = b.email.toLowerCase();
         
@@ -288,7 +289,7 @@ export class TypographyComponent implements OnInit {
 
 
       case 'Sitio-Web':
-        this.hotels= this.hotels.sort((a, b)=>{
+        this.displayedHotels= this.hotels.sort((a, b)=>{
           const nameA = a.sitioWeb.toLowerCase();
           const nameB = b.sitioWeb.toLowerCase();
           
@@ -307,7 +308,7 @@ export class TypographyComponent implements OnInit {
 
 
     }
-    this.managementService.getHotelsRequest('hotel').subscribe();
+    // this.managementService.getHotelsRequest('hotel').subscribe();
 
   }
 

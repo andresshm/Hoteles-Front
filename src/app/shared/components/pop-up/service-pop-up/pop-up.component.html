@@ -108,13 +108,13 @@
                 <label for="recipient-name" class="col-form-label">ID:</label>
                 <input type="text" class="form-control" id="recipient-name">
               </div> -->
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nombre:</label>
+              <div *ngIf="serviceAux" class="mb-3">
+                <label for="recipient-name" class="col-form-label">Nombre: {{serviceAux.nombre}}</label>
                 <input type="text" class="form-control" id="recipient-name" [value]="serviceAux.nombre">
               </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label" >Descripción</label>
-                <input type="text" class="form-control" id="recipient-name" [value]="serviceAux.descripcion">
+              <div *ngIf="serviceAux" class="mb-3">
+                <label for="recipient-desc" class="col-form-label" >Descripción</label>
+                <input type="text" class="form-control" id="recipient-desc" [value]="serviceAux.descripcion">
               </div>
               
               <!-- <div class="mb-3">

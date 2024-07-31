@@ -107,10 +107,11 @@ public service : Service;
  
 
   getServices() {
-   
+
     this.managementService.getServicesRequest('servicio')
       .subscribe(servs => {
         this.services = servs.sort((a, b)=>a.id-b.id);
+        this.displayedServices = servs.sort((a, b)=>a.id-b.id);
         //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
       });
   }
@@ -147,7 +148,10 @@ public service : Service;
 
 
   filter(nombre:string, descripcion:string){
-    this.managementService.filterService(nombre, descripcion).subscribe(matchServices => this.services = matchServices);
+    this.managementService.filterService(nombre, descripcion).subscribe(matchServices => {
+      this.services = matchServices;
+      this.displayedServices = matchServices;
+    });
   }
 
 
@@ -162,7 +166,7 @@ public service : Service;
     console.log(this.selectedOption)
     switch(this.selectedOption){
       case 'Nombre':
-        this.services= this.services.sort((a, b)=>{
+        this.displayedServices= this.services.sort((a, b)=>{
           const nameA = a.nombre.toLowerCase();
           const nameB = b.nombre.toLowerCase();
           
@@ -179,7 +183,7 @@ public service : Service;
         break;
 
       case 'Descripcion':
-        this.services= this.services.sort((a, b)=>{
+        this.displayedServices= this.services.sort((a, b)=>{
           const nameA = a.descripcion.toLowerCase();
           const nameB = b.descripcion.toLowerCase();
           
@@ -198,7 +202,7 @@ public service : Service;
 
     }
 
-    this.managementService.getServicesRequest('servicio').subscribe();
+    // this.managementService.getServicesRequest('servicio').subscribe();
 
   }
 

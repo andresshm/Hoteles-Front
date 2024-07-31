@@ -113,6 +113,7 @@ export class IconsComponent implements OnInit {
     this.managementService.getRoomsRequest('habitacion')
       .subscribe(rooms => {
         this.rooms = rooms.sort((a, b)=>a.id-b.id);
+        this.displayedRooms = rooms.sort((a, b)=>a.id-b.id);
         //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
       });
   }
@@ -150,7 +151,10 @@ export class IconsComponent implements OnInit {
 
 
   filter(numero:string, precioNoche:number, tipo:string){
-    this.managementService.filterRoom(numero, precioNoche, tipo).subscribe(matchRooms => this.rooms = matchRooms);    
+    this.managementService.filterRoom(numero, precioNoche, tipo).subscribe(matchRooms => {
+      this.rooms = matchRooms;
+      this.displayedRooms = matchRooms;
+    });    
   }
 
 
@@ -165,7 +169,7 @@ export class IconsComponent implements OnInit {
     console.log(this.selectedOption)
     switch(this.selectedOption){
       case 'Numero':
-        this.rooms= this.rooms.sort((a, b)=>{
+        this.displayedRooms= this.rooms.sort((a, b)=>{
           const nameA = a.numero.toLowerCase();
           const nameB = b.numero.toLowerCase();
           
@@ -182,7 +186,7 @@ export class IconsComponent implements OnInit {
         break;
 
       case 'Tipo':
-        this.rooms= this.rooms.sort((a, b)=>{
+        this.displayedRooms= this.rooms.sort((a, b)=>{
           const nameA = a.tipo.toLowerCase();
           const nameB = b.tipo.toLowerCase();
           
@@ -202,7 +206,7 @@ export class IconsComponent implements OnInit {
 
       case 'Precio':
 
-      this.rooms= this.rooms.sort((a, b)=>{
+      this.displayedRooms= this.rooms.sort((a, b)=>{
         const nameA = a.precioNoche;
         const nameB = b.precioNoche;
         
@@ -212,22 +216,11 @@ export class IconsComponent implements OnInit {
         else
           return nameA - nameB; // Ordenar de más reciente a más antiguo
       });
-      //   if(this.invertirSeleccion){
-      //     if (nameA - nameB) return 1;
-      //     if (nameA - nameB) return -1;
-
-      //  }else{
-
-      //    if (nameA - nameB) return -1;
-      //    if (nameA - nameB) return 1;
-      //  }
-      //   return 0;
-      // });
       break;
 
     }
 
-    this.managementService.getRoomsRequest('habitacion').subscribe();
+    // this.managementService.getRoomsRequest('habitacion').subscribe();
 
   }
 

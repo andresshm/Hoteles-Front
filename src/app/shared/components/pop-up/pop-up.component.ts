@@ -118,29 +118,10 @@ export class PopUpComponent implements OnInit, OnChanges{
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes && this.selectedIdHijo!==0 && this.hostAux){
+    if(changes && this.selectedIdHijo!==0 && this.serviceAux){
+      this.managementService.getServiceById(this.selectedIdHijo, 'servicio').subscribe(hotel => this.serviceAux = hotel);
 
-      console.log(this.selectedIdHijo);
-      this.managementService.getHostById(this.selectedIdHijo, 'huesped').subscribe(host => this.hostAux = host);
-      
-      let originalDate = this.hostAux.fechaCheckin;
-      let parts = originalDate.split(" ")[0].split("/"); // Split the date and then the parts
-      let formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-      this.dateIn = formattedDate;
-      console.log(this.dateIn);
-      this.timeIn = originalDate.split(" ")[1];
-
-
-      originalDate = this.hostAux.fechaCheckout;
-      parts = originalDate.split(" ")[0].split("/"); // Split the date and then the parts
-      formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-      this.dateOut = formattedDate;
-      this.timeOut = originalDate.split(" ")[1];
     }
-    /*if(changes && this.selectedIdHijo!==0 && this.hotelAux){
-      this.managementService.getHotelById(this.selectedIdHijo, 'hotel').subscribe(hotel => this.hotelAux = hotel);
-
-    }*/
   }
 
   ngOnInit(): void {
@@ -232,7 +213,7 @@ export class PopUpComponent implements OnInit, OnChanges{
         break;
       case "SER":
         this.managementService
-          .putService(this.selectedIdHijo, this.service)
+          .putService(this.selectedIdHijo, this.serviceAux)
           .subscribe();
         break;
     }
