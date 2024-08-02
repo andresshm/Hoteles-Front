@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import { Router } from "@angular/router";
+import { Criterio } from "app/interfaces/criterio.interface";
 import { Service } from "app/interfaces/service.interface";
 import { ManagementService } from "app/services/management.service";
 
@@ -127,10 +128,25 @@ export class MapsComponent implements OnInit {
 
 
   filter(nombre:string, descripcion:string){
-    this.managementService.filterService(nombre, descripcion).subscribe(matchServices => {
-      this.services = matchServices;
-      this.displayedServices = matchServices;
-    });
+    // this.managementService.filterService(nombre, descripcion).subscribe(matchServices => {
+    //   this.services = matchServices;
+    //   this.displayedServices = matchServices;
+    // });
+
+    const valuesAux : Criterio[] = [
+      {name:"nombre", value:nombre},
+      {name:"descripcion", value:descripcion}];
+    const searchCriteria = [];
+    valuesAux.forEach(value => {
+      if(value.value!=='')
+        searchCriteria.push(value)
+    } );
+
+
+    this.managementService.searchService(null, null, searchCriteria, "EQUALS")
+    .subscribe(filteredServices=>
+      this.displayedServices = filteredServices
+    )
   }
 
 
@@ -144,38 +160,33 @@ export class MapsComponent implements OnInit {
   
     switch(this.selectedOption){
       case 'Nombre':
-        this.displayedServices= this.services.sort((a, b)=>{
-          const nameA = a.nombre.toLowerCase();
-          const nameB = b.nombre.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
+        if(this.invertirSeleccion){
+          this.managementService.searchService("nombre", "DESC")
+          .subscribe(sortedServices =>
+            this.displayedServices = sortedServices
+          );
 
-         }else{
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });
+       }else{
+        this.managementService.searchService("nombre", "ASC")
+        .subscribe(sortedServices =>
+          this.displayedServices = sortedServices
+        );
+       }
         break;
 
       case 'Descripcion':
-        this.displayedServices= this.services.sort((a, b)=>{
-          const nameA = a.descripcion.toLowerCase();
-          const nameB = b.descripcion.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
+        if(this.invertirSeleccion){
+          this.managementService.searchService("descripcion", "DESC")
+          .subscribe(sortedServices =>
+            this.displayedServices = sortedServices
+          );
 
-         }else{
-
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });
+       }else{
+        this.managementService.searchService("descripcion", "ASC")
+        .subscribe(sortedServices =>
+          this.displayedServices = sortedServices
+        );
+       }
         break;
 
     }
@@ -206,7 +217,11 @@ export class MapsComponent implements OnInit {
   handlePageEvent(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.updateDisplayedHosts();
+    // this.updateDisplayedHosts();
+    this.managementService.searchService(null,null,null,null,this.pageSize,this.currentPage)
+    .subscribe(pagedServices =>
+      this.displayedServices = pagedServices
+    )
   }
 
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'environments/environment';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -6,16 +7,17 @@ declare interface RouteInfo {
     title: string;
     icon: string;
     class: string;
+    show: boolean;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
-    { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
-    { path: '/user-profile', title: 'Huéspedes',  icon:'person', class: '' },
-    { path: '/typography', title: 'Hoteles',  icon:'hotel_class', class: '' },
-    { path: '/icons', title: 'Habitaciones',  icon:'room_preferences', class: '' },
-    { path: '/maps', title: 'Servicios',  icon:'room_service', class: '' },
-    { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '' },
-    { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
+    { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '', show: true },
+    { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '', show: environment.tableList },
+    { path: '/user-profile', title: 'Huéspedes',  icon:'person', class: '', show: true },
+    { path: '/typography', title: 'Hoteles',  icon:'hotel_class', class: '', show: true },
+    { path: '/icons', title: 'Habitaciones',  icon:'room_preferences', class: '', show: true },
+    { path: '/maps', title: 'Servicios',  icon:'room_service', class: '', show: true },
+    { path: '/notifications', title: 'Notifications',  icon:'notifications', class: '', show: environment.notification },
+    // { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
 ];
 
 @Component({
@@ -29,7 +31,7 @@ export class SidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.menuItems = ROUTES.filter(menuItem => menuItem && menuItem.show);
   }
   isMobileMenu() {
       if ($(window).width() > 991) {

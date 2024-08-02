@@ -1,9 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Host } from 'app/interfaces/host.interface';
-import { ManagementService } from 'app/services/management.service';
-import { ControllerComponent } from 'app/shared/controller/controller.component';
 declare var $: any;
 
 const rtx5090 = {

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Host, OnInit } from '@angular/core';
+import { Hotel } from 'app/interfaces/hotel.interface';
+import { Room } from 'app/interfaces/room.interface';
+import { Service } from 'app/interfaces/service.interface';
+import { ManagementService } from 'app/services/management.service';
 import * as Chartist from 'chartist';
 
 @Component({
@@ -8,7 +12,91 @@ import * as Chartist from 'chartist';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+
+  public hoteles : Hotel[];
+  public numHoteles : number;
+
+  public huespedes : Host[];
+  public numHuespedes : number;
+
+  public habitaciones : Room[];
+  public numHabitaciones : number;
+
+  public servicios : Service[];
+  public numServicios : number;
+
+nombresHoteles :string[] = []
+
+  constructor(private managementService : ManagementService) { }
+
+
+getHoteles(){
+  this.managementService.getHotelsRequest('hotel').subscribe(hoteles => {
+    this.hoteles = hoteles;
+  })
+
+}
+
+
+get nHoteles(){
+  this.hoteles.forEach(hotel => this.nombresHoteles.push(hotel.nombre));
+  return this.hoteles.length;
+}
+
+
+getHosts(){
+  this.managementService.getHostsRequest('huesped').subscribe(hoteles => {
+    this.huespedes = hoteles;
+  })
+
+}
+
+
+get nHuespedes(){
+  return this.huespedes.length;
+}
+
+
+getHabitaciones(){
+  this.managementService.getRoomsRequest('habitacion').subscribe(hoteles => {
+    this.habitaciones = hoteles;
+  })
+
+}
+
+
+get nHabitaciones(){
+  return this.habitaciones.length;
+}
+
+
+getServicios(){
+  this.managementService.getServicesRequest('servicio').subscribe(hoteles => {
+    this.servicios = hoteles;
+  })
+
+}
+
+
+get nServicios(){
+  return this.servicios.length;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -66,6 +154,13 @@ export class DashboardComponent implements OnInit {
       seq2 = 0;
   };
   ngOnInit() {
+
+    this.getHoteles();
+    this.getHabitaciones();
+    this.getHosts();
+    this.getServicios();
+
+
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
       const dataDailySalesChart: any = {
@@ -91,33 +186,34 @@ export class DashboardComponent implements OnInit {
 
       /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
 
-      const dataCompletedTasksChart: any = {
-          labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-          series: [
-              [230, 750, 450, 300, 280, 240, 200, 190]
-          ]
-      };
+    //   const dataCompletedTasksChart: any = {
+    //       labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
+    //       series: [
+    //           [230, 750, 450, 300, 280, 240, 200, 190]
+    //       ]
+    //   };
 
-     const optionsCompletedTasksChart: any = {
-          lineSmooth: Chartist.Interpolation.cardinal({
-              tension: 0
-          }),
-          low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
-      }
+    //  const optionsCompletedTasksChart: any = {
+    //       lineSmooth: Chartist.Interpolation.cardinal({
+    //           tension: 0
+    //       }),
+    //       low: 0,
+    //       high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    //       chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
+    //   }
 
-      var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
+    //   var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
 
-      // start animation for the Completed Tasks Chart - Line Chart
-      this.startAnimationForLineChart(completedTasksChart);
+    //   // start animation for the Completed Tasks Chart - Line Chart
+    //   this.startAnimationForLineChart(completedTasksChart);
 
 
 
       /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
       var datawebsiteViewsChart = {
-        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        // labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        labels:this.nombresHoteles,
         series: [
           [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
 
@@ -145,6 +241,9 @@ export class DashboardComponent implements OnInit {
 
       //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(websiteViewsChart);
+
+
+
   }
 
 }

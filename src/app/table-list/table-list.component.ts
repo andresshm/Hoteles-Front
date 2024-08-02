@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Host } from 'app/interfaces/host.interface';
@@ -7,8 +6,6 @@ import { Hotel } from 'app/interfaces/hotel.interface';
 import { Room } from 'app/interfaces/room.interface';
 import { Service } from 'app/interfaces/service.interface';
 import { ManagementService } from 'app/services/management.service';
-import { PopUpComponent } from 'app/shared/components/pop-up/pop-up.component';
-import { from, Observable } from 'rxjs';
 
 declare var $: any;
 
@@ -25,6 +22,17 @@ export class TableListComponent implements OnInit {
   public hosts: Host[]= [];
   public rooms: Room[]= [];
   public hotels: Hotel[]= [];
+  public hotel: Hotel = {
+    id: 0,
+    nombre: '',
+    direccion: '',
+    telefono: '',
+    email: '',
+    sitioWeb: '',
+    services: [],
+    servicios: [],
+    habitaciones: []
+  };
   public services: Service[]= [];
 
   public name:string=''
@@ -35,292 +43,110 @@ export class TableListComponent implements OnInit {
   
 
 
-  public showHostTable = false;
-  public showRoomTable = false;
-  public showHotelTable = false;
-  public showServiceTable = false;
+  // public showHostTable = false;
+  // public showRoomTable = false;
+  // public showHotelTable = false;
+  // public showServiceTable = false;
 
-  public selectedId: number=0;
-  public showButton: boolean = false;
-  public showFilters: boolean = false;
-  public showSorters: boolean = false;
-  public invertirSeleccion: boolean = false;
- public selectedOption:string='';
+//   public selectedId: number=0;
+//   public showButton: boolean = false;
+//   public showFilters: boolean = false;
+//   public showSorters: boolean = false;
+//   public invertirSeleccion: boolean = false;
+//  public selectedOption:string='';
 
 
- displayedHosts: Host[] = [];
- pageSize: number = 10;
- currentPage: number = 0;
-
- @ViewChild(MatPaginator) paginator: MatPaginator;
  
-
-public host: Host;
+selectedHotelId: number;
+selectedServiceIds: number[] = [];
 
   constructor(private managementService : ManagementService,
-    private router : Router
+    // private router : Router
   ) { }
 
 
 
+  ngOnInit(): void {
+    this.loadHotels();
+    this.loadServices();
+  }
 
+  loadHotels() {
+    // Replace this with actual data fetching
+    this.managementService.getHotelsRequest('hotel').subscribe(hoteles => {
+      this.hotels = hoteles.sort((a, b)=>a.id-b.id);
+      // this.hotel = this.hotels[0];
+    })
+  }
 
-   ngOnInit() {
-    // Esta parte gestiona las notificaciones despues de 
-    // borrar un huesped. Se añade una señal por asi decirlo
-    // en el localStorage y si la encontramos al recargar
-    // mostramos la noti y limpiamos el historial para que no
-    // salga la noti cada vez que recargamos
-    const mensaje = localStorage.getItem('notificacion');
+  loadServices() {
+    // Replace this with actual data fetching
+    this.managementService.getServicesRequest('servicio').subscribe(servicios => this.services = servicios)
 
-    // mensaje es DEL/POST/PUT
-    //se podria dejar el remove para el final y no repetirlo
-    
-    if(mensaje)
-    switch(mensaje){
-      case 'DEL':
-        this.showNotification('top', 'right', 'DEL');
-        localStorage.removeItem('notificacion');
-        break;
-      case 'POST':
-        this.showNotification('top', 'right', 'POST');
-        localStorage.removeItem('notificacion');
-        break;
-      case 'PUT':
-        this.showNotification('top', 'right', 'PUT');
-        localStorage.removeItem('notificacion');
-        break;
+  }
+
+  onHotelChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedHotelId = parseInt(selectElement.value, 10);
+    console.log('Selected hotel ID:', this.selectedHotelId);
+    if(this.selectedHotelId)
+      this.managementService.getHotelById(this.selectedHotelId, 'hotel').subscribe(hotelAux => this.hotel = hotelAux)
+
+  }
+  // onRoomChange(event: Event) {
+  //   const selectElement = event.target as HTMLSelectElement;
+  //   this.selectedHotelId = parseInt(selectElement.value, 10);
+  //   console.log('Selected hotel ID:', this.selectedHotelId);
+  //   if(this.selectedHotelId)
+  //     this.managementService.getHotelById(this.selectedHotelId, 'hotel').subscribe(hotelAux => this.hotel = hotelAux)
+
+  // }
+
+  toggleService(serviceId: number) {
+    console.log('Selected service ID:', serviceId);
+    // console.log('Selected hotel ID:', this.selectedHotelId);
+
+    const index = this.selectedServiceIds.indexOf(serviceId);
+    if (index === -1) {
+      this.selectedServiceIds.push(serviceId);
+    } else {
+      this.selectedServiceIds.splice(index, 1);
     }
-    
-    
-    
-
-    this.router.events.subscribe(() => {
-      this.checkRoute();
-    });
-    this.checkRoute();
-     
-
-
-   
-
-
-
-
-    // Aqui se piden los huespedes a la API
-    // para generar la lista en pantalla
-   this.getHuespedes();
-
-
-
-
-    //paginasion
-   this.loadData();
   }
 
- 
-
-  getHuespedes() {
-   
-    this.managementService.getHostsRequest('huesped')
-      .subscribe(hosts => {
-        this.hosts = hosts.sort((a, b)=>a.id-b.id);
-        // this.displayedHosts=hosts.sort((a, b)=>a.id-b.id);
-        //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
-      });
-  }
-
-  onSubmitDEL(id:number){
-    
-    this.managementService.deleteHost(id)
-    .subscribe();
-  }
-
-  setIndex(id:number){
-    this.selectedId=id;
-    console.log(this.selectedId);
-  }
-
-
-  toggleFilter(){
-    console.log(this.hosts.length)
-
-    this.showFilters = !this.showFilters;
-  }
-
-  toggleSorter(){
-    this.showSorters = !this.showSorters;
-  }
-
-  //A priori funciona bn
-  handleSelection(swap?:string) {
-    if(swap)
-      this.invertirSeleccion = !this.invertirSeleccion;
-    else
-      this.invertirSeleccion = false
-  
-    console.log(this.selectedOption)
-    switch(this.selectedOption){
-      case 'Nombre':
-        this.hosts= this.hosts.sort((a, b)=>{
-          const nameA = a.nombre.toLowerCase();
-          const nameB = b.nombre.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
-
-         }else{
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });
-        break;
-
-      case 'Apellido':
-        this.hosts= this.hosts.sort((a, b)=>{
-          const nameA = a.apellido.toLowerCase();
-          const nameB = b.apellido.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
-
-         }else{
-
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });
-        break;
-
-
-      case 'DNI/Pasaporte':
-
-      this.hosts= this.hosts.sort((a, b)=>{
-        const nameA = a.dniPasaporte.toLowerCase();
-        const nameB = b.dniPasaporte.toLowerCase();
-        
-        if(this.invertirSeleccion){
-          if (nameA < nameB) return 1;
-          if (nameA > nameB) return -1;
-
-       }else{
-
-         if (nameA < nameB) return -1;
-         if (nameA > nameB) return 1;
-       }
-        return 0;
-      });
-      break;
-
-
-      case 'Check-in':
-        this.hosts= this.hosts.sort((a, b) => {
-          const parseDate = (dateString: string): number => {
-            const [day, month, year, time] = dateString.split(/[- :]/);
-            return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
-          };
-        
-          const dateA = parseDate(a.fechaCheckin.toString());
-          const dateB = parseDate(b.fechaCheckin.toString());
-
-          if(this.invertirSeleccion)
-            return dateB - dateA; // Ordenar de más reciente a más antiguo
-          else
-            return dateA - dateB; // Ordenar de más reciente a más antiguo
-        });
-        break;
-
-
-      case 'Check-out':
-        this.hosts= this.hosts.sort((a, b) => {
-          const parseDate = (dateString: string): number => {
-            const [day, month, year, time] = dateString.split(/[- :]/);
-            return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
-          };
-        
-          const dateA = parseDate(a.fechaCheckout.toString());
-          const dateB = parseDate(b.fechaCheckout.toString());
-
-          if(this.invertirSeleccion)
-            return dateB - dateA; // Ordenar de más reciente a más antiguo
-          else
-            return dateA - dateB; // Ordenar de más reciente a más antiguo
-        });
-        break;
-
-
-    }
-    this.managementService.getHostsRequest('huesped').subscribe();
-
-  }
-
-
-
-
-
-  filter(name:string, apellido:string, dni:string, checkIn:string, checkOut:string){
-    // this.managementService.filterHost(name, apellido, dni, checkIn, checkOut).subscribe(matchHosts => this.hosts = matchHosts);
-
-    
-  }
-
-
-
-  checkRoute() {
-    const currentRoute = this.router.url;
-    this.showButton = currentRoute === '/table-list';
-  }
-
-
-
-  //paginator
-  loadData() {
-    // Simula la carga de datos
-
-    this.managementService.getHostsRequest('huesped')
-    .subscribe(hosts => {
-      this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
-      // this.displayedHosts=hosts.sort((a, b)=>a.id-b.id);
-      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+  linkServices() {
+    console.log('lista de ids', this.selectedServiceIds)
+    let hotel : Hotel;
+    this.managementService.getHotelById(this.selectedHotelId, 'hotel').subscribe(hotelAux => {
+      hotel = hotelAux;
+      hotel.services=this.selectedServiceIds;
+      this.managementService.putHotel(this.selectedHotelId, hotel).subscribe();
     });
 
-
-    // this.displayedHosts = this.hosts;
-    this.updateDisplayedHosts();
-  }
-
-  updateDisplayedHosts() {
-    const startIndex = this.currentPage * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.displayedHosts = this.hosts.slice(startIndex, endIndex);
-  }
-
-  handlePageEvent(event: PageEvent) {
-    this.currentPage = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.updateDisplayedHosts();
+    
   }
 
 
-
-
+  includedServices(serviceId:number) : boolean{
+    if(serviceId)
+      if(this.hotel.services.includes(serviceId))
+        return true;
+      else
+        return false;
+    return;
+  }
 
 
 
   showNotification(from :string, align:string, tipo:string){
-    // const type = ['','info','success','warning','danger'];
 
-    // const color = Math.floor((Math.random() * 4) + 1);
     let mensaje = '';
 
     switch(tipo){
       case 'DEL': mensaje = "Huésped eliminado correctamente";break;
       case 'POST': mensaje = "Huésped creado correctamente";break;
       case 'PUT': mensaje = "Huésped actualizado correctamente";break;
+      case 'STH': mensaje = "Servicios añadidos correctamente";break;
 
     }
     

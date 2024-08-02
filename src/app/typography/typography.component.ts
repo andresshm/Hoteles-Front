@@ -1,6 +1,7 @@
 import { Component, Host, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { Criterio } from 'app/interfaces/criterio.interface';
 import { Hotel } from 'app/interfaces/hotel.interface';
 import { ManagementService } from 'app/services/management.service';
 
@@ -198,8 +199,25 @@ export class TypographyComponent implements OnInit {
   }
 
 
-  filter(name:string, direccion:string, telefono:string, email:string, sitioWeb:string){
-    this.managementService.filterHotel(name, direccion, telefono, email, sitioWeb).subscribe(matchHotels => this.displayedHotels = matchHotels);    
+  filter(name?:string, direccion?:string, telefono?:string, email?:string, sitioWeb?:string){
+    // this.managementService.filterHotel(name, direccion, telefono, email, sitioWeb).subscribe(matchHotels => this.displayedHotels = matchHotels);
+    const valuesAux : Criterio[] = [
+      {name:"nombre", value:name},
+      {name:"direccion", value:direccion},
+      {name:"telefono", value:telefono},
+      {name:"email", value:email},
+      {name:"sitioWeb", value:sitioWeb}];
+    const searchCriteria = [];
+    valuesAux.forEach(value => {
+      if(value.value!=='')
+        searchCriteria.push(value)
+    } );
+
+
+    this.managementService.searchHotel(null, null, searchCriteria, "EQUALS")
+    .subscribe(filteredHotels=>
+      this.displayedHotels = filteredHotels
+    )
   }
 
 
@@ -214,96 +232,82 @@ export class TypographyComponent implements OnInit {
     console.log(this.selectedOption)
     switch(this.selectedOption){
       case 'Nombre':
-        this.displayedHotels= this.hotels.sort((a, b)=>{
-          const nameA = a.nombre.toLowerCase();
-          const nameB = b.nombre.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
+        if(this.invertirSeleccion){
+          this.managementService.searchHotel("nombre", "DESC")
+          .subscribe(sortedHotels =>
+            this.displayedHotels = sortedHotels
+          );
 
-         }else{
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });
+       }else{
+        this.managementService.searchHotel("nombre", "ASC")
+        .subscribe(sortedHotels =>
+          this.displayedHotels = sortedHotels
+        );
+       }
         break;
 
       case 'Direccion':
-        this.displayedHotels= this.hotels.sort((a, b)=>{
-          const nameA = a.direccion.toLowerCase();
-          const nameB = b.direccion.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
+        if(this.invertirSeleccion){
+          this.managementService.searchHotel("direccion", "DESC")
+          .subscribe(sortedHotels =>
+            this.displayedHotels = sortedHotels
+          );
 
-         }else{
-
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });
+       }else{
+        this.managementService.searchHotel("direccion", "ASC")
+        .subscribe(sortedHotels =>
+          this.displayedHotels = sortedHotels
+        );
+       }
         break;
 
 
       case 'Telefono':
 
-      this.displayedHotels= this.hotels.sort((a, b)=>{
-        const nameA = a.telefono.toLowerCase();
-        const nameB = b.telefono.toLowerCase();
-        
-        if(this.invertirSeleccion){
-          if (nameA < nameB) return 1;
-          if (nameA > nameB) return -1;
+      if(this.invertirSeleccion){
+        this.managementService.searchHotel("telefono", "DESC")
+        .subscribe(sortedHotels =>
+          this.displayedHotels = sortedHotels
+        );
 
-       }else{
-
-         if (nameA < nameB) return -1;
-         if (nameA > nameB) return 1;
-       }
-        return 0;
-      });
+     }else{
+      this.managementService.searchHotel("telefono", "ASC")
+      .subscribe(sortedHotels =>
+        this.displayedHotels = sortedHotels
+      );
+     }
       break;
     
       case 'Email':
 
-      this.displayedHotels= this.hotels.sort((a, b)=>{
-        const nameA = a.email.toLowerCase();
-        const nameB = b.email.toLowerCase();
-        
-        if(this.invertirSeleccion){
-          if (nameA < nameB) return 1;
-          if (nameA > nameB) return -1;
+      if(this.invertirSeleccion){
+        this.managementService.searchHotel("email", "DESC")
+        .subscribe(sortedHotels =>
+          this.displayedHotels = sortedHotels
+        );
 
-       }else{
-
-         if (nameA < nameB) return -1;
-         if (nameA > nameB) return 1;
-       }
-        return 0;
-      });
+     }else{
+      this.managementService.searchHotel("email", "ASC")
+      .subscribe(sortedHotels =>
+        this.displayedHotels = sortedHotels
+      );
+     }
       break;
 
 
       case 'Sitio-Web':
-        this.displayedHotels= this.hotels.sort((a, b)=>{
-          const nameA = a.sitioWeb.toLowerCase();
-          const nameB = b.sitioWeb.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
-  
-         }else{
-  
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });
+        if(this.invertirSeleccion){
+          this.managementService.searchHotel("sitioWeb", "DESC")
+          .subscribe(sortedHotels =>
+            this.displayedHotels = sortedHotels
+          );
+
+       }else{
+        this.managementService.searchHotel("sitioWeb", "ASC")
+        .subscribe(sortedHotels =>
+          this.displayedHotels = sortedHotels
+        );
+       }
         break;
 
 
@@ -322,7 +326,6 @@ export class TypographyComponent implements OnInit {
     this.managementService.getHotelsRequest('hotel')
     .subscribe(hotels => {
       this.displayedHotels = hotels.sort((a, b)=>a.id-b.id);
-      // this.displayedHotels=hosts.sort((a, b)=>a.id-b.id);
       //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
     });
 
@@ -340,7 +343,11 @@ export class TypographyComponent implements OnInit {
   handlePageEvent(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.updateDisplayedHosts();
+    // this.updateDisplayedHosts();
+    this.managementService.searchHotel(null,null,null,null,this.pageSize,this.currentPage)
+    .subscribe(pagedHotels =>
+      this.displayedHotels = pagedHotels
+    )
   }
 
 

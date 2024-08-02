@@ -1,11 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import { ManagementService } from "app/services/management.service";
-import { MatDialog } from "@angular/material/dialog";
-import { Host } from "app/interfaces/host.interface";
-import { Hotel } from "app/interfaces/hotel.interface";
 import { Room } from "app/interfaces/room.interface";
-import { Service } from "app/interfaces/service.interface";
-import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "room-pop-up",

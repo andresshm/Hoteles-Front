@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { Criterio } from 'app/interfaces/criterio.interface';
 
 import { Room } from 'app/interfaces/room.interface';
 import { ManagementService } from 'app/services/management.service';
@@ -126,10 +127,29 @@ export class IconsComponent implements OnInit {
 
 
   filter(numero:string, precioNoche:number, tipo:string){
-    this.managementService.filterRoom(numero, precioNoche, tipo).subscribe(matchRooms => {
-      this.rooms = matchRooms;
-      this.displayedRooms = matchRooms;
-    });    
+    // this.managementService.filterRoom(numero, precioNoche, tipo).subscribe(matchRooms => {
+    //   this.rooms = matchRooms;
+    //   this.displayedRooms = matchRooms;
+    // });  
+    
+    
+    const valuesAux : Criterio[] = [
+      {name:"numero", value:numero},
+      {name:"tipo", value:tipo},
+      {name:"precioNoche", value:precioNoche}];
+    const searchCriteria :Criterio[] = [];
+    valuesAux.forEach(value => {
+      if(value.value!=='')
+        searchCriteria.push(value)
+    } );
+
+
+    this.managementService.searchRoom(null, null, searchCriteria, "EQUALS")
+    .subscribe(filteredRooms=>
+      this.displayedRooms = filteredRooms
+    )
+
+
   }
 
 
@@ -143,53 +163,50 @@ export class IconsComponent implements OnInit {
   
     switch(this.selectedOption){
       case 'Numero':
-        this.displayedRooms= this.rooms.sort((a, b)=>{
-          const nameA = a.numero.toLowerCase();
-          const nameB = b.numero.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
+        if(this.invertirSeleccion){
+          this.managementService.searchRoom("nombre", "DESC")
+          .subscribe(sortedRooms =>
+            this.displayedRooms = sortedRooms
+          );
 
-         }else{
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });
+       }else{
+        this.managementService.searchRoom("nombre", "ASC")
+        .subscribe(sortedRooms =>
+          this.displayedRooms = sortedRooms
+        );
+       }
         break;
 
       case 'Tipo':
-        this.displayedRooms= this.rooms.sort((a, b)=>{
-          const nameA = a.tipo.toLowerCase();
-          const nameB = b.tipo.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
+        if(this.invertirSeleccion){
+          this.managementService.searchRoom("nombre", "DESC")
+          .subscribe(sortedRooms =>
+            this.displayedRooms = sortedRooms
+          );
 
-         }else{
-
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });
+       }else{
+        this.managementService.searchRoom("nombre", "ASC")
+        .subscribe(sortedRooms =>
+          this.displayedRooms = sortedRooms
+        );
+       }
         break;
 
 
       case 'Precio':
 
-      this.displayedRooms= this.rooms.sort((a, b)=>{
-        const nameA = a.precioNoche;
-        const nameB = b.precioNoche;
-        
+      if(this.invertirSeleccion){
+        this.managementService.searchRoom("nombre", "DESC")
+        .subscribe(sortedRooms =>
+          this.displayedRooms = sortedRooms
+        );
 
-        if(this.invertirSeleccion)
-          return nameB - nameA; // Ordenar de más reciente a más antiguo
-        else
-          return nameA - nameB; // Ordenar de más reciente a más antiguo
-      });
+     }else{
+      this.managementService.searchRoom("nombre", "ASC")
+      .subscribe(sortedRooms =>
+        this.displayedRooms = sortedRooms
+      );
+     }
       break;
 
     }
@@ -220,7 +237,11 @@ export class IconsComponent implements OnInit {
   handlePageEvent(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.updateDisplayedHosts();
+    // this.updateDisplayedHosts();
+    this.managementService.searchRoom(null,null,null,null,this.pageSize,this.currentPage)
+    .subscribe(pagedRooms =>
+      this.displayedRooms = pagedRooms
+    )
   }
 
 

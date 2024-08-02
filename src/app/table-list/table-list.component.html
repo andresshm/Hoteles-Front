@@ -1,178 +1,62 @@
+
 <div class="main-content">
   <div class="container-fluid">
 
-
-    
-      <div class="button-container2">
-        <button class="search-button" (click)="toggleFilter()">
-          <mat-icon class="mr-2">search</mat-icon>
-          <span class="button-text">Buscar</span>
-        </button>
-        <button class="search-button" (click)="toggleSorter()">
-          <mat-icon class="mr-2">sort</mat-icon>
-          <span class="button-text">Ordenar</span>
-        </button>
-      </div>
-   
-
-
-
-
-    <div *ngIf="showSorters" >
-      <hr>
-      <h3>Ordenar</h3>
-      <hr>
-      <h4>Seleccione una opción</h4>
-
-      <div class="button-container2">
-        <select id="option-selector" class="selector" [(ngModel)]="selectedOption">
-          <option value="" >Seleccione...</option>
-          <option value="Nombre">Nombre</option>
-          <option value="Apellido">Apellido</option>
-          <option value="DNI/Pasaporte">DNI/Pasaporte</option>
-          <option value="Check-in">Check-in</option>
-          <option value="Check-out">Check-out</option>
-        </select>
-        <button *ngIf="selectedOption" class="search-button" (click)="handleSelection('swap')">
-          <mat-icon>swap_vert</mat-icon>
-        </button>
-      </div>
-
-
-
-
-      <button *ngIf="selectedOption" class="search-button mt-4" (click)="handleSelection()">
-        <span class="button-text ">Ordenar</span>
-        <!-- <span class="button-icon"></span> -->
-      </button>
-
-    </div>
-
-
-
-
-
-    <div *ngIf="showFilters" class="filter-form-container">
-      <hr>
-      <h3>Filtrar</h3>
-      <hr>
-      <form >
-        <mat-form-field class="full-width">
-          <mat-label>Nombre</mat-label>
-          <input matInput placeholder="Nombre" name="name" [(ngModel)]="name">
-        </mat-form-field>
-    
-        <mat-form-field class="full-width">
-          <mat-label>Apellidos</mat-label>
-          <input matInput type="text" placeholder="Apellidos" name="age" [(ngModel)]="surname">
-        </mat-form-field>
+    <!-- Servicios a hoteles -->
+    <div class="container">
+      <h2>Seleccione los servicios que desea añadir</h2>
       
-        <mat-form-field class="full-width">
-          <mat-label>DNI/Pasaporte</mat-label>
-          <input matInput type="text" placeholder="DNI/Pasaporte" name="age" [(ngModel)]="dni">
-        </mat-form-field>
-    
-        <mat-form-field class="full-width">
-          <mat-label>Check-IN</mat-label>
-          <input matInput type="text" placeholder="check-in"  name="check-in"  [(ngModel)]="checkin">
-        </mat-form-field>
-    
-        <mat-form-field class="full-width">
-          <mat-label>Check-OUT</mat-label>
-          <input matInput type="text" placeholder="check-out"  name="check-out" [(ngModel)]="checkout">
-        </mat-form-field>
-    
-      </form>
-      <div class="centrar">
-        <button class="mr-4 search-button" color="primary" type="submit" (click)="filter(name, surname, dni, checkin, checkout)">
-          <mat-icon class="mr-2">filter_list</mat-icon>
-          Filtrar 
-        </button>
-        <button class="search-button" color="primary" type="submit" (click)="getHuespedes()">
-          <mat-icon class="mr-2">restart_alt</mat-icon>
-          Reestablecer
-        </button>
+      <div *ngIf="hotels" class="form-group">
+        <label for="hotelSelect">Seleccione Hotel</label>
+        <select id="hotelSelect" class="form-control" (change)="onHotelChange($event)">
+          <!-- <option value="" >Seleccione...</option> -->
+          <option *ngFor="let hotel of hotels" [value]="hotel.id"  >{{ hotel.nombre }}</option>
+        </select>
       </div>
+
+      <div *ngIf="services" class="form-group mt-3">
+        <h4>Servicios</h4>
+        <div *ngFor="let service of services">
+          <input type="checkbox" id="{{service.id}}" (change)="toggleService(service.id)" [ngModel]="includedServices(service.id)">
+          <label class="ml-2" for="{{service.id}}">{{ service.nombre }}</label>
+        </div>
+      </div>
+
+      <button class="btn btn-primary mt-3" (click)="linkServices(); showNotification('top','right','STH')">Añadir Servicios</button>
+     
     </div>
-
-
-    <div class="list-container">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title>Lista de Huéspedes</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- Huespedes a habitaciones -->
+    <!-- <div class="container">
+      <h2>Seleccione los huéspedes que desea añadir</h2>
+      
+      <div *ngIf="hotels" class="form-group">
+        <label for="roomSelect">Seleccione Habitación</label>
+        <select id="roomSelect" class="form-control" (change)="onRoomChange($event)">
          
+          <option *ngFor="let room of rooms" [value]="room.id"  >{{ room.numero }}</option>
+        </select>
+      </div>
 
-          <mat-list>
-            <mat-list-item class="huesped-item">
-              <span class="matListItemTitle reduce-space">ID</span>
-              <span class="matListItemLine"><strong>Nombre</strong></span>
-              <span class="matListItemLine"><strong>Apellido</strong></span>
-              <span class="matListItemLine"
-                ><strong>DNI/Pasaporte</strong></span
-              >
-              <span class="matListItemLine"><strong>Check-in</strong></span>
-              <span class="matListItemLine"><strong>Check-out</strong></span>
-              <div class="huesped-actions">
-                <span class="matListItemLine"><strong>Acciones</strong></span>
-              </div>
-            </mat-list-item>
-            <mat-list-item
-              *ngFor="let host of displayedHosts; let i = index"
-              class="huesped-item"
-            >
-              <span class="matListItemTitle reduce-space">{{ host.id }}</span>
-              <span class="matListItemLine">{{ host.nombre }}</span>
-              <span class="matListItemLine">{{ host.apellido }}</span>
-              <span class="matListItemLine">{{ host.dniPasaporte }}</span>
-              <span class="matListItemLine">{{ host.fechaCheckin }}</span>
-              <span class="matListItemLine">{{ host.fechaCheckout }}</span>
+      <div *ngIf="hosts" class="form-group mt-3">
+        <h4>Huéspedes</h4>
+        <div *ngFor="let host of hosts">
+          <input type="checkbox" id="{{host.id}}" (change)="toggleService(host.id)" [ngModel]="includedHosts(host.id)">
+          <label class="ml-2" for="{{host.id}}">{{ host.nombre }}</label>
+        </div>
+      </div>
 
-              <!-- Como muevas esto una linea no funciona el hdp -->
-              <shared-pop-up
-                [selectedIdHijo]="selectedId"
-              
-              ></shared-pop-up>
-
-              <div class="huesped-actions">
-                <button
-                  mat-icon-button
-                  (click)="setIndex(host.id)"
-                  data-bs-toggle="modal"
-                  data-bs-target="#updateModal"
-                >
-                  <mat-icon>edit</mat-icon>
-                </button>
-
-
-                
-                <!-- <shared-pop-up></shared-pop-up> -->
-                <button
-                  mat-icon-button
-                  class="botones"
-                  (click)="setIndex(host.id)"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteModal"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-            </mat-list-item>
-          </mat-list>
-
-
-          <mat-paginator 
-          [length]="hosts.length"
-          [pageSize]="pageSize"
-          [pageSizeOptions]="[5, 10, 25, 100]"
-          (page)="handlePageEvent($event)">
-        </mat-paginator>
-
-
-        </mat-card-content>
-      </mat-card>
+      <button class="btn btn-primary mt-3" (click)="linkHosts(); showNotification('top','right','HTR')">Añadir Servicios</button>
+     
     </div>
 
-    <shared-floating-button [huesped]="showButton"></shared-floating-button>
-  
+  </div>
+</div>
+   -->

@@ -5,7 +5,7 @@ import { Observable, catchError, of } from "rxjs";
 import { Service } from "app/interfaces/service.interface";
 import { Hotel } from "app/interfaces/hotel.interface";
 import { Room } from "app/interfaces/room.interface";
-import { Country } from "app/interfaces/Country.interface";
+import { Criterio } from "app/interfaces/criterio.interface";
 
 @Injectable({ providedIn: "root" })
 export class ManagementService {
@@ -145,6 +145,232 @@ export class ManagementService {
       .delete<Service>(`${this.url}servicio/${id}`)
       .pipe(catchError(() => of()));
   }
+
+
+
+  //dynamic search
+  searchHost(sortBy?:string, orden?:string, searchCriteria?:Criterio[], operator?:string, pageSize?:number, pageIndex?:number) : Observable<Host[]> {
+
+
+
+    let data = {};
+    let criteriosOrden : any[]=[];
+    let criteriosBusqueda : any[]=[];
+    let page : any;
+
+    if(sortBy || orden){
+      criteriosOrden.push({
+        "sortBy": sortBy || "nombre",
+        "sentidoOrden": orden || "ASC"
+      })
+    }
+
+    if(searchCriteria && operator ){
+      
+      searchCriteria.forEach((criteria)=>{
+          criteriosBusqueda.push({
+            "key": criteria.name || "nombre",
+            "operation": typeof criteria.value === 'string' ? "CONTAINS" : "GREATER_THAN",//operator || "EQUALS",   Con esto operator no hace falta
+            "value": criteria.value || "juan carlos"
+          })
+        })
+    }
+
+  
+      page = {
+        "pageIndex": pageIndex || 0,
+        "pageSize": pageSize || 10
+      }
+    
+
+    data = {
+      criteriosOrden,
+      criteriosBusqueda,
+      page
+    }
+
+    console.log(data)
+
+
+    return this.httpClient
+    .post<Host[]>(`${this.url}huesped/filterv2`, data)
+    .pipe(catchError(()=>of([])))
+
+
+
+
+    
+  }
+
+
+
+
+  searchHotel(sortBy?:string, orden?:string, searchCriteria?:Criterio[], operator?:string, pageSize?:number, pageIndex?:number) : Observable<Hotel[]> {
+
+
+
+    let data = {};
+    let criteriosOrden : any[]=[];
+    let criteriosBusqueda : any[]=[];
+    let page : any;
+
+    if(sortBy || orden){
+      criteriosOrden.push({
+        "sortBy": sortBy || "nombre",
+        "sentidoOrden": orden || "ASC"
+      })
+    }
+
+    if(searchCriteria && operator ){
+      
+      searchCriteria.forEach((criteria)=>{
+          criteriosBusqueda.push({
+            "key": criteria.name || "nombre",
+            "operation": typeof criteria.value === 'string' ? "CONTAINS" : "GREATER_THAN",//operator || "EQUALS",   Con esto operator no hace falta
+            "value": criteria.value || "juan carlos"
+          })
+        })
+    }
+
+  
+      page = {
+        "pageIndex": pageIndex || 0,
+        "pageSize": pageSize || 10
+      }
+    
+
+    data = {
+      criteriosOrden,
+      criteriosBusqueda,
+      page
+    }
+
+    console.log(data)
+
+
+    return this.httpClient
+    .post<Hotel[]>(`${this.url}hotel/filterv2`, data)
+    .pipe(catchError(()=>of([])))
+
+
+
+
+    
+  }
+
+
+
+  searchService(sortBy?:string, orden?:string, searchCriteria?:Criterio[], operator?:string, pageSize?:number, pageIndex?:number) : Observable<Service[]> {
+
+
+
+    let data = {};
+    let criteriosOrden : any[]=[];
+    let criteriosBusqueda : any[]=[];
+    let page : any;
+
+    if(sortBy || orden){
+      criteriosOrden.push({
+        "sortBy": sortBy || "nombre",
+        "sentidoOrden": orden || "ASC"
+      })
+    }
+
+    if(searchCriteria && operator ){
+      
+      searchCriteria.forEach((criteria)=>{
+          criteriosBusqueda.push({
+            "key": criteria.name || "nombre",
+            "operation": typeof criteria.value === 'string' ? "CONTAINS" : "GREATER_THAN",//operator || "EQUALS",   Con esto operator no hace falta
+            "value": criteria.value || "juan carlos"
+          })
+        })
+    }
+
+  
+      page = {
+        "pageIndex": pageIndex || 0,
+        "pageSize": pageSize || 10
+      }
+    
+
+    data = {
+      criteriosOrden,
+      criteriosBusqueda,
+      page
+    }
+
+    console.log(data)
+
+
+    return this.httpClient
+    .post<Service[]>(`${this.url}servicio/filterv2`, data)
+    .pipe(catchError(()=>of([])))
+
+
+
+
+    
+  }
+
+
+
+  searchRoom(sortBy?:string, orden?:string, searchCriteria?:Criterio[], operator?:string, pageSize?:number, pageIndex?:number) : Observable<Room[]> {
+
+
+
+    let data = {};
+    let criteriosOrden : any[]=[];
+    let criteriosBusqueda : any[]=[];
+    let page : any;
+
+    if(sortBy || orden){
+      criteriosOrden.push({
+        "sortBy": sortBy || "nombre",
+        "sentidoOrden": orden || "ASC"
+      })
+    }
+
+    if(searchCriteria && operator ){
+      
+      searchCriteria.forEach((criteria)=>{
+       
+          criteriosBusqueda.push({
+            "key": criteria.name || "nombre",
+            "operation": criteria.name === 'precioNoche' ? "GREATER_THAN" : "CONTAINS",//operator || "EQUALS",   Con esto operator no hace falta
+            "value": criteria.value || "juan carlos"
+          })
+        })
+    }
+
+  
+      page = {
+        "pageIndex": pageIndex || 0,
+        "pageSize": pageSize || 10
+      }
+    
+
+    data = {
+      criteriosOrden,
+      criteriosBusqueda,
+      page
+    }
+
+    console.log(data)
+
+
+    return this.httpClient
+    .post<Room[]>(`${this.url}habitacion/filterv2`, data)
+    .pipe(catchError(()=>of([])))
+
+
+
+
+    
+  }
+
+
+
 
   //filter
   filterHost(
