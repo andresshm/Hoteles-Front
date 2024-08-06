@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Host } from "app/interfaces/host.interface";
-import { Observable, catchError, of } from "rxjs";
+import { Observable, catchError, forkJoin, of } from "rxjs";
 import { Service } from "app/interfaces/service.interface";
 import { Hotel } from "app/interfaces/hotel.interface";
 import { Room } from "app/interfaces/room.interface";
@@ -151,6 +151,13 @@ export class ManagementService {
   getHuespedesPorHotel(): Observable<HuespedPorHotel[]>{
     return this.httpClient.get<HuespedPorHotel[]>(`${this.url}hotel/total`).pipe(catchError(() => of([])));
   }
+
+
+  getCounts(idHotel:number, fecha:string): Observable<number> {
+    return this.httpClient.get<number>(`${this.url}history/count?idHotel=${idHotel}&fecha=${fecha}`).pipe(catchError(() => of()));
+  }
+
+ 
 
 
 

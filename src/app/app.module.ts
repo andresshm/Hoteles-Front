@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { SharedModule } from './shared/shared.module';
 import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
+// import { HistoryGraphicComponent } from './dashboard/components/grafico-historial.component';
 
 @NgModule({
   imports: [
@@ -19,12 +20,14 @@ import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    
 
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    // HistoryGraphicComponent
     
   
 

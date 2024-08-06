@@ -180,26 +180,43 @@ getHuespedesPorHotel(){
 
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
-      const dataDailySalesChart: any = {
-          labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-          series: [
-              [12, 17, 7, 17, 23, 18, 38]
-          ]
-      };
+        const fechas:string[] = ['2024-06-17', '2024-07-31', '2024-07-30']//['17-06-2024', '31-07-2024', '30-07-2024',]
+        const values:number[] = []
+        for(let str in fechas){
+          this.managementService.getCounts(14, fechas[str]).subscribe(v=>{
+            values.push(v);
+          })
+  
+        }
 
-     const optionsDailySalesChart: any = {
+        this.managementService.getCounts(14, '2024-07-31').subscribe(v=>{
+          let dataDailySalesChart: any = {
+            labels: ['17-06-2024', '31-07-2024', '30/07/2024',],
+            series: [values]
+        };
+  
+  
+  
+  
+  
+        const optionsDailySalesChart: any = {
           lineSmooth: Chartist.Interpolation.cardinal({
               tension: 0
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 5, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
       }
-
+  
       var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
+  
       this.startAnimationForLineChart(dailySalesChart);
+        })
 
+  
+      
+
+   
 
       /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
 

@@ -25,8 +25,12 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {MatPaginatorModule} from '@angular/material/paginator'
 import { MatDatepicker, MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
 
+import {NgApexchartsModule} from 'ng-apexcharts';
+import { TranslateModule } from '@ngx-translate/core'; 
+
 
 import { SharedModule } from 'app/shared/shared.module';
+// import { HistoryGraphicComponent } from 'app/dashboard/components/grafico-historial.component';
 
 @NgModule({
   imports: [
@@ -47,6 +51,9 @@ import { SharedModule } from 'app/shared/shared.module';
     MatDialogModule,
     MatPaginatorModule,
     MatDatepickerModule,
+    NgApexchartsModule,
+    TranslateModule,
+
   
     SharedModule
 
@@ -62,6 +69,7 @@ import { SharedModule } from 'app/shared/shared.module';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    // HistoryGraphicComponent
     
   ],
   // exports:[AdminLayoutModule]
