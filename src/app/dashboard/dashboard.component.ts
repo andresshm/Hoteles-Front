@@ -1,9 +1,12 @@
-import { Component, Host, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Host, OnInit } from '@angular/core';
 import { Hotel } from 'app/interfaces/hotel.interface';
+import { HuespedPorHotel } from 'app/interfaces/huesped-por-hotel.interface';
 import { Room } from 'app/interfaces/room.interface';
 import { Service } from 'app/interfaces/service.interface';
 import { ManagementService } from 'app/services/management.service';
 import * as Chartist from 'chartist';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +15,12 @@ import * as Chartist from 'chartist';
 })
 export class DashboardComponent implements OnInit {
 
+  public datawebsiteViewsChart :any;
+  chartdata?: HuespedPorHotel[];
+
+  labeldata: any[] = [];
+  realdata: any[] = [];
+  colordata: any[] = [];
 
   public hoteles : Hotel[];
   public numHoteles : number;
@@ -25,7 +34,8 @@ export class DashboardComponent implements OnInit {
   public servicios : Service[];
   public numServicios : number;
 
-nombresHoteles :string[] = []
+  public nombresHoteles :string[]=[];
+  public numeroHuespedes:number[]=[];
 
   constructor(private managementService : ManagementService) { }
 
@@ -33,13 +43,14 @@ nombresHoteles :string[] = []
 getHoteles(){
   this.managementService.getHotelsRequest('hotel').subscribe(hoteles => {
     this.hoteles = hoteles;
+    // hoteles.forEach(hotel => this.nombresHoteles.push(hotel.nombre))
   })
 
 }
 
 
 get nHoteles(){
-  this.hoteles.forEach(hotel => this.nombresHoteles.push(hotel.nombre));
+  // this.hoteles.forEach(hotel => this.nombresHoteles.push(hotel.nombre));
   return this.hoteles.length;
 }
 
@@ -83,6 +94,11 @@ get nServicios(){
 }
 
 
+getHuespedesPorHotel(){
+  this.managementService.getHuespedesPorHotel().subscribe(hph => {
+    this.chartdata=hph
+  })
+}
 
 
 
@@ -153,13 +169,14 @@ get nServicios(){
 
       seq2 = 0;
   };
+  
   ngOnInit() {
 
     this.getHoteles();
     this.getHabitaciones();
     this.getHosts();
     this.getServicios();
-
+    this.getHuespedesPorHotel()
 
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
@@ -211,39 +228,57 @@ get nServicios(){
 
       /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
-      var datawebsiteViewsChart = {
-        // labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-        labels:this.nombresHoteles,
-        series: [
-          [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+     
 
-        ]
-      };
-      var optionswebsiteViewsChart = {
-          axisX: {
-              showGrid: false
-          },
-          low: 0,
-          high: 1000,
-          chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
-      };
-      var responsiveOptions: any[] = [
-        ['screen and (max-width: 640px)', {
-          seriesBarDistance: 5,
-          axisX: {
-            labelInterpolationFnc: function (value) {
-              return value[0];
-            }
-          }
-        }]
-      ];
-      var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+this.managementService.getHuespedesPorHotel().subscribe(result => {
+  this.chartdata = result;
+  if(this.chartdata!=null){
 
-      //start animation for the Emails Subscription Chart
-      this.startAnimationForBarChart(websiteViewsChart);
 
+    let names:string[]=[];
+    this.hoteles.forEach(h => names.push(h.nombre));
+    this.labeldata=names;
+    for(let i=0; i<this.chartdata.length ;i++){
+      // this.labeldata.push(this.chartdata[i].nombre)
+      this.realdata.push(this.chartdata[i].num)
+     }
+
+
+    this.RenderChart(this.labeldata,this.realdata,this.colordata,'bar','websiteViewsChart');
+
+    
+  }
+});
 
 
   }
+
+  RenderChart(labeldata:any,maindata:any,colordata:any,type:any,id:any) {
+    const myChart = new Chart(id, {
+      type: type,
+      data: {
+        labels: labeldata,
+        datasets: [{
+          label: '# de huespedes',
+          data: maindata,
+          backgroundColor:  'rgba(255, 255, 132, 1)',
+          borderColor: [
+            'rgba(255, 99, 132, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+
+ 
+ 
 
 }

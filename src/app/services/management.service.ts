@@ -6,6 +6,7 @@ import { Service } from "app/interfaces/service.interface";
 import { Hotel } from "app/interfaces/hotel.interface";
 import { Room } from "app/interfaces/room.interface";
 import { Criterio } from "app/interfaces/criterio.interface";
+import { HuespedPorHotel } from "app/interfaces/huesped-por-hotel.interface";
 
 @Injectable({ providedIn: "root" })
 export class ManagementService {
@@ -144,6 +145,11 @@ export class ManagementService {
     return this.httpClient
       .delete<Service>(`${this.url}servicio/${id}`)
       .pipe(catchError(() => of()));
+  }
+
+
+  getHuespedesPorHotel(): Observable<HuespedPorHotel[]>{
+    return this.httpClient.get<HuespedPorHotel[]>(`${this.url}hotel/total`).pipe(catchError(() => of([])));
   }
 
 
@@ -368,6 +374,9 @@ export class ManagementService {
 
     
   }
+
+
+
 
 
 
