@@ -36,6 +36,7 @@ export class DashboardComponent implements OnInit {
 
   public nombresHoteles :string[]=[];
   public numeroHuespedes:number[]=[];
+  public selectedHotelId: number;
 
   constructor(private managementService : ManagementService) { }
 
@@ -180,7 +181,7 @@ getHuespedesPorHotel(){
 
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
-        const fechas:string[] = ['2024-06-17', '2024-07-31', '2024-07-30']//['17-06-2024', '31-07-2024', '30-07-2024',]
+        const fechas:string[] = ['2024-06-17', '2024-07-30', '2024-07-31',]//['17-06-2024', '31-07-2024', '30-07-2024',]
         const values:number[] = []
         for(let str in fechas){
           this.managementService.getCounts(14, fechas[str]).subscribe(v=>{
@@ -191,7 +192,7 @@ getHuespedesPorHotel(){
 
         this.managementService.getCounts(14, '2024-07-31').subscribe(v=>{
           let dataDailySalesChart: any = {
-            labels: ['17-06-2024', '31-07-2024', '30/07/2024',],
+            labels: ['17-06-2024', '30-07-2024', '31-07-2024',],
             series: [values]
         };
   
@@ -204,7 +205,7 @@ getHuespedesPorHotel(){
               tension: 0
           }),
           low: 0,
-          high: 5, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 5, // aqui podria ver cual es el maximo de values y añadirle +2 o +3
           chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
       }
   
@@ -253,7 +254,8 @@ this.managementService.getHuespedesPorHotel().subscribe(result => {
 
 
     let names:string[]=[];
-    this.hoteles.forEach(h => names.push(h.nombre));
+    if(this.hoteles)
+      this.hoteles.forEach(h => names.push(h.nombre));
     this.labeldata=names;
     for(let i=0; i<this.chartdata.length ;i++){
       // this.labeldata.push(this.chartdata[i].nombre)
@@ -295,7 +297,51 @@ this.managementService.getHuespedesPorHotel().subscribe(result => {
     });
   }
 
+
+  onHotelChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedHotelId = parseInt(selectElement.value, 10);
+    console.log('Selected hotel ID:', this.selectedHotelId);
+    this.updateHistoryGraph(this.selectedHotelId)
+  }
  
+
+  updateHistoryGraph(idHotel:number){
+    /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
+
+    const fechas:string[] = ['2024-06-17', '2024-07-30', '2024-07-31',]
+    const values:number[] = []
+    for(let str in fechas){
+      this.managementService.getCounts(idHotel, fechas[str]).subscribe(v=>{
+        values.push(v);
+      })
+
+    }
+
+    this.managementService.getCounts(idHotel, '2024-07-31').subscribe(v=>{
+      let dataDailySalesChart: any = {
+        labels: ['17-06-2024', '31-07-2024', '30/07/2024',],
+        series: [values]
+    };
+
+
+
+
+
+    const optionsDailySalesChart: any = {
+      lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+      }),
+      low: 0,
+      high: 5, // aqui podria ver cual es el maximo de values y añadirle +2 o +3
+      chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+  }
+
+  var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+
+  this.startAnimationForLineChart(dailySalesChart);
+    })
+  }
  
 
 }

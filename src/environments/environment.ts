@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  notification: false,
+  notification: true,
   tableList: true,
 
 };

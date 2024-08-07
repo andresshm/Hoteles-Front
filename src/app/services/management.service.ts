@@ -7,6 +7,7 @@ import { Hotel } from "app/interfaces/hotel.interface";
 import { Room } from "app/interfaces/room.interface";
 import { Criterio } from "app/interfaces/criterio.interface";
 import { HuespedPorHotel } from "app/interfaces/huesped-por-hotel.interface";
+import { Usuario } from "app/interfaces/usuario.interface";
 
 @Injectable({ providedIn: "root" })
 export class ManagementService {
@@ -156,6 +157,14 @@ export class ManagementService {
   getCounts(idHotel:number, fecha:string): Observable<number> {
     return this.httpClient.get<number>(`${this.url}history/count?idHotel=${idHotel}&fecha=${fecha}`).pipe(catchError(() => of()));
   }
+
+
+
+  addUsers(data:Usuario){
+    return this.httpClient.post<Usuario>(`${this.url}users`, data).pipe(catchError(() => of()));
+  }
+
+
 
  
 
@@ -381,6 +390,7 @@ export class ManagementService {
 
     
   }
+
 
 
 

@@ -8,12 +8,13 @@ import { HotelPopUpComponent } from './components/pop-up/hotel-pop-up/hotel-pop-
 import { RoomPopUpComponent } from './components/pop-up/room-pop-up/pop-up.component';
 import { ServicePopUpComponent } from './components/pop-up/service-pop-up/pop-up.component';
 import { HostPopUpComponent } from './components/pop-up/host-pop-up/pop-up.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 @NgModule({
     imports: [MatIconModule, FormsModule, CommonModule, ReactiveFormsModule,],
-    exports: [FloatingButtonComponent, HotelPopUpComponent, RoomPopUpComponent, ServicePopUpComponent, HostPopUpComponent],
-    declarations: [FloatingButtonComponent, HotelPopUpComponent, RoomPopUpComponent, ServicePopUpComponent, HostPopUpComponent],
+    exports: [FloatingButtonComponent, HotelPopUpComponent, RoomPopUpComponent, ServicePopUpComponent, HostPopUpComponent, LoginComponent],
+    declarations: [FloatingButtonComponent, HotelPopUpComponent, RoomPopUpComponent, ServicePopUpComponent, HostPopUpComponent, LoginComponent],
     providers: [],
 })
 export class SharedModule { }

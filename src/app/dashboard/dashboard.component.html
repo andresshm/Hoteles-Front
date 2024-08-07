@@ -85,14 +85,21 @@
                       <div class="ct-chart" id="dailySalesChart"></div>
                   </div>
                   <div class="card-body">
-                      <h4 class="card-title">Daily Sales</h4>
+                      <h4 class="card-title">Historial de huéspedes por hotel</h4>
                       <p class="card-category">
-                          <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                          <!-- <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p> -->
                   </div>
                   <div class="card-footer">
-                      <div class="stats">
-                          <i class="material-icons">access_time</i> updated 4 minutes ago
+                    <div *ngIf="hoteles" class="form-group">
+                        <label for="hotelSelect">Seleccione Hotel</label>
+                        <select id="hotelSelect" class="form-control" (change)="onHotelChange($event)">
+                          <!-- <option value="" >Seleccione...</option> -->
+                          <option *ngFor="let hotel of hoteles" [value]="hotel.id"  >{{ hotel.nombre }}</option>
+                        </select>
                       </div>
+                      <!-- <div class="stats">
+                          <i class="material-icons">access_time</i> updated 4 minutes ago
+                      </div> -->
                   </div>
               </div>
           </div>

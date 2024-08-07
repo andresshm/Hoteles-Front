@@ -1,5 +1,35 @@
 
 
+<div class="main-content">
+    <div class="container-fluid">
+  
+      <!-- Servicios a hoteles -->
+      <div class="container">
+        <h2>Seleccione los huéspedes que desea añadir</h2>
+        
+        <div *ngIf="rooms" class="form-group">
+          <label for="hotelSelect">Seleccione Habitacion</label>
+          <select id="hotelSelect" class="form-control" (change)="onHotelChange($event)">
+            <!-- <option value="" >Seleccione...</option> -->
+            <option *ngFor="let room of rooms" [value]="room.id"  >{{ room.numero }}</option>
+          </select>
+        </div>
+  
+        <div *ngIf="hosts" class="form-group mt-3">
+          <h4>Huespedes</h4>
+          <div *ngFor="let host of hosts">
+            <input type="checkbox" id="{{host.id}}" (change)="toggleService(host.id)" [ngModel]="includedServices(host)">
+            <!-- [ngModel]="includedServices(host.id)"> -->
+            <label class="ml-2" for="{{host.id}}">{{ host.nombre }}</label>
+          </div>
+        </div>
+  
+        <button class="btn btn-primary mt-3" (click)="linkHosts(); showNotification('top','right','STH')">Añadir Huéspedes</button>
+       
+      </div>
+      
+      
+      
 
 
 <!-- <div class="main-content">
