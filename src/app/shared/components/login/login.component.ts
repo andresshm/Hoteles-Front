@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Usuario } from 'app/interfaces/usuario.interface';
 import { ManagementService } from 'app/services/management.service';
 
@@ -19,7 +20,9 @@ export class LoginComponent implements OnInit {
 
     user:Usuario
 
-    constructor(private managementService : ManagementService) { }
+    constructor(private managementService : ManagementService,
+        private router: Router
+    ) { }
 
     ngOnInit() { }
 
@@ -30,6 +33,8 @@ export class LoginComponent implements OnInit {
             nombre: this.nombre,
             password :this.password
         }
-        this.managementService.addUsers(usuario).subscribe()
+        this.managementService.addUsers(usuario).subscribe();
+
+        this.router.navigate(['/dashboard']);
     }
 }

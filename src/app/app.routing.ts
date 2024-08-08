@@ -4,9 +4,44 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { LoginComponent } from './shared/components/login/login.component';
+import { LoginComponent } from './auth/pages/login/login.component';
+import { RegisterComponent } from './auth/pages/register/register.component';
 
 const routes: Routes =[
+  // {
+  //   path: '',
+  //   redirectTo: 'login',
+  //   pathMatch: 'full'
+  // },
+  // Ruta para el componente de login
+  // {
+  //   path: 'login',
+  //   component: LoginComponent
+  // },
+  // // Ruta para el componente de dashboard
+  // {
+  //     path: 'dashboard',
+  //     component: AdminLayoutComponent,
+  //     children: [
+        
+  //       {
+  //       path: '',
+  //       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
+  //     }]
+  //   },
+
+
+
+
+
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path:'register',
+    component: RegisterComponent
+  },
   {
     path: '',
     redirectTo: 'dashboard',
@@ -14,15 +49,15 @@ const routes: Routes =[
   }, {
     path: '',
     component: AdminLayoutComponent,
-    children: [{
+    children: [
+      
+      {
       path: '',
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
     }]
   },
-  {
-    path:'login',
-    component: LoginComponent
-  }
+
+
 ];
 
 @NgModule({

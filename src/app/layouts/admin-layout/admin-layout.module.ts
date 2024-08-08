@@ -72,7 +72,7 @@ import { SharedModule } from 'app/shared/shared.module';
     // HistoryGraphicComponent
     
   ],
-  // exports:[AdminLayoutModule]
+  exports:[RouterModule]
 })
 
 export class AdminLayoutModule {}

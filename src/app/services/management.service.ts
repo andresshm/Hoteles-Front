@@ -165,6 +165,10 @@ export class ManagementService {
   }
 
 
+  checkUser(password:string): Observable<Usuario[]>{
+    return this.httpClient.get<Usuario[]>(`${this.url}users/password?password=${password}`).pipe(catchError(() => of([])));
+  }
+
 
  
 

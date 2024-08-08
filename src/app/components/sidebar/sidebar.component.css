@@ -17,13 +17,18 @@
     width: 100%;
     height: auto;
     overflow: hidden;
+    align-items: center;
   }
   
   .sidebar-image {
-    width: 100%;
+    width: 50%;
     height: auto;
     object-fit: cover;
     display: block;
+    border-radius: 50%;
+    /* opacity: 0.5; */
+    max-width: 100%; /* Asegura que la imagen no se desborde del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
   }
   
   .sidebar-image-container::before {
@@ -37,3 +42,5 @@
     pointer-events: none; /* Permite hacer clic en la imagen debajo */
   }
   
+
+
