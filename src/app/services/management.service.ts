@@ -1,19 +1,27 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Host } from "app/interfaces/host.interface";
-import { Observable, catchError, forkJoin, of } from "rxjs";
+import { BehaviorSubject, Observable, catchError, forkJoin, map, of, tap } from "rxjs";
 import { Service } from "app/interfaces/service.interface";
 import { Hotel } from "app/interfaces/hotel.interface";
 import { Room } from "app/interfaces/room.interface";
 import { Criterio } from "app/interfaces/criterio.interface";
 import { HuespedPorHotel } from "app/interfaces/huesped-por-hotel.interface";
 import { Usuario } from "app/interfaces/usuario.interface";
+import { environment } from "environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class ManagementService {
-  private url = "http://localhost:8080/";
+  private url = `http://localhost:${environment.port}/`;
+  private token = '';
 
-  constructor(private httpClient: HttpClient) {}
+  // currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  // currentUserData: BehaviorSubject<String> =new BehaviorSubject<String>("");
+
+  constructor(private httpClient: HttpClient) {
+  //   this.currentUserLoginOn=new BehaviorSubject<boolean>(sessionStorage.getItem("token")!=null);
+  //   this.currentUserData=new BehaviorSubject<String>(sessionStorage.getItem("token") || "");
+  }
 
   //GET-ALL
   public getHostsRequest(entity: string): Observable<Host[]> {
@@ -160,13 +168,10 @@ export class ManagementService {
 
 
 
-  addUsers(data:Usuario){
-    return this.httpClient.post<Usuario>(`${this.url}users`, data).pipe(catchError(() => of()));
-  }
 
 
   checkUser(password:string): Observable<Usuario[]>{
-    return this.httpClient.get<Usuario[]>(`${this.url}users/password?password=${password}`).pipe(catchError(() => of([])));
+    return this.httpClient.get<Usuario[]>(`${this.url}users?password=${password}`).pipe(catchError(() => of([])));
   }
 
 

@@ -4,7 +4,25 @@
                 <h2>Register</h2>
                 <form [formGroup]="myForm" (ngSubmit)="register()" autocomplete="off">
                     <div class="textbox">
-                        <input type="text" placeholder="Full Name" formControlName="name" required [(ngModel)]="fullName">
+                        <input type="text" placeholder="User Name" formControlName="name" required [(ngModel)]="username">
+                        <span *ngIf="isValidField('name')"  class="form-text text-danger">
+                            Debe de ser en formato de nombre y apellido
+                        </span>
+                    </div>
+                    <div class="textbox">
+                        <input type="text" placeholder="First Name" formControlName="name" required [(ngModel)]="firstname">
+                        <span *ngIf="isValidField('name')"  class="form-text text-danger">
+                            Debe de ser en formato de nombre y apellido
+                        </span>
+                    </div>
+                    <div class="textbox">
+                        <input type="text" placeholder="Second Name" formControlName="name" required [(ngModel)]="secondname">
+                        <span *ngIf="isValidField('name')"  class="form-text text-danger">
+                            Debe de ser en formato de nombre y apellido
+                        </span>
+                    </div>
+                    <div class="textbox">
+                        <input type="text" placeholder="Location" formControlName="name" required [(ngModel)]="location">
                         <span *ngIf="isValidField('name')"  class="form-text text-danger">
                             Debe de ser en formato de nombre y apellido
                         </span>

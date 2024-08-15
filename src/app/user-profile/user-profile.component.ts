@@ -99,8 +99,11 @@ export class UserProfileComponent implements OnInit {
    
     this.managementService.getHostsRequest('huesped')
       .subscribe(hosts => {
-        this.hosts = hosts.sort((a, b)=>a.id-b.id);
-        this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
+        if(hosts){
+
+          this.hosts = hosts.sort((a, b)=>a.id-b.id);
+          this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
+        }
         //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
       });
   }
@@ -376,7 +379,8 @@ export class UserProfileComponent implements OnInit {
 
     this.managementService.getHostsRequest('huesped')
     .subscribe(hosts => {
-      this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
+      if(hosts)
+        this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
       //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
     });
 

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ValidatorsService } from 'app/auth/service/validators.service';
 import { ManagementService } from 'app/services/management.service';
 import {EmailValidator} from 'app/auth/validators/email-validator.service'
+import { AuthService } from 'app/auth/service/auth.service';
 
 
 @Component({
@@ -13,7 +14,10 @@ import {EmailValidator} from 'app/auth/validators/email-validator.service'
 })
 
 export class RegisterComponent implements OnInit {
-    public fullName:string;
+    public username:string;
+    public firstname:string;
+    public secondname:string;
+    public location:string;
     public email:string;
     public password:string;
     public confirmPassword:string;
@@ -35,7 +39,8 @@ export class RegisterComponent implements OnInit {
         private router:Router,
         private fb : FormBuilder,
         private emailValidator : EmailValidator,
-        private validatorsService : ValidatorsService
+        private validatorsService : ValidatorsService,
+        private authService:AuthService
     ) { }
 
     ngOnInit() { }
@@ -53,10 +58,14 @@ export class RegisterComponent implements OnInit {
         if(this.checkUser()){
 
             const usuario = {
-                nombre: this.fullName,
-                password: this.password
+              username: this.username,
+              password: this.password,
+              firstname: this.firstname,
+              lastname: this.secondname,
+              location: this.location,
+              role: 'USER'
             }
-            this.managementService.addUsers(usuario).subscribe();
+            this.authService.addUsers(usuario).subscribe();
             this.router.navigate(['/login'])
 
         }

@@ -25,8 +25,8 @@ import {MatDialogModule} from '@angular/material/dialog'
 import {MatPaginatorModule} from '@angular/material/paginator'
 import { MatDatepicker, MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
 
-import {NgApexchartsModule} from 'ng-apexcharts';
-import { TranslateModule } from '@ngx-translate/core'; 
+// import {NgApexchartsModule} from 'ng-apexcharts';
+// import { TranslateModule } from '@ngx-translate/core'; 
 
 
 import { SharedModule } from 'app/shared/shared.module';
@@ -51,8 +51,8 @@ import { SharedModule } from 'app/shared/shared.module';
     MatDialogModule,
     MatPaginatorModule,
     MatDatepickerModule,
-    NgApexchartsModule,
-    TranslateModule,
+    // NgApexchartsModule,
+    // TranslateModule,
 
   
     SharedModule

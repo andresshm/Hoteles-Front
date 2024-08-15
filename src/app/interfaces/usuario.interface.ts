@@ -1,5 +1,10 @@
 export interface Usuario{
-    nombre:string;
+    username:string;
     password:string;
+    firstname:string;
+    lastname:string;
+    location:string;
+    role:string;
+
     
 }

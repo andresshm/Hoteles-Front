@@ -181,18 +181,18 @@ getHuespedesPorHotel(){
 
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
-        const fechas:string[] = ['2024-06-17', '2024-07-30', '2024-07-31',]//['17-06-2024', '31-07-2024', '30-07-2024',]
+        const fechas:string[] = ['2024-06-17', ]//['17-06-2024', '31-07-2024', '30-07-2024',]
         const values:number[] = []
         for(let str in fechas){
-          this.managementService.getCounts(14, fechas[str]).subscribe(v=>{
+          this.managementService.getCounts(2, fechas[str]).subscribe(v=>{
             values.push(v);
           })
   
         }
 
-        this.managementService.getCounts(14, '2024-07-31').subscribe(v=>{
+        this.managementService.getCounts(2, '2024-06-17').subscribe(v=>{
           let dataDailySalesChart: any = {
-            labels: ['17-06-2024', '30-07-2024', '31-07-2024',],
+            labels: ['17-06-2024'],
             series: [values]
         };
   

@@ -28,13 +28,13 @@ export class LoginComponent implements OnInit {
 
 
     addUser(){
-        console.log(this.nombre, this.password)
-        const usuario:Usuario = {
-            nombre: this.nombre,
-            password :this.password
-        }
-        this.managementService.addUsers(usuario).subscribe();
+        // console.log(this.nombre, this.password)
+        // const usuario:Usuario = {
+        //     nombre: this.nombre,
+        //     password :this.password
+        // }
+        // this.managementService.addUsers(usuario).subscribe();
 
-        this.router.navigate(['/dashboard']);
+        // this.router.navigate(['/dashboard']);
     }
 }
