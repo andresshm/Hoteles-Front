@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   notification: true,
   tableList: true,
-  port:8081,
+  port:8080,
   token: ''
 
 };
