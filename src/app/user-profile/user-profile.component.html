@@ -9,11 +9,11 @@
     <div class="button-container2">
       <button class="search-button" (click)="toggleFilter()">
         <mat-icon class="mr-2">search</mat-icon>
-        <span class="button-text">Buscar</span>
+        <span class="button-text">{{"buscar"|translate}}</span>
       </button>
       <button class="search-button" (click)="toggleSorter()">
         <mat-icon class="mr-2">sort</mat-icon>
-        <span class="button-text">Ordenar</span>
+        <span class="button-text">{{"ordenar"|translate}}</span>
       </button>
     </div>
  
@@ -23,19 +23,19 @@
 
   <div *ngIf="showSorters" >
     <hr>
-    <h3>Ordenar</h3>
+    <h3>{{"ordenar"|translate}}</h3>
     <hr>
-    <h4>Seleccione una opción</h4>
+    <h4>{{"seleccione_opcion"|translate}}</h4>
 
     <div class="button-container2">
       <select id="option-selector" class="selector" [(ngModel)]="selectedOption">
         <option value="" >Seleccione...</option>
-        <option value="Nombre">Nombre</option>
-        <option value="Apellido">Apellido</option>
-        <option value="DNI/Pasaporte">DNI/Pasaporte</option>
-        <option value="Procedencia">Procedencia</option>
-        <option value="Check-in">Check-in</option>
-        <option value="Check-out">Check-out</option>
+        <option value="Nombre">{{"nombre"|translate}}</option>
+        <option value="Apellido">{{"apellido"|translate}}</option>
+        <option value="DNI/Pasaporte">{{"dni_pasaporte"|translate}}</option>
+        <option value="Procedencia">{{"procedencia"|translate}}</option>
+        <option value="Check-in">{{"check_in"|translate}}</option>
+        <option value="Check-out">{{"check_out"|translate}}</option>
       </select>
       <button *ngIf="selectedOption" class="search-button" (click)="handleSelection('swap')">
         <mat-icon>swap_vert</mat-icon>
@@ -46,7 +46,7 @@
 
 
     <button *ngIf="selectedOption" class="search-button mt-4" (click)="handleSelection()">
-      <span class="button-text ">Ordenar</span>
+      <span class="button-text ">{{"ordenar"|translate}}</span>
       <!-- <span class="button-icon"></span> -->
     </button>
 
@@ -58,45 +58,45 @@
 
   <div *ngIf="showFilters" class="filter-form-container">
     <hr>
-    <h3>Filtrar</h3>
+    <h3>{{"filtrar_boton"|translate}}</h3>
     <hr>
     <form >
       <mat-form-field class="full-width">
-        <mat-label>Nombre</mat-label>
+        <mat-label>{{"nombre"|translate}}</mat-label>
         <input matInput placeholder="Nombre" name="name" [(ngModel)]="name">
       </mat-form-field>
   
       <mat-form-field class="full-width">
-        <mat-label>Apellidos</mat-label>
+        <mat-label>{{"apellido"|translate}}</mat-label>
         <input matInput type="text" placeholder="Apellidos" name="surnames" [(ngModel)]="surname">
       </mat-form-field>
     
       <mat-form-field class="full-width">
-        <mat-label>DNI/Pasaporte</mat-label>
+        <mat-label>{{"dni_pasaporte"|translate}}</mat-label>
         <input matInput type="text" placeholder="DNI/Pasaporte" name="document" [(ngModel)]="dni">
       </mat-form-field>
     
       <mat-form-field class="full-width">
-        <mat-label>Procedencia</mat-label>
+        <mat-label>{{"procedencia"|translate}}</mat-label>
         <input matInput type="text" placeholder="Procedencia" name="procedence" [(ngModel)]="procedencia">
       </mat-form-field>
   
       <mat-form-field class="full-width">
-        <mat-label>Check-IN - desde</mat-label>
+        <mat-label>{{"check_in_desde"|translate}}</mat-label>
         <input matInput type="date" placeholder="Desde"  name="check-in"  [(ngModel)]="checkinD">
       </mat-form-field>
       <mat-form-field class="full-width">
-        <mat-label>Check-IN - hasta</mat-label>
+        <mat-label>{{"check_in_hasta"|translate}}</mat-label>
         <input matInput type="date" placeholder="Hasta"  name="check-in"  [(ngModel)]="checkinH">
       </mat-form-field>
   
       <mat-form-field class="full-width">
-        <mat-label>Check-OUT - desde</mat-label>
+        <mat-label>{{"check_out_desde"|translate}}</mat-label>
         <input matInput type="date" placeholder="check-out"  name="check-out" [(ngModel)]="checkoutD">
       </mat-form-field>
   
       <mat-form-field class="full-width">
-        <mat-label>Check-OUT -hasta</mat-label>
+        <mat-label>{{"check_out_hasta"|translate}}</mat-label>
         <input matInput type="date" placeholder="check-out"  name="check-out" [(ngModel)]="checkoutH">
       </mat-form-field>
   
@@ -104,11 +104,11 @@
     <div class="centrar">
       <button class="mr-4 search-button" color="primary" type="submit" (click)="filter(name, surname, dni, procedencia, checkinD, checkinH, checkoutD, checkoutH)">
         <mat-icon class="mr-2">filter_list</mat-icon>
-        Filtrar 
+        {{"filtrar_boton"|translate}} 
       </button>
       <button class="search-button" color="primary" type="submit" (click)="getHuespedes()">
         <mat-icon class="mr-2">restart_alt</mat-icon>
-        Reestablecer
+        {{"reestablecer_boton"|translate}}
       </button>
     </div>
   </div>
@@ -126,20 +126,20 @@
     <div class="list-container">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Lista de Huéspedes</mat-card-title>
+          <mat-card-title>{{"HUESPEDES" | translate}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <mat-list>
             <mat-list-item class="huesped-item">
               <span class="matListItemTitle reduce-space">ID</span>
-              <span class="matListItemLine"><strong>Nombre</strong></span>
-              <span class="matListItemLine"><strong>Apellido</strong></span>
-              <span class="matListItemLine"><strong>DNI/Pasaporte</strong></span>
-              <span class="matListItemLine"><strong>Procedencia</strong></span>
-              <span class="matListItemLine"><strong>Check-in</strong></span>
-              <span class="matListItemLine"><strong>Check-out</strong></span>
+              <span class="matListItemLine"><strong>{{"nombre"|translate}}</strong></span>
+              <span class="matListItemLine"><strong>{{"apellido"|translate}}</strong></span>
+              <span class="matListItemLine"><strong>{{"dni_pasaporte"|translate}}</strong></span>
+              <span class="matListItemLine"><strong>{{"procedencia"|translate}}</strong></span>
+              <span class="matListItemLine"><strong>{{"check_in"|translate}}</strong></span>
+              <span class="matListItemLine"><strong>{{"check_out"|translate}}</strong></span>
               <div class="huesped-actions">
-                <span class="matListItemLine"><strong>Acciones</strong></span>
+                <span class="matListItemLine"><strong>{{"acciones"|translate}}</strong></span>
               </div>
             </mat-list-item>
             <mat-list-item

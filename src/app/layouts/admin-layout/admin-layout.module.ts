@@ -30,6 +30,7 @@ import { MatDatepicker, MatDatepickerModule, MatDatepickerToggle } from '@angula
 
 
 import { SharedModule } from 'app/shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
 // import { HistoryGraphicComponent } from 'app/dashboard/components/grafico-historial.component';
 
 @NgModule({
@@ -52,7 +53,7 @@ import { SharedModule } from 'app/shared/shared.module';
     MatPaginatorModule,
     MatDatepickerModule,
     // NgApexchartsModule,
-    // TranslateModule,
+    TranslateModule,
 
   
     SharedModule

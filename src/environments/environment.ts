@@ -8,6 +8,7 @@ export const environment = {
   notification: true,
   tableList: true,
   port:8080,
-  token: ''
+  token: '',
+  language: 'en'
 
 };

@@ -4,20 +4,20 @@
     <div class="button-container2">
       <button class="search-button" (click)="toggleFilter()">
         <mat-icon class="mr-2">search</mat-icon>
-        <span class="button-text">Buscar</span>
+        <span class="button-text">{{"buscar"|translate}}</span>
       </button>
       <button class="search-button" (click)="toggleSorter()">
         <mat-icon class="mr-2">sort</mat-icon>
-        <span class="button-text">Ordenar</span>
+        <span class="button-text">{{"ordenar"|translate}}</span>
       </button>
     </div>
 
     <!-- boton que aparece al clicar ordenar -->
     <div *ngIf="showSorters">
       <hr />
-      <h3>Ordenar</h3>
+      <h3>{{"ordenar"|translate}}</h3>
       <hr />
-      <h4>Seleccione una opción</h4>
+      <h4>{{"seleccione_opcion"|translate}}</h4>
 
       <div class="button-container2">
         <select
@@ -25,10 +25,10 @@
           class="selector"
           [(ngModel)]="selectedOption"
         >
-          <option value="">Seleccione...</option>
-          <option value="Numero">Número</option>
-          <option value="Tipo">Tipo</option>
-          <option value="Precio">Precio</option>
+          <option value="">{{"seleccione"|translate}}</option>
+          <option value="Numero">{{"numero"|translate}}</option>
+          <option value="Tipo">{{"tipo"|translate}}</option>
+          <option value="Precio">{{"precio"|translate}}</option>
         </select>
         <button
           *ngIf="selectedOption"
@@ -45,18 +45,18 @@
         class="search-button mt-4"
         (click)="handleSelection()"
       >
-        <span class="button-text">Ordenar</span>
+        <span class="button-text">{{"ordenar"|translate}}</span>
       </button>
     </div>
 
     <!-- boton que aparece al clicar buscar -->
     <div *ngIf="showFilters" class="filter-form-container">
       <hr />
-      <h3>Filtrar</h3>
+      <h3>{{"filtrar_boton"|translate}}</h3>
       <hr />
       <form>
         <mat-form-field class="full-width">
-          <mat-label>Número</mat-label>
+          <mat-label>{{"numero"|translate}}</mat-label>
           <input
             matInput
             placeholder="Número"
@@ -66,7 +66,7 @@
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <mat-label>Tipo</mat-label>
+          <mat-label>{{"tipo"|translate}}</mat-label>
           <input
             matInput
             type="text"
@@ -77,7 +77,7 @@
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <mat-label>Precio</mat-label>
+          <mat-label>{{"precio"|translate}}</mat-label>
           <input
             matInput
             type="text"
@@ -95,7 +95,7 @@
           (click)="filter(numero, precioNoche, tipo)"
         >
           <mat-icon class="mr-2">filter_list</mat-icon>
-          Filtrar
+          {{"filtrar_boton"|translate}}
         </button>
         <button
           class="search-button"
@@ -104,7 +104,7 @@
           (click)="getHabitaciones()"
         >
           <mat-icon class="mr-2">restart_alt</mat-icon>
-          Reestablecer
+          {{"reestablecer_boton"|translate}}
         </button>
       </div>
     </div>
@@ -112,17 +112,17 @@
     <div class="list-container">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Lista de Habitaciones</mat-card-title>
+          <mat-card-title>{{"HABITACIONES"|translate}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <mat-list>
             <mat-list-item class="huesped-item">
               <span class="matListItemTitle reduce-space">ID</span>
-              <span class="matListItemLine"><strong>Número</strong></span>
-              <span class="matListItemLine"><strong>Tipo</strong></span>
-              <span class="matListItemLine"><strong>Precio/noche</strong></span>
+              <span class="matListItemLine"><strong>{{"numero"|translate}}</strong></span>
+              <span class="matListItemLine"><strong>{{"tipo"|translate}}</strong></span>
+              <span class="matListItemLine"><strong>{{"precio"|translate}}</strong></span>
               <div class="huesped-actions">
-                <span class="matListItemLine"><strong>Acciones</strong></span>
+                <span class="matListItemLine"><strong>{{"acciones"|translate}}</strong></span>
               </div>
             </mat-list-item>
             <mat-list-item

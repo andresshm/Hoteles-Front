@@ -7,7 +7,7 @@
                       <div class="card-icon">
                           <i class="material-icons">apartment</i>
                       </div>
-                      <p class="card-category">Hoteles</p>
+                      <p class="card-category">{{"hotel"|translate}}</p>
                       <h3 *ngIf="hoteles" class="card-title">{{nHoteles}}
                           <!-- <small>Hoteles</small> -->
                       </h3>
@@ -27,7 +27,7 @@
                       <div class="card-icon">
                           <i class="material-icons">groups</i>
                       </div>
-                      <p class="card-category">Huéspedes</p>
+                      <p class="card-category">{{"huesped"|translate}}</p>
                       <h3 *ngIf="huespedes" class="card-title">{{nHuespedes}}</h3>
                   </div>
                   <div class="card-footer">
@@ -43,7 +43,7 @@
                       <div class="card-icon">
                           <i class="material-icons">hotel</i>
                       </div>
-                      <p class="card-category">Habitaciones</p>
+                      <p class="card-category">{{"habitacion"|translate}}</p>
                       <h3 *ngIf="habitaciones" class="card-title">{{nHabitaciones}}</h3>
                   </div>
                   <div class="card-footer">
@@ -60,7 +60,7 @@
                           <!-- <i class="fa fa-twitter"></i> -->
                           <i class="material-icons">room_service</i>
                       </div>
-                      <p class="card-category">Servicios</p>
+                      <p class="card-category">{{"servicio"|translate}}</p>
                       <h3 *ngIf="servicios" class="card-title">{{nServicios}}</h3>
                   </div>
                   <div class="card-footer">
@@ -85,13 +85,13 @@
                       <div class="ct-chart" id="dailySalesChart"></div>
                   </div>
                   <div class="card-body">
-                      <h4 class="card-title">Historial de huéspedes por hotel</h4>
+                      <h4 class="card-title">{{"historial"|translate}}</h4>
                       <p class="card-category">
                           <!-- <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p> -->
                   </div>
                   <div class="card-footer">
                     <div *ngIf="hoteles" class="form-group">
-                        <label for="hotelSelect">Seleccione Hotel</label>
+                        <label for="hotelSelect">{{"seleccione_hotel_etiqueta"|translate}}</label>
                         <select id="hotelSelect" class="form-control" (change)="onHotelChange($event)">
                           <!-- <option value="" >Seleccione...</option> -->
                           <option *ngFor="let hotel of hoteles" [value]="hotel.id"  >{{ hotel.nombre }}</option>
@@ -115,8 +115,8 @@
                        <canvas id="websiteViewsChart"></canvas>
                   </div>
                   <div class="card-body">
-                      <h4 class="card-title">Huéspedes/Hotel</h4>
-                      <p class="card-category">Datos de la última quincena</p>
+                      <h4 class="card-title">{{"huesped_hotel"|translate}}</h4>
+                      <p class="card-category">{{"datos"|translate}}</p>
                   </div>
                   <div class="card-footer">
                       <div class="stats">

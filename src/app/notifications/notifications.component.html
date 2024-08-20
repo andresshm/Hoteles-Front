@@ -5,10 +5,10 @@
   
       <!-- Servicios a hoteles -->
       <div class="container">
-        <h2>Seleccione los huéspedes que desea añadir</h2>
+        <h2>{{"seleccione_huespedes_titulo"|translate}}</h2>
         
         <div *ngIf="rooms" class="form-group">
-          <label for="hotelSelect">Seleccione Habitacion</label>
+          <label for="hotelSelect">{{"seleccione_habitacion_etiqueta"|translate}}</label>
           <select id="hotelSelect" class="form-control" (change)="onHotelChange($event)">
             <!-- <option value="" >Seleccione...</option> -->
             <option *ngFor="let room of rooms" [value]="room.id"  >{{ room.numero }}</option>
@@ -16,7 +16,7 @@
         </div>
   
         <div *ngIf="hosts" class="form-group mt-3">
-          <h4>Huespedes</h4>
+          <h4>{{"huesped"|translate}}</h4>
           <div *ngFor="let host of hosts">
             <input type="checkbox" id="{{host.id}}" (change)="toggleService(host.id)" [ngModel]="includedServices(host)">
             <!-- [ngModel]="includedServices(host.id)"> -->
@@ -24,7 +24,7 @@
           </div>
         </div>
   
-        <button class="btn btn-primary mt-3" (click)="linkHosts(); showNotification('top','right','STH')">Añadir Huéspedes</button>
+        <button class="btn btn-primary mt-3" (click)="linkHosts(); showNotification('top','right','STH')">{{"anadir_huespedes_boton"|translate}}</button>
        
       </div>
       

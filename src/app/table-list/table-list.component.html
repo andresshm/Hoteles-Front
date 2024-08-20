@@ -4,10 +4,10 @@
 
     <!-- Servicios a hoteles -->
     <div class="container">
-      <h2>Seleccione los servicios que desea añadir</h2>
+      <h2>{{"seleccione_servicios_titulo"|translate}}</h2>
       
       <div *ngIf="hotels" class="form-group">
-        <label for="hotelSelect">Seleccione Hotel</label>
+        <label for="hotelSelect">{{"seleccione_hotel_etiqueta"|translate}}</label>
         <select id="hotelSelect" class="form-control" (change)="onHotelChange($event)">
           <!-- <option value="" >Seleccione...</option> -->
           <option *ngFor="let hotel of hotels" [value]="hotel.id"  >{{ hotel.nombre }}</option>
@@ -15,14 +15,14 @@
       </div>
 
       <div *ngIf="services" class="form-group mt-3">
-        <h4>Servicios</h4>
+        <h4>{{"servicio"|translate}}</h4>
         <div *ngFor="let service of services">
           <input type="checkbox" id="{{service.id}}" (change)="toggleService(service.id)" [ngModel]="includedServices(service.id)">
           <label class="ml-2" for="{{service.id}}">{{ service.nombre }}</label>
         </div>
       </div>
 
-      <button class="btn btn-primary mt-3" (click)="linkServices(); showNotification('top','right','STH')">Añadir Servicios</button>
+      <button class="btn btn-primary mt-3" (click)="linkServices(); showNotification('top','right','STH')">{{"anadir_servicios_boton"|translate}}</button>
      
     </div>
     

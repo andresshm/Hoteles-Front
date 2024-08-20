@@ -1,0 +1,9 @@
+<!-- language-selector.component.html -->
+
+<p class="mt-10">{{ 'changeLanguage'}}</p>
+
+<select class="flex" [value]="currentLang$ | async" (ngModelChange)="changeLanguage($event)">
+  <option *ngFor="let lang of languages | async" [value]="lang.code">
+    {{ lang.code }} {{ lang.flag }} 
+  </option>
+</select>

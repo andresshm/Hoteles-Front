@@ -8,11 +8,11 @@
       <div class="button-container2">
         <button class="search-button" (click)="toggleFilter()">
           <mat-icon class="mr-2">search</mat-icon>
-          <span class="button-text">Buscar</span>
+          <span class="button-text">{{"buscar" | translate}}</span>
         </button>
         <button class="search-button" (click)="toggleSorter()">
           <mat-icon class="mr-2">sort</mat-icon>
-          <span class="button-text">Ordenar</span>
+          <span class="button-text">{{"ordenar"| translate}}</span>
         </button>
       </div>
    
@@ -22,18 +22,18 @@
   
     <div *ngIf="showSorters" >
       <hr>
-      <h3>Ordenar</h3>
+      <h3>{{"ordenar"| translate}}</h3>
       <hr>
-      <h4>Seleccione una opción</h4>
+      <h4>{{"seleccione_opcion"| translate}}</h4>
   
       <div class="button-container2">
         <select id="option-selector" class="selector" [(ngModel)]="selectedOption">
           <option value="" >Seleccione...</option>
-          <option value="Nombre">Nombre</option>
-          <option value="Direccion">Dirección</option>
-          <option value="Telefono">Teléfono</option>
-          <option value="Email">Email</option>
-          <option value="Sitio-Web">Sitio Web</option>
+          <option value="Nombre">{{"nombre"| translate}}</option>
+          <option value="Direccion">{{"direccion"| translate}}</option>
+          <option value="Telefono">{{"telefono"| translate}}</option>
+          <option value="Email">{{"email"| translate}}</option>
+          <option value="Sitio-Web">{{"sitio_web"| translate}}</option>
         </select>
         <button *ngIf="selectedOption" class="search-button" (click)="handleSelection('swap')">
           <mat-icon>swap_vert</mat-icon>
@@ -44,7 +44,7 @@
   
   
       <button *ngIf="selectedOption" class="search-button mt-4" (click)="handleSelection()">
-        <span class="button-text ">Ordenar</span>
+        <span class="button-text ">{{"ordenar"| translate}}</span>
         <!-- <span class="button-icon"></span> -->
       </button>
   
@@ -56,31 +56,31 @@
   
     <div *ngIf="showFilters" class="filter-form-container">
       <hr>
-      <h3>Filtrar</h3>
+      <h3>{{"filtrar_boton"| translate}}</h3>
       <hr>
       <form >
         <mat-form-field class="full-width">
-          <mat-label>Nombre</mat-label>
+          <mat-label>{{"nombre"| translate}}</mat-label>
           <input matInput placeholder="Nombre" name="nombre" [(ngModel)]="nombre">
         </mat-form-field>
     
         <mat-form-field class="full-width">
-          <mat-label>Dirección</mat-label>
+          <mat-label>{{"direccion"| translate}}</mat-label>
           <input matInput type="text" placeholder="direccion" name="direccion" [(ngModel)]="direccion">
         </mat-form-field>
       
         <mat-form-field class="full-width">
-          <mat-label>Teléfono</mat-label>
+          <mat-label>{{"telefono"| translate}}</mat-label>
           <input matInput type="text" placeholder="telefono" name="telefono" [(ngModel)]="telefono">
         </mat-form-field>
       
         <mat-form-field class="full-width">
-          <mat-label>Email</mat-label>
+          <mat-label>{{"email"| translate}}</mat-label>
           <input matInput type="text" placeholder="email" name="email" [(ngModel)]="email">
         </mat-form-field>
       
         <mat-form-field class="full-width">
-          <mat-label>Sitio Web</mat-label>
+          <mat-label>{{"sitio_web"| translate}}</mat-label>
           <input matInput type="text" placeholder="sitioWeb" name="sitioWeb" [(ngModel)]="sitioWeb">
         </mat-form-field>
     
@@ -90,11 +90,11 @@
       <div class="centrar">
         <button class="mr-4 search-button" color="primary" type="submit" (click)="filter(nombre, direccion, telefono, email, sitioWeb)">
           <mat-icon class="mr-2">filter_list</mat-icon>
-          Filtrar 
+          {{"filtrar_boton"| translate}} 
         </button>
         <button class="search-button" color="primary" type="submit" (click)="getHoteles()">
           <mat-icon class="mr-2">restart_alt</mat-icon>
-          Reestablecer
+          {{"restablecer_boton"| translate}}
         </button>
       </div>
     </div>
@@ -113,19 +113,19 @@
       <div class="list-container">
         <mat-card>
           <mat-card-header>
-            <mat-card-title>Lista de Hoteles</mat-card-title>
+            <mat-card-title>{{'HOTELES' | translate}}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <mat-list>
               <mat-list-item class="huesped-item">
                 <span class="matListItemTitle reduce-space">ID</span>
-                <span class="matListItemLine"><strong>Nombre</strong></span>
-                <span class="matListItemLine"><strong>Dirección</strong></span>
-                <span class="matListItemLine"><strong>Teléfono</strong></span>
-                <span class="matListItemLine"><strong>Email</strong></span>
-                <span class="matListItemLine"><strong>Sitio Web</strong></span>
+                <span class="matListItemLine"><strong>{{"nombre"| translate}}</strong></span>
+                <span class="matListItemLine"><strong>{{"direccion"| translate}}</strong></span>
+                <span class="matListItemLine"><strong>{{"telefono"| translate}}</strong></span>
+                <span class="matListItemLine"><strong>{{"email"| translate}}</strong></span>
+                <span class="matListItemLine"><strong>{{"sitio_web"| translate}}</strong></span>
                 <div class="huesped-actions">
-                  <span class="matListItemLine"><strong>Acciones</strong></span>
+                  <span class="matListItemLine"><strong>{{"acciones"| translate}}</strong></span>
                 </div>
               </mat-list-item>
               <mat-list-item
