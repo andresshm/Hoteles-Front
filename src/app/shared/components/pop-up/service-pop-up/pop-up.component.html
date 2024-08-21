@@ -6,20 +6,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar servicio</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{"eliminar_servicio"|translate}}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form >
               <div class="mb-3">
-                 <p>Está a punto de borrar el servicio: {{selectedIdHijo}}</p>
-                 <p class="warn">Esta operación es irreversible</p>
+                 <p>{{"esta_a_punto_de_borrar_servicio"|translate}} {{selectedIdHijo}}</p>
+                 <p class="warn">{{"esta_operacion_es_irreversible"|translate}}</p>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2S" data-bs-toggle="modal">Eliminar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"cancelar"|translate}}</button>
+            <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2S" data-bs-toggle="modal">{{"eliminar"|translate}}</button>
           </div>
         </div>
       </div>
@@ -33,18 +33,17 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">ATENCIÓN</h1>
+            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">{{"atencion"|translate}}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <p>
-              Está a punto de eliminar el servicio: {{selectedIdHijo}} de forma permanente.
-              ¿Quiere realizar la operación igualmente?
+              {{"esta_a_punto_de_borrar_servicio"|translate}} {{selectedIdHijo}} {{"permanente"|translate}}
             </p>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary"  data-bs-dismiss="modal">Atrás</button>
-            <button class="btn btn-primary" (click)=" onSubmitDEL('SER'); recharge('DEL');"   data-bs-dismiss="modal">Eliminar</button>
+            <button class="btn btn-primary"  data-bs-dismiss="modal">{{"atras"|translate}}</button>
+            <button class="btn btn-primary" (click)=" onSubmitDEL('SER'); recharge('DEL');"   data-bs-dismiss="modal">{{"eliminar"|translate}}</button>
           </div>
         </div>
       </div>
@@ -57,13 +56,13 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear servicio</h1>
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">{{"crear_servicio"|translate}}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                <label for="recipient-name" class="col-form-label">{{"nombre"|translate}}:</label>
                 <input type="text" class="form-control" id="recipient-name" [(ngModel)]="service.nombre">
               </div>
               <!-- <div class="mb-3">
@@ -71,15 +70,15 @@
                 <input type="text" class="form-control" id="recipient-name" [(ngModel)]="service.descripcion">
               </div> -->
               <div class="mb-3">
-                <label for="message-text" class="col-form-label">Descripción:</label>
+                <label for="message-text" class="col-form-label">{{"descripcion"|translate}}:</label>
                 <textarea class="form-control" id="message-text" [(ngModel)]="service.descripcion"></textarea>
               </div>
         
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" (click)="postNewHost('SER'); recharge('POST');">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"cancelar"|translate}}</button>
+            <button type="button" class="btn btn-primary" (click)="postNewHost('SER'); recharge('POST');">{{"guardar"|translate}}</button>
           </div>
         </div>
       </div>
@@ -92,17 +91,17 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar servicio: {{selectedIdHijo}} </h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{"actualizar_servicio"|translate}}: {{selectedIdHijo}} </h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form>
               <div *ngIf="serviceAux" class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                <label for="recipient-name" class="col-form-label">{{"nombre"|translate}}:</label>
                 <input type="text" #myInput class="form-control" id="recipient-name" [value]="serviceAux.nombre" >
               </div>
               <div *ngIf="serviceAux" class="mb-3">
-                <label for="recipient-desc" class="col-form-label" >Descripción</label>
+                <label for="recipient-desc" class="col-form-label" >{{"descripcion"|translate}}</label>
                 <!-- Aqui abajo puedo dejar el ngmodel porque es la ultima propiedad
                  que no se porque pero si pongo ngmodel a todas las props en los inputs aparece el 
                  valor de la ultima prop -->
@@ -116,8 +115,8 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" (click)="onSubmitPut('SER'); recharge('PUT')">Actualizar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"cancelar"|translate}}</button>
+            <button type="button" class="btn btn-primary" (click)="onSubmitPut('SER'); recharge('PUT')">{{"actualizar"|translate}}</button>
           </div>
         </div>
       </div>

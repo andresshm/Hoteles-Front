@@ -11,7 +11,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
-          Actualizar huésped: {{ selectedIdHijo }}
+          {{"actualizar"|translate}}: {{ selectedIdHijo }}
         </h1>
         <button
           type="button"
@@ -24,7 +24,7 @@
         <form>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label"
-              >Nombre:
+              >{{"nombre"|translate}}:
             </label>
             <!-- <input type="text" class="form-control" id="recipient-name" [value]="hostAux.nombre" [(ngModel)]="hostAux.nombre"> -->
             <input
@@ -38,7 +38,7 @@
           </div>
           <div class="mb-3">
             <label for="recipient-surname" class="col-form-label"
-              >Apellidos:</label
+              >{{"apellido"|translate}}:</label
             >
             <!-- <input type="text" class="form-control" id="recipient-surname" [(ngModel)]="hostAux.apellido"> -->
             <input
@@ -51,7 +51,7 @@
           </div>
           <div class="mb-3">
             <label for="recipient-dni" class="col-form-label"
-              >DNI/Pasaporte:</label
+              >{{"dni_pasaporte"|translate}}:</label
             >
             <!-- <input type="text" class="form-control" id="recipient-dni" [(ngModel)]="hostAux.dniPasaporte"> -->
             <input
@@ -64,7 +64,7 @@
           </div>
           <div class="mb-3">
             <label for="recipient-procedence" class="col-form-label"
-              >Procedencia:</label
+              >{{"procedencia"|translate}}:</label
             >
             <!-- <input type="text" class="form-control" id="recipient-procedence" [(ngModel)]="hostAux.procedencia"> -->
             <input
@@ -79,7 +79,7 @@
           <div class="button-container2">
             <div class="mb-3">
               <label for="recipient-checkin" class="col-form-label"
-                >Fecha check-in:</label
+                >{{"check_in"|translate}}:</label
               >
               <input
               #inputDateIn
@@ -95,7 +95,7 @@
             </div>
 
             <div class="mb-3">
-              <label for="recipient-timein" class="col-form-label">Hora</label>
+              <label for="recipient-timein" class="col-form-label">{{"hora"|translate}}</label>
               <input
               #inputTimeIn
                 matInput
@@ -113,7 +113,7 @@
           <div class="button-container2">
             <div class="mb-3">
               <label for="recipient-checkout" class="col-form-label"
-                >Fecha check-out:</label
+                >{{"check_out"|translate}}:</label
               >
               <input
               #inputDateOut
@@ -129,7 +129,7 @@
             </div>
 
             <div class="mb-3">
-              <label for="recipient-timeout" class="col-form-label">Hora</label>
+              <label for="recipient-timeout" class="col-form-label">{{"hora"|translate}}</label>
               <input
               #inputTimeOut
                 matInput
@@ -147,14 +147,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancelar
+          {{"cancelar"|translate}}
         </button>
         <button
           type="button"
           class="btn btn-primary"
           (click)="onSubmitPut('HOS'); recharge('PUT')"
         >
-          Actualizar
+          {{"actualizar"|translate}}
         </button>
       </div>
     </div>
@@ -174,7 +174,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
-          Eliminar huésped
+          {{"eliminar_huesped"|translate}}
         </h1>
         <button
           type="button"
@@ -186,14 +186,14 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <p>Está a punto de borrar el huésped: {{ selectedIdHijo }}</p>
-            <p class="warn">Esta operación es irreversible</p>
+            <p>{{"esta_a_punto_de_borrar"|translate}} {{ selectedIdHijo }}</p>
+            <p class="warn">{{"esta_operacion_es_irreversible"|translate}}</p>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancelar
+          {{"cancelar"|translate}}
         </button>
         <button
           type="submit"
@@ -201,7 +201,7 @@
           data-bs-target="#exampleModalToggle2"
           data-bs-toggle="modal"
         >
-          Eliminar
+          {{"eliminar"|translate}}
         </button>
       </div>
     </div>
@@ -221,7 +221,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">ATENCIÓN</h1>
+        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">{{"atencion"|translate}}</h1>
         <button
           type="button"
           class="btn-close"
@@ -231,18 +231,17 @@
       </div>
       <div class="modal-body">
         <p>
-          Está a punto de eliminar el huésped: {{ selectedIdHijo }} de forma
-          permanente. ¿Quiere realizar la operación igualmente?
+          {{"esta_a_punto_de_borrar"|translate}} {{ selectedIdHijo }} {{"permanente"|translate}}
         </p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-dismiss="modal">Atrás</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal">{{"atras"|translate}}</button>
         <button
           class="btn btn-primary"
           (click)="onSubmitDEL('HOS'); recharge('DEL')"
           data-bs-dismiss="modal"
         >
-          Eliminar
+          {{"eliminar"|translate}}
         </button>
       </div>
     </div>
@@ -262,7 +261,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear huésped</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">{{"crear_huesped"|translate}}</h1>
         <button
           type="button"
           class="btn-close"
@@ -273,7 +272,7 @@
       <div class="modal-body">
         <form>
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Nombre:</label>
+            <label for="recipient-name" class="col-form-label">{{"nombre"|translate}}:</label>
             <input
               type="text"
               class="form-control"
@@ -283,7 +282,7 @@
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label"
-              >Apellidos:</label
+              >{{"apellidos"|translate}}:</label
             >
             <input
               type="text"
@@ -294,7 +293,7 @@
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label"
-              >DNI/Pasaporte:</label
+              >{{"dni_pasaporte"|translate}}:</label
             >
             <input
               type="text"
@@ -305,7 +304,7 @@
           </div>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label"
-              >Procedencia:</label
+              >{{"procedencia"|translate}}:</label
             >
             <input
               type="text"
@@ -326,7 +325,7 @@
           <div class="button-container2">
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label"
-                >Fecha check-in:</label
+                >{{"check_in"|translate}}:</label
               >
               <input
                 matInput
@@ -340,7 +339,7 @@
             </div>
 
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">Hora</label>
+              <label for="recipient-name" class="col-form-label">{{"hora"|translate}}</label>
               <input
                 matInput
                 placeholder="HH:mm"
@@ -356,7 +355,7 @@
           <div class="button-container2">
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label"
-                >Fecha check-out:</label
+                >{{"check_out"|translate}}:</label
               >
               <input
                 matInput
@@ -370,7 +369,7 @@
             </div>
 
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">Hora</label>
+              <label for="recipient-name" class="col-form-label">{{"hora"|translate}}</label>
               <input
                 matInput
                 placeholder="HH:mm"
@@ -386,14 +385,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancelar
+          {{"cancelar"|translate}}
         </button>
         <button
           type="button"
           class="btn btn-primary"
           (click)="postNewHost('HOS'); recharge('POS')"
         >
-          Guardar
+          {{"guardar"|translate}}
         </button>
       </div>
     </div>

@@ -12,6 +12,8 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
 import { LanguajeModule } from './languajes/components/languaje.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ErrorInterceptor } from './services/error.interceptor';
+
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -39,9 +41,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    // HistoryGraphicComponent
-    
-  
 
   ],
   exports:[
@@ -49,7 +48,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     
   ],
   providers: [
-     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

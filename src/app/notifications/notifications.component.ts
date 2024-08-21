@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Host } from 'app/interfaces/host.interface';
 import { Hotel } from 'app/interfaces/hotel.interface';
 import { Room } from 'app/interfaces/room.interface';
@@ -47,8 +48,9 @@ selectedHotelId: number;
 selectedServiceIds: number[] = [];
   selectedHostIds: number[]=[];
 
-  constructor(private managementService : ManagementService,
-    // private router : Router
+  constructor(
+    private managementService : ManagementService,
+    private translateService  : TranslateService,
   ) { }
 
 
@@ -60,7 +62,7 @@ selectedServiceIds: number[] = [];
 
   loadRooms() {
     // Replace this with actual data fetching
-    this.managementService.getRoomsRequest('habitacion').subscribe(hoteles => {
+    this.managementService.getAllRequest('habitacion').subscribe(hoteles => {
       this.rooms = hoteles.sort((a, b)=>a.id-b.id);
       // this.hotel = this.Rooms[0];
     })
@@ -68,7 +70,7 @@ selectedServiceIds: number[] = [];
 
   loadHosts() {
     // Replace this with actual data fetching
-    this.managementService.getHostsRequest('huesped').subscribe(servicios => this.hosts = servicios)
+    this.managementService.getAllRequest('huesped').subscribe(servicios => this.hosts = servicios)
 
   }
 
@@ -77,17 +79,10 @@ selectedServiceIds: number[] = [];
     this.selectedHotelId = parseInt(selectElement.value, 10);
     console.log('Selected hotel ID:', this.selectedHotelId);
     if(this.selectedHotelId)
-      this.managementService.getRoomById(this.selectedHotelId, 'habitacion').subscribe(hotelAux => this.room = hotelAux)
+      this.managementService.getById(this.selectedHotelId, 'habitacion').subscribe(hotelAux => this.room = hotelAux)
 
   }
-  // onRoomChange(event: Event) {
-  //   const selectElement = event.target as HTMLSelectElement;
-  //   this.selectedHotelId = parseInt(selectElement.value, 10);
-  //   console.log('Selected hotel ID:', this.selectedHotelId);
-  //   if(this.selectedHotelId)
-  //     this.managementService.getHotelById(this.selectedHotelId, 'hotel').subscribe(hotelAux => this.hotel = hotelAux)
 
-  // }
 
   toggleService(hostId: number) {
     console.log('Selected host ID:', hostId);
@@ -104,13 +99,13 @@ selectedServiceIds: number[] = [];
   linkHosts() {
     console.log('lista de ids', this.selectedHostIds)
     let hotel : Hotel;
-    this.managementService.getRoomById(this.selectedHotelId, 'habitacion').subscribe(roomAux => {
+    this.managementService.getById(this.selectedHotelId, 'habitacion').subscribe(roomAux => {
       this.room = roomAux;
     });
 
     for(let i of this.selectedHostIds){
       let host : Host;
-      this.managementService.getHostById(i, 'huesped').subscribe(hostAux => {
+      this.managementService.getById(i, 'huesped').subscribe(hostAux => {
         host=hostAux;
         host.idHabitacion=this.selectedHotelId;
         this.managementService.putHost(i, host).subscribe();
@@ -134,10 +129,10 @@ selectedServiceIds: number[] = [];
     let mensaje = '';
 
     switch(tipo){
-      case 'DEL': mensaje = "Huésped eliminado correctamente";break;
-      case 'POST': mensaje = "Huésped creado correctamente";break;
-      case 'PUT': mensaje = "Huésped actualizado correctamente";break;
-      case 'STH': mensaje = "Huespedes añadidos correctamente";break;
+      case 'DEL':  mensaje = "Huésped eliminado correctamente";    mensaje=this.translateService.instant("huesped_eliminado");     break;
+      case 'POST': mensaje = "Huésped creado correctamente";       mensaje=this.translateService.instant("huesped_creado");        break;
+      case 'PUT':  mensaje = "Huésped actualizado correctamente";  mensaje=this.translateService.instant("huesped_actualizado");   break;
+      case 'STH':  mensaje = "Huespedes añadidos correctamente";   mensaje=this.translateService.instant("huespedes_anadidos");    break;
 
     }
     

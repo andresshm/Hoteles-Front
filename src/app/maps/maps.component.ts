@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import { Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 import { Criterio } from "app/interfaces/criterio.interface";
 import { Service } from "app/interfaces/service.interface";
 import { ManagementService } from "app/services/management.service";
@@ -39,7 +40,8 @@ export class MapsComponent implements OnInit {
   
   constructor(
     private managementService : ManagementService,
-    private router            : Router
+    private router            : Router,
+    private translateService  : TranslateService
   ) { }
 
 
@@ -73,9 +75,9 @@ export class MapsComponent implements OnInit {
     
     
 
-    this.router.events.subscribe(() => {
-      this.checkRoute();
-    });
+    // this.router.events.subscribe(() => {
+    //   this.checkRoute();
+    // });
     this.checkRoute();
      
 
@@ -93,7 +95,7 @@ export class MapsComponent implements OnInit {
 
   getServices() {
 
-    this.managementService.getServicesRequest('servicio')
+    this.managementService.getAllRequest('servicio')
       .subscribe(servs => {
         this.services = servs.sort((a, b)=>a.id-b.id);
         this.displayedServices = servs.sort((a, b)=>a.id-b.id);
@@ -102,12 +104,12 @@ export class MapsComponent implements OnInit {
   }
 
   onSubmitDEL(id:number){
-    this.managementService.deleteService(id).subscribe();
+    this.managementService.delete(id, 'servicio').subscribe();
   }
 
   setIndex(id:number){
     this.selectedId=id;
-    this.managementService.getServiceById(id, 'servicio').subscribe(service => this.service = service);
+    this.managementService.getById(id, 'servicio').subscribe(service => this.service = service);
   }
 
 
@@ -128,10 +130,6 @@ export class MapsComponent implements OnInit {
 
 
   filter(nombre:string, descripcion:string){
-    // this.managementService.filterService(nombre, descripcion).subscribe(matchServices => {
-    //   this.services = matchServices;
-    //   this.displayedServices = matchServices;
-    // });
 
     const valuesAux : Criterio[] = [
       {name:"nombre", value:nombre},
@@ -160,33 +158,41 @@ export class MapsComponent implements OnInit {
   
     switch(this.selectedOption){
       case 'Nombre':
-        if(this.invertirSeleccion){
-          this.managementService.searchService("nombre", "DESC")
+        this.managementService.searchService("nombre", this.invertirSeleccion ? "DESC" : "ASC")
           .subscribe(sortedServices =>
             this.displayedServices = sortedServices
           );
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchService("nombre", "DESC")
+      //     .subscribe(sortedServices =>
+      //       this.displayedServices = sortedServices
+      //     );
 
-       }else{
-        this.managementService.searchService("nombre", "ASC")
-        .subscribe(sortedServices =>
-          this.displayedServices = sortedServices
-        );
-       }
+      //  }else{
+      //   this.managementService.searchService("nombre", "ASC")
+      //   .subscribe(sortedServices =>
+      //     this.displayedServices = sortedServices
+      //   );
+      //  }
         break;
 
       case 'Descripcion':
-        if(this.invertirSeleccion){
-          this.managementService.searchService("descripcion", "DESC")
+        this.managementService.searchService("descripcion", this.invertirSeleccion ? "DESC" : "ASC")
           .subscribe(sortedServices =>
             this.displayedServices = sortedServices
           );
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchService("descripcion", "DESC")
+      //     .subscribe(sortedServices =>
+      //       this.displayedServices = sortedServices
+      //     );
 
-       }else{
-        this.managementService.searchService("descripcion", "ASC")
-        .subscribe(sortedServices =>
-          this.displayedServices = sortedServices
-        );
-       }
+      //  }else{
+      //   this.managementService.searchService("descripcion", "ASC")
+      //   .subscribe(sortedServices =>
+      //     this.displayedServices = sortedServices
+      //   );
+      //  }
         break;
 
     }
@@ -200,7 +206,7 @@ export class MapsComponent implements OnInit {
   loadData() {
     // Simula la carga de datos
 
-    this.managementService.getServicesRequest('servicio')
+    this.managementService.getAllRequest('servicio')
     .subscribe(services => {
       this.displayedServices = services.sort((a, b)=>a.id-b.id);
       //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
@@ -231,9 +237,9 @@ export class MapsComponent implements OnInit {
     let mensaje = '';
 
     switch(tipo){
-      case 'DEL': mensaje = "Servicio eliminado correctamente";break;
-      case 'POST': mensaje = "Servicio creado correctamente";break;
-      case 'PUT': mensaje = "Servicio actualizado correctamente";break;
+      case 'DEL': mensaje = "Servicio eliminado correctamente";     mensaje=this.translateService.instant("servicio_eliminado");    break;
+      case 'POST': mensaje = "Servicio creado correctamente";       mensaje=this.translateService.instant("servicio_creado");       break;
+      case 'PUT': mensaje = "Servicio actualizado correctamente";   mensaje=this.translateService.instant("servicio_actualizado");  break;
 
     }
     

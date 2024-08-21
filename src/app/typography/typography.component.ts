@@ -1,6 +1,7 @@
 import { Component, Host, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Criterio } from 'app/interfaces/criterio.interface';
 import { Hotel } from 'app/interfaces/hotel.interface';
 import { ManagementService } from 'app/services/management.service';
@@ -69,8 +70,10 @@ export class TypographyComponent implements OnInit {
     habitaciones: []
   }
   
-  constructor(private managementService : ManagementService,
-    private router : Router
+  constructor(
+    private managementService : ManagementService,
+    private router            : Router,
+    private translateService  : TranslateService
   ) { }
 
 
@@ -81,7 +84,7 @@ export class TypographyComponent implements OnInit {
   setIndex(id:number){
     this.selectedId=id;
     console.log(this.selectedId);
-    this.managementService.getHotelById(id, 'hotel').subscribe(hotel => this.hotel = hotel);
+    this.managementService.getById(id, 'hotel').subscribe(hotel => this.hotel = hotel);
 
   }
 
@@ -93,11 +96,7 @@ export class TypographyComponent implements OnInit {
     this.data.email=this.email;
     this.data.sitioWeb=this.sitioWeb;
 
-    console.log(this.data);
-
-
-    this.managementService.postNewHotel(this.data)
-    .subscribe();
+    this.managementService.post(this.data, 'hotel').subscribe();
 
   }
 
@@ -112,20 +111,19 @@ export class TypographyComponent implements OnInit {
 
 
 
-    this.managementService.putHotel(this.selectedId, this.data)
-    .subscribe();
+    this.managementService.put(this.selectedId, this.data, 'hotel').subscribe();
 
   }
 
   onSubmitDEL(id:number){
     console.log('llega')
-    this.managementService.deleteHotel(id)
+    this.managementService.delete(id, 'hotel')
     .subscribe();
   }
 
   getHoteles() {
    
-    this.managementService.getHotelsRequest('hotel')
+    this.managementService.getAllRequest('hotel')
       .subscribe(hotels => {
         this.hotels = hotels.sort((a, b)=>a.id-b.id);
         this.displayedHotels = hotels.sort((a, b)=>a.id-b.id);
@@ -165,9 +163,9 @@ export class TypographyComponent implements OnInit {
 
 
 
-    this.router.events.subscribe(() => {
-      this.checkRoute();
-    });
+    // this.router.events.subscribe(() => {
+    //   this.checkRoute();
+    // });
     this.checkRoute();
 
 
@@ -229,90 +227,110 @@ export class TypographyComponent implements OnInit {
     else
       this.invertirSeleccion = false
   
-    console.log(this.selectedOption)
+    
     switch(this.selectedOption){
       case 'Nombre':
-        if(this.invertirSeleccion){
-          this.managementService.searchHotel("nombre", "DESC")
-          .subscribe(sortedHotels =>
-            this.displayedHotels = sortedHotels
-          );
-
-       }else{
-        this.managementService.searchHotel("nombre", "ASC")
+        this.managementService.searchHotel("nombre", this.invertirSeleccion ? "DESC" : "ASC")
         .subscribe(sortedHotels =>
           this.displayedHotels = sortedHotels
         );
-       }
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchHotel("nombre", "DESC")
+      //     .subscribe(sortedHotels =>
+      //       this.displayedHotels = sortedHotels
+      //     );
+
+      //  }else{
+      //   this.managementService.searchHotel("nombre", "ASC")
+      //   .subscribe(sortedHotels =>
+      //     this.displayedHotels = sortedHotels
+      //   );
+      //  }
         break;
 
       case 'Direccion':
-        if(this.invertirSeleccion){
-          this.managementService.searchHotel("direccion", "DESC")
-          .subscribe(sortedHotels =>
-            this.displayedHotels = sortedHotels
-          );
-
-       }else{
-        this.managementService.searchHotel("direccion", "ASC")
+        this.managementService.searchHotel("direccion", this.invertirSeleccion ? "DESC" : "ASC")
         .subscribe(sortedHotels =>
           this.displayedHotels = sortedHotels
         );
-       }
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchHotel("direccion", "DESC")
+      //     .subscribe(sortedHotels =>
+      //       this.displayedHotels = sortedHotels
+      //     );
+
+      //  }else{
+      //   this.managementService.searchHotel("direccion", "ASC")
+      //   .subscribe(sortedHotels =>
+      //     this.displayedHotels = sortedHotels
+      //   );
+      //  }
         break;
 
 
       case 'Telefono':
-
-      if(this.invertirSeleccion){
-        this.managementService.searchHotel("telefono", "DESC")
+        this.managementService.searchHotel("telefono", this.invertirSeleccion ? "DESC" : "ASC")
         .subscribe(sortedHotels =>
           this.displayedHotels = sortedHotels
         );
 
-     }else{
-      this.managementService.searchHotel("telefono", "ASC")
-      .subscribe(sortedHotels =>
-        this.displayedHotels = sortedHotels
-      );
-     }
+    //   if(this.invertirSeleccion){
+    //     this.managementService.searchHotel("telefono", "DESC")
+    //     .subscribe(sortedHotels =>
+    //       this.displayedHotels = sortedHotels
+    //     );
+
+    //  }else{
+    //   this.managementService.searchHotel("telefono", "ASC")
+    //   .subscribe(sortedHotels =>
+    //     this.displayedHotels = sortedHotels
+    //   );
+    //  }
       break;
     
       case 'Email':
-
-      if(this.invertirSeleccion){
-        this.managementService.searchHotel("email", "DESC")
+        this.managementService.searchHotel("email", this.invertirSeleccion ? "DESC" : "ASC")
         .subscribe(sortedHotels =>
           this.displayedHotels = sortedHotels
         );
 
-     }else{
-      this.managementService.searchHotel("email", "ASC")
-      .subscribe(sortedHotels =>
-        this.displayedHotels = sortedHotels
-      );
-     }
+    //   if(this.invertirSeleccion){
+    //     this.managementService.searchHotel("email", "DESC")
+    //     .subscribe(sortedHotels =>
+    //       this.displayedHotels = sortedHotels
+    //     );
+
+    //  }else{
+    //   this.managementService.searchHotel("email", "ASC")
+    //   .subscribe(sortedHotels =>
+    //     this.displayedHotels = sortedHotels
+    //   );
+    //  }
       break;
 
 
       case 'Sitio-Web':
-        if(this.invertirSeleccion){
-          this.managementService.searchHotel("sitioWeb", "DESC")
-          .subscribe(sortedHotels =>
-            this.displayedHotels = sortedHotels
-          );
-
-       }else{
-        this.managementService.searchHotel("sitioWeb", "ASC")
+        this.managementService.searchHotel("sitioWeb", this.invertirSeleccion ? "DESC" : "ASC")
         .subscribe(sortedHotels =>
           this.displayedHotels = sortedHotels
         );
-       }
+
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchHotel("sitioWeb", "DESC")
+      //     .subscribe(sortedHotels =>
+      //       this.displayedHotels = sortedHotels
+      //     );
+
+      //  }else{
+      //   this.managementService.searchHotel("sitioWeb", "ASC")
+      //   .subscribe(sortedHotels =>
+      //     this.displayedHotels = sortedHotels
+      //   );
+      //  }
         break;
 
 
     }
-    // this.managementService.getHotelsRequest('hotel').subscribe();
 
   }
 
@@ -323,7 +341,7 @@ export class TypographyComponent implements OnInit {
   loadData() {
     // Simula la carga de datos
 
-    this.managementService.getHotelsRequest('hotel')
+    this.managementService.getAllRequest('hotel')
     .subscribe(hotels => {
       this.displayedHotels = hotels.sort((a, b)=>a.id-b.id);
       //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
@@ -360,9 +378,9 @@ export class TypographyComponent implements OnInit {
     let mensaje = '';
 
     switch(tipo){
-      case 'DEL': mensaje = "Hotel eliminado correctamente";break;
-      case 'POST': mensaje = "Hotel creado correctamente";break;
-      case 'PUT': mensaje = "Hotel actualizado correctamente";break;
+      case 'DEL':  mensaje = "Hotel eliminado correctamente";      mensaje=this.translateService.instant("hotel_eliminado");     break;
+      case 'POST': mensaje = "Hotel creado correctamente";         mensaje=this.translateService.instant("hotel_creado");        break;
+      case 'PUT':  mensaje = "Hotel actualizado correctamente";    mensaje=this.translateService.instant("hotel_actualizado");   break;
 
     }
     

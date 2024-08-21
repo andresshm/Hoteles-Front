@@ -12,18 +12,24 @@ import { environment } from "environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class ManagementService {
-  private url = `http://localhost:${environment.port}/`;
-  private token = '';
+  private url = environment.baseUrl;
 
-  // currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  // currentUserData: BehaviorSubject<String> =new BehaviorSubject<String>("");
 
-  constructor(private httpClient: HttpClient) {
-  //   this.currentUserLoginOn=new BehaviorSubject<boolean>(sessionStorage.getItem("token")!=null);
-  //   this.currentUserData=new BehaviorSubject<String>(sessionStorage.getItem("token") || "");
-  }
+  constructor(private httpClient: HttpClient) { }
 
   //GET-ALL
+
+
+
+  public getAllRequest(entity: string): Observable<any[]> {
+    return this.httpClient
+      .get<any[]>(`${this.url}${entity}`)
+      .pipe(catchError(() => of([])));
+  }
+
+
+
+  //borrar estas 4
   public getHostsRequest(entity: string): Observable<Host[]> {
     return this.httpClient
       .get<Host[]>(`${this.url}${entity}`)
@@ -52,6 +58,16 @@ export class ManagementService {
 
   
   //get by id
+
+
+
+  public getById(id: number, entity: string): Observable<any> {
+    return this.httpClient
+      .get<any>(`${this.url}${entity}/${id}`)
+      .pipe(catchError(() => of()));
+  }
+
+  //borrar estas 4
   public getHostById(id: number, entity: string): Observable<Host> {
     return this.httpClient
       .get<Host>(`${this.url}${entity}/${id}`)
@@ -75,6 +91,17 @@ export class ManagementService {
 
   //manejar errores
   //POST
+
+
+
+  post(data: any, entity:string): Observable<any> {
+    return this.httpClient
+      .post<any>(`${this.url}${entity}`, data)
+      .pipe(catchError(() => of()));
+  }
+
+  
+  //borrar estas 4
   postNewHost(data: Host): Observable<Host> {
     return this.httpClient
       .post<Host>(`${this.url}huesped`, data)
@@ -101,6 +128,14 @@ export class ManagementService {
 
   //PUT
 
+  put(id: number, data: any, entity:string): Observable<any> {
+    return this.httpClient
+      .put<any>(`${this.url}${entity}/${id}`, data)
+      .pipe(catchError(() => of()));
+  }
+
+
+  //borrar estas 4
   putHost(id: number, data: Host): Observable<Host> {
     return this.httpClient
       .put<Host>(`${this.url}huesped/${id}`, data)
@@ -132,6 +167,17 @@ export class ManagementService {
   }
 
   //DELETE
+
+
+
+  delete(id: number, entity:string): Observable<any> {
+    return this.httpClient
+      .delete<any>(`${this.url}${entity}/${id}`)
+      .pipe(catchError(() => of()));
+  }
+
+
+  //borrar estas 4
   deleteHost(id: number): Observable<Host> {
     return this.httpClient
       .delete<Host>(`${this.url}huesped/${id}`)
@@ -155,6 +201,9 @@ export class ManagementService {
       .delete<Service>(`${this.url}servicio/${id}`)
       .pipe(catchError(() => of()));
   }
+
+
+
 
 
   getHuespedesPorHotel(): Observable<HuespedPorHotel[]>{
@@ -357,7 +406,7 @@ export class ManagementService {
 
     if(sortBy || orden){
       criteriosOrden.push({
-        "sortBy": sortBy || "nombre",
+        "sortBy": sortBy || "numero",
         "sentidoOrden": orden || "ASC"
       })
     }
@@ -367,7 +416,7 @@ export class ManagementService {
       searchCriteria.forEach((criteria)=>{
        
           criteriosBusqueda.push({
-            "key": criteria.name || "nombre",
+            "key": criteria.name || "numero",
             "operation": criteria.name === 'precioNoche' ? "GREATER_THAN" : "CONTAINS",//operator || "EQUALS",   Con esto operator no hace falta
             "value": criteria.value || "juan carlos"
           })
@@ -401,152 +450,4 @@ export class ManagementService {
   }
 
 
-
-
-
-
-
-
-  //filter
-  filterHost(
-    name: string,
-    surname: string,
-    dni: string,
-    procedencia: string,
-    checkinD: string,
-    checkinH: string,
-    checkoutD: string,
-    checkoutH: string
-  ): Observable<Host[]> {
-    let checkinDateD = "";
-    let checkinDateH = "";
-    let checkoutDateD = "";
-    let checkoutDateH = "";
-
-    if (checkinD) {
-      let date = "";
-      date = checkinD.replace(/-/g, "/");
-      let [year, month, day] = date.split("/");
-      let formattedDate = `${day}/${month}/${year}`;
-      checkinDateD = `${formattedDate} 00:00`;
-    }
-
-    if (checkinH) {
-      let date = "";
-      date = checkinH.replace(/-/g, "/");
-      let [year, month, day] = date.split("/");
-      let formattedDate = `${day}/${month}/${year}`;
-      checkinDateH = `${formattedDate} 00:00`;
-    }
-
-    if (checkoutD) {
-      let date = "";
-      date = checkoutD.replace(/-/g, "/");
-      let [year, month, day] = date.split("/");
-      let formattedDate = `${day}/${month}/${year}`;
-      checkoutDateD = `${formattedDate} 00:00`;
-    }
-
-    if (checkoutH) {
-      let date = "";
-      date = checkoutH.replace(/-/g, "/");
-      let [year, month, day] = date.split("/");
-      let formattedDate = `${day}/${month}/${year}`;
-      checkoutDateH = `${formattedDate} 00:00`;
-    }
-
-    const formData = {
-      nombre: name.trim(),
-      apellido: surname.trim(),
-      documento: dni.trim(),
-      procedencia: procedencia.trim(),
-      checkInD: checkinDateD, //checkinD.trim(),
-      checkInH: checkinDateH, //checkinH.trim(),
-      checkOutD: checkoutDateD, //checkoutD.trim(),
-      checkOutH: checkoutDateH, //checkoutH.trim()
-    };
-
-    let params = Object.keys(formData)
-      .filter((key) => formData[key]) // Include only non-empty values
-      .map((key) => `${key}=${encodeURIComponent(formData[key])}`) // Encode and concatenate
-      .join("&"); // Join all parameters with '&'
-
-    if (params) {
-      params = "?" + params;
-    }
-
-    return this.httpClient
-      .get<Host[]>(`${this.url}huesped/filter${params}`)
-      .pipe(catchError(() => of([])));
-  }
-
-  filterHotel(
-    name: string,
-    direccion: string,
-    telefono: string,
-    email: string,
-    sitioWeb: string
-  ): Observable<Hotel[]> {
-    const formData = {
-      nombre: name,
-      direccion: direccion,
-      telefono: telefono.trim(),
-      email: email.trim(),
-      web: sitioWeb.trim(),
-    };
-
-    let params = Object.keys(formData)
-      .filter((key) => formData[key]) // Include only non-empty values
-      .map((key) => `${key}=${encodeURIComponent(formData[key])}`) // Encode and concatenate
-      .join("&"); // Join all parameters with '&'
-
-    if (params) {
-      params = "?" + params;
-    }
-
-    return this.httpClient
-      .get<Hotel[]>(`${this.url}hotel/filter${params}`)
-      .pipe(catchError(() => of([])));
-  }
-
-  filterRoom(numero: string, precio: number, type: string): Observable<Room[]> {
-    const formData = {
-      numero,
-      precio,
-      tipo: type.trim(),
-    };
-
-    let params = Object.keys(formData)
-      .filter((key) => formData[key]) // Include only non-empty values
-      .map((key) => `${key}=${encodeURIComponent(formData[key])}`) // Encode and concatenate
-      .join("&"); // Join all parameters with '&'
-
-    if (params) {
-      params = "?" + params;
-    }
-
-    return this.httpClient
-      .get<Room[]>(`${this.url}habitacion/filter${params}`)
-      .pipe(catchError(() => of([])));
-  }
-
-  filterService(nombre: string, descripcion: string): Observable<Service[]> {
-    const formData = {
-      nombre,
-      descripcion: descripcion,
-    };
-
-    let params = Object.keys(formData)
-      .filter((key) => formData[key]) // Include only non-empty values
-      .map((key) => `${key}=${encodeURIComponent(formData[key])}`) // Encode and concatenate
-      .join("&"); // Join all parameters with '&'
-
-    if (params) {
-      params = "?" + params;
-    }
-
-    return this.httpClient
-      .get<Service[]>(`${this.url}servicio/filter${params}`)
-      .pipe(catchError(() => of([])));
-  }
 }

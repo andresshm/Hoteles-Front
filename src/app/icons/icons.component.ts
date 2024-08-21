@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Criterio } from 'app/interfaces/criterio.interface';
 
 import { Room } from 'app/interfaces/room.interface';
@@ -39,7 +40,8 @@ export class IconsComponent implements OnInit {
   
   constructor(
     private managementService : ManagementService,
-    private router            : Router
+    private router            : Router,
+    private translateService  : TranslateService
   ) { }
 
 
@@ -73,9 +75,7 @@ export class IconsComponent implements OnInit {
     
     
 
-    this.router.events.subscribe(() => {
-      this.checkRoute();
-    });
+    // comprueba donde estamos para sacar los edit y post adecuados
     this.checkRoute();
      
 
@@ -90,9 +90,8 @@ export class IconsComponent implements OnInit {
 
  
 
-  getHabitaciones() {
-   
-    this.managementService.getRoomsRequest('habitacion')
+  getHabitaciones() {   
+    this.managementService.getAllRequest('habitacion')
       .subscribe(rooms => {
         this.rooms = rooms.sort((a, b)=>a.id-b.id);
         this.displayedRooms = rooms.sort((a, b)=>a.id-b.id);
@@ -101,12 +100,12 @@ export class IconsComponent implements OnInit {
   }
 
   onSubmitDEL(id:number){
-    this.managementService.deleteRoom(id).subscribe();
+    this.managementService.delete(id, 'habitacion').subscribe();
   }
 
   setIndex(id:number){
     this.selectedId=id;
-    this.managementService.getRoomById(id, 'habitacion').subscribe(room => this.room = room);
+    this.managementService.getById(id, 'habitacion').subscribe(room => this.room = room);
   }
 
 
@@ -127,11 +126,6 @@ export class IconsComponent implements OnInit {
 
 
   filter(numero:string, precioNoche:number, tipo:string){
-    // this.managementService.filterRoom(numero, precioNoche, tipo).subscribe(matchRooms => {
-    //   this.rooms = matchRooms;
-    //   this.displayedRooms = matchRooms;
-    // });  
-    
     
     const valuesAux : Criterio[] = [
       {name:"numero", value:numero},
@@ -163,50 +157,63 @@ export class IconsComponent implements OnInit {
   
     switch(this.selectedOption){
       case 'Numero':
-        if(this.invertirSeleccion){
-          this.managementService.searchRoom("nombre", "DESC")
+        this.managementService.searchRoom("numero", this.invertirSeleccion ? "DESC" : "ASC")
           .subscribe(sortedRooms =>
             this.displayedRooms = sortedRooms
           );
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchRoom("nombre", "DESC")
+      //     .subscribe(sortedRooms =>
+      //       this.displayedRooms = sortedRooms
+      //     );
 
-       }else{
-        this.managementService.searchRoom("nombre", "ASC")
-        .subscribe(sortedRooms =>
-          this.displayedRooms = sortedRooms
-        );
-       }
+      //  }else{
+      //   this.managementService.searchRoom("nombre", "ASC")
+      //   .subscribe(sortedRooms =>
+      //     this.displayedRooms = sortedRooms
+      //   );
+      //  }
         break;
 
       case 'Tipo':
-        if(this.invertirSeleccion){
-          this.managementService.searchRoom("nombre", "DESC")
+
+      this.managementService.searchRoom("tipo", this.invertirSeleccion ? "DESC" : "ASC")
           .subscribe(sortedRooms =>
             this.displayedRooms = sortedRooms
           );
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchRoom("tipo", "DESC")
+      //     .subscribe(sortedRooms =>
+      //       this.displayedRooms = sortedRooms
+      //     );
 
-       }else{
-        this.managementService.searchRoom("nombre", "ASC")
-        .subscribe(sortedRooms =>
-          this.displayedRooms = sortedRooms
-        );
-       }
+      //  }else{
+      //   this.managementService.searchRoom("tipo", "ASC")
+      //   .subscribe(sortedRooms =>
+      //     this.displayedRooms = sortedRooms
+      //   );
+      //  }
         break;
 
 
       case 'Precio':
-
-      if(this.invertirSeleccion){
-        this.managementService.searchRoom("nombre", "DESC")
+        this.managementService.searchRoom("precioNoche", this.invertirSeleccion ? "DESC" : "ASC")
         .subscribe(sortedRooms =>
           this.displayedRooms = sortedRooms
         );
 
-     }else{
-      this.managementService.searchRoom("nombre", "ASC")
-      .subscribe(sortedRooms =>
-        this.displayedRooms = sortedRooms
-      );
-     }
+    //   if(this.invertirSeleccion){
+    //     this.managementService.searchRoom("precioNoche", "DESC")
+    //     .subscribe(sortedRooms =>
+    //       this.displayedRooms = sortedRooms
+    //     );
+
+    //  }else{
+    //   this.managementService.searchRoom("precioNoche", "ASC")
+    //   .subscribe(sortedRooms =>
+    //     this.displayedRooms = sortedRooms
+    //   );
+    //  }
       break;
 
     }
@@ -253,9 +260,9 @@ export class IconsComponent implements OnInit {
     let mensaje = '';
 
     switch(tipo){
-      case 'DEL': mensaje = "Habitación eliminada correctamente";break;
-      case 'POST': mensaje = "Habitación creada correctamente";break;
-      case 'PUT': mensaje = "Habitación actualizada correctamente";break;
+      case 'DEL':  mensaje = "Habitación eliminada correctamente";    mensaje=this.translateService.instant("habitacion_eliminado");   break;
+      case 'POST': mensaje = "Habitación creada correctamente";       mensaje=this.translateService.instant("habitacion_creado");   break;
+      case 'PUT':  mensaje = "Habitación actualizada correctamente";  mensaje=this.translateService.instant("habitacion_actualizado");   break;
     }
     
     $.notify({

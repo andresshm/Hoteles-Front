@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Host } from 'app/interfaces/host.interface';
 import { Hotel } from 'app/interfaces/hotel.interface';
 import { Room } from 'app/interfaces/room.interface';
@@ -60,7 +61,10 @@ export class TableListComponent implements OnInit {
 selectedHotelId: number;
 selectedServiceIds: number[] = [];
 
-  constructor(private managementService : ManagementService,
+  constructor(
+    private managementService : ManagementService,
+    private translateService : TranslateService,
+
     // private router : Router
   ) { }
 
@@ -73,7 +77,7 @@ selectedServiceIds: number[] = [];
 
   loadHotels() {
     // Replace this with actual data fetching
-    this.managementService.getHotelsRequest('hotel').subscribe(hoteles => {
+    this.managementService.getAllRequest('hotel').subscribe(hoteles => {
       this.hotels = hoteles.sort((a, b)=>a.id-b.id);
       // this.hotel = this.hotels[0];
     })
@@ -81,16 +85,16 @@ selectedServiceIds: number[] = [];
 
   loadServices() {
     // Replace this with actual data fetching
-    this.managementService.getServicesRequest('servicio').subscribe(servicios => this.services = servicios)
+    this.managementService.getAllRequest('servicio').subscribe(servicios => this.services = servicios)
 
   }
 
   onHotelChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedHotelId = parseInt(selectElement.value, 10);
-    console.log('Selected hotel ID:', this.selectedHotelId);
+    // console.log('Selected hotel ID:', this.selectedHotelId);
     if(this.selectedHotelId)
-      this.managementService.getHotelById(this.selectedHotelId, 'hotel').subscribe(hotelAux => this.hotel = hotelAux)
+      this.managementService.getById(this.selectedHotelId, 'hotel').subscribe(hotelAux => this.hotel = hotelAux)
 
   }
   // onRoomChange(event: Event) {
@@ -103,7 +107,7 @@ selectedServiceIds: number[] = [];
   // }
 
   toggleService(serviceId: number) {
-    console.log('Selected service ID:', serviceId);
+    // console.log('Selected service ID:', serviceId);
     // console.log('Selected hotel ID:', this.selectedHotelId);
 
     const index = this.selectedServiceIds.indexOf(serviceId);
@@ -117,7 +121,7 @@ selectedServiceIds: number[] = [];
   linkServices() {
     console.log('lista de ids', this.selectedServiceIds)
     let hotel : Hotel;
-    this.managementService.getHotelById(this.selectedHotelId, 'hotel').subscribe(hotelAux => {
+    this.managementService.getById(this.selectedHotelId, 'hotel').subscribe(hotelAux => {
       hotel = hotelAux;
       hotel.services=this.selectedServiceIds;
       this.managementService.putHotel(this.selectedHotelId, hotel).subscribe();
@@ -143,10 +147,10 @@ selectedServiceIds: number[] = [];
     let mensaje = '';
 
     switch(tipo){
-      case 'DEL': mensaje = "Huésped eliminado correctamente";break;
-      case 'POST': mensaje = "Huésped creado correctamente";break;
-      case 'PUT': mensaje = "Huésped actualizado correctamente";break;
-      case 'STH': mensaje = "Servicios añadidos correctamente";break;
+      case 'DEL':  mensaje = "Servicio eliminado correctamente";    mensaje=this.translateService.instant("servicios_eliminado");     break;
+      case 'POST': mensaje = "Servicio creado correctamente";       mensaje=this.translateService.instant("servicios_creado");        break;
+      case 'PUT':  mensaje = "Servicio actualizado correctamente";  mensaje=this.translateService.instant("servicios_actualizado");   break;  
+      case 'STH':  mensaje = "Servicios añadidos correctamente";    mensaje=this.translateService.instant("servicios_anadidos");      break;
 
     }
     

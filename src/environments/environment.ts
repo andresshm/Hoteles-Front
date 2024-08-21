@@ -5,9 +5,10 @@
 
 export const environment = {
   production: false,
+  port:8080,
+  baseUrl: `http://localhost:8080/`,
   notification: true,
   tableList: true,
-  port:8080,
   token: '',
   language: 'en'
 

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Criterio } from 'app/interfaces/criterio.interface';
 import { Host } from 'app/interfaces/host.interface';
 import { ManagementService } from 'app/services/management.service';
@@ -43,8 +44,8 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private managementService : ManagementService,
-    private router : Router,
-    private _dialog: MatDialog,
+    private router            : Router,
+    private translateService  : TranslateService
   ) { }
 
 
@@ -78,9 +79,9 @@ export class UserProfileComponent implements OnInit {
     
     
 /* Checkeo de rutas*/
-    this.router.events.subscribe(() => {
-      this.checkRoute();
-    });
+    // this.router.events.subscribe(() => {
+    //   this.checkRoute();
+    // });
     this.checkRoute();
      
 
@@ -97,7 +98,7 @@ export class UserProfileComponent implements OnInit {
 
   getHuespedes() {
    
-    this.managementService.getHostsRequest('huesped')
+    this.managementService.getAllRequest('huesped')
       .subscribe(hosts => {
         if(hosts){
 
@@ -109,7 +110,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmitDEL(id:number){
-    this.managementService.deleteHost(id).subscribe();
+    this.managementService.delete(id, 'huesped').subscribe();
   }
 
 
@@ -119,7 +120,7 @@ export class UserProfileComponent implements OnInit {
   setIndex(id:number){
     this.selectedId=id;
     console.log(this.selectedId);
-    this.managementService.getHostById(id, 'huesped').subscribe(host => this.host = host);
+    this.managementService.getById(id, 'huesped').subscribe(host => this.host = host);
 
   }
 
@@ -144,10 +145,7 @@ export class UserProfileComponent implements OnInit {
 
 
   filter(name?:string, apellido?:string, dni?:string, procedencia?:string, checkInD?:string, checkInH?:string, checkOutD?:string, checkOutH?:string){
-    // this.managementService.filterHost(name, apellido, dni, procedencia, checkInD, checkInH, checkOutD, checkOutH).subscribe(matchHosts => {
-    //   this.displayedHosts = matchHosts;
-    //   this.hosts = matchHosts
-    // });
+
     const valuesAux : Criterio[] = [
       {name:"nombre", value:name},
       {name:"apellido", value:apellido},
@@ -182,192 +180,135 @@ export class UserProfileComponent implements OnInit {
     console.log(this.selectedOption)
     switch(this.selectedOption){
       case 'Nombre':
-        
-          
-          if(this.invertirSeleccion){
-            this.managementService.searchHost("nombre", "DESC")
-            .subscribe(sortedHosts =>
-              this.displayedHosts = sortedHosts
-            );
-
-         }else{
-          this.managementService.searchHost("nombre", "ASC")
-          .subscribe(sortedHosts =>
-            this.displayedHosts = sortedHosts
-          );
-         }
-         
-        
-        /*this.displayedHosts= this.hosts.sort((a, b)=>{
-          const nameA = a.nombre.toLowerCase();
-          const nameB = b.nombre.toLowerCase();
-          
-          if(this.invertirSeleccion){
-            if (nameA < nameB) return 1;
-            if (nameA > nameB) return -1;
-
-         }else{
-           if (nameA < nameB) return -1;
-           if (nameA > nameB) return 1;
-         }
-          return 0;
-        });*/
-        break;
-
-      case 'Apellido':
-        if(this.invertirSeleccion){
-          this.managementService.searchHost("apellido", "DESC")
-          .subscribe(sortedHosts =>
-            this.displayedHosts = sortedHosts
-          );
-
-       }else{
-        this.managementService.searchHost("apellido", "ASC")
+        this.managementService.searchHost("nombre", this.invertirSeleccion ? "DESC" : "ASC")
         .subscribe(sortedHosts =>
           this.displayedHosts = sortedHosts
         );
-       }
-        // this.displayedHosts= this.hosts.sort((a, b)=>{
-        //   const nameA = a.apellido.toLowerCase();
-        //   const nameB = b.apellido.toLowerCase();
           
         //   if(this.invertirSeleccion){
-        //     if (nameA < nameB) return 1;
-        //     if (nameA > nameB) return -1;
+        //     this.managementService.searchHost("nombre", "DESC")
+        //     .subscribe(sortedHosts =>
+        //       this.displayedHosts = sortedHosts
+        //     );
 
         //  }else{
-
-        //    if (nameA < nameB) return -1;
-        //    if (nameA > nameB) return 1;
+        //   this.managementService.searchHost("nombre", "ASC")
+        //   .subscribe(sortedHosts =>
+        //     this.displayedHosts = sortedHosts
+        //   );
         //  }
-        //   return 0;
-        // });
+         
+        break;
+
+      case 'Apellido':
+        this.managementService.searchHost("apellido", this.invertirSeleccion ? "DESC" : "ASC")
+          .subscribe(sortedHosts =>
+            this.displayedHosts = sortedHosts
+          );
+
+
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchHost("apellido", "DESC")
+      //     .subscribe(sortedHosts =>
+      //       this.displayedHosts = sortedHosts
+      //     );
+
+      //  }else{
+      //   this.managementService.searchHost("apellido", "ASC")
+      //   .subscribe(sortedHosts =>
+      //     this.displayedHosts = sortedHosts
+      //   );
+      //  }
         break;
 
 
       case 'DNI/Pasaporte':
-        if(this.invertirSeleccion){
-          this.managementService.searchHost("dniPasaporte", "DESC")
-          .subscribe(sortedHosts =>
-            this.displayedHosts = sortedHosts
-          );
-
-       }else{
-        this.managementService.searchHost("dniPasaporte", "ASC")
+        this.managementService.searchHost("dniPasaporte", this.invertirSeleccion ? "DESC" : "ASC")
         .subscribe(sortedHosts =>
           this.displayedHosts = sortedHosts
         );
-       }
-      // this.displayedHosts= this.hosts.sort((a, b)=>{
-      //   const nameA = a.dniPasaporte.toLowerCase();
-      //   const nameB = b.dniPasaporte.toLowerCase();
-        
+
       //   if(this.invertirSeleccion){
-      //     if (nameA < nameB) return 1;
-      //     if (nameA > nameB) return -1;
+      //     this.managementService.searchHost("dniPasaporte", "DESC")
+      //     .subscribe(sortedHosts =>
+      //       this.displayedHosts = sortedHosts
+      //     );
 
       //  }else{
-
-      //    if (nameA < nameB) return -1;
-      //    if (nameA > nameB) return 1;
+      //   this.managementService.searchHost("dniPasaporte", "ASC")
+      //   .subscribe(sortedHosts =>
+      //     this.displayedHosts = sortedHosts
+      //   );
       //  }
-      //   return 0;
-      // });
+     
       break;
     
       case 'Procedencia':
-        if(this.invertirSeleccion){
-          this.managementService.searchHost("procedencia", "DESC")
-          .subscribe(sortedHosts =>
-            this.displayedHosts = sortedHosts
-          );
-
-       }else{
-        this.managementService.searchHost("procedencia", "ASC")
+        this.managementService.searchHost("procedencia", this.invertirSeleccion ? "DESC" : "ASC")
         .subscribe(sortedHosts =>
           this.displayedHosts = sortedHosts
         );
-       }
-      // this.displayedHosts= this.hosts.sort((a, b)=>{
-      //   const nameA = a.procedencia.toLowerCase();
-      //   const nameB = b.procedencia.toLowerCase();
-        
+
       //   if(this.invertirSeleccion){
-      //     if (nameA < nameB) return 1;
-      //     if (nameA > nameB) return -1;
+      //     this.managementService.searchHost("procedencia", "DESC")
+      //     .subscribe(sortedHosts =>
+      //       this.displayedHosts = sortedHosts
+      //     );
 
       //  }else{
-
-      //    if (nameA < nameB) return -1;
-      //    if (nameA > nameB) return 1;
+      //   this.managementService.searchHost("procedencia", "ASC")
+      //   .subscribe(sortedHosts =>
+      //     this.displayedHosts = sortedHosts
+      //   );
       //  }
-      //   return 0;
-      // });
+
       break;
 
 
       case 'Check-in':
-        if(this.invertirSeleccion){
-          this.managementService.searchHost("fechaCheckin", "DESC")
+        this.managementService.searchHost("fechaCheckin", this.invertirSeleccion ? "DESC" : "ASC")
           .subscribe(sortedHosts =>
             this.displayedHosts = sortedHosts
           );
 
-       }else{
-        this.managementService.searchHost("fechaCheckin", "ASC")
-        .subscribe(sortedHosts =>
-          this.displayedHosts = sortedHosts
-        );
-       }
-        // this.displayedHosts= this.hosts.sort((a, b) => {
-        //   const parseDate = (dateString: string): number => {
-        //     const [day, month, year, time] = dateString.split(/[- :]/);
-        //     return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
-        //   };
-        
-        //   const dateA = parseDate(a.fechaCheckin.toString());
-        //   const dateB = parseDate(b.fechaCheckin.toString());
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchHost("fechaCheckin", "DESC")
+      //     .subscribe(sortedHosts =>
+      //       this.displayedHosts = sortedHosts
+      //     );
 
-        //   if(this.invertirSeleccion)
-        //     return dateB - dateA; // Ordenar de más reciente a más antiguo
-        //   else
-        //     return dateA - dateB; // Ordenar de más reciente a más antiguo
-        // });
+      //  }else{
+      //   this.managementService.searchHost("fechaCheckin", "ASC")
+      //   .subscribe(sortedHosts =>
+      //     this.displayedHosts = sortedHosts
+      //   );
+
         break;
 
 
       case 'Check-out':
-        if(this.invertirSeleccion){
-          this.managementService.searchHost("fechaCheckout", "DESC")
+        this.managementService.searchHost("fechaCheckout", this.invertirSeleccion ? "DESC" : "ASC")
           .subscribe(sortedHosts =>
             this.displayedHosts = sortedHosts
           );
 
-       }else{
-        this.managementService.searchHost("fechaCheckout", "ASC")
-        .subscribe(sortedHosts =>
-          this.displayedHosts = sortedHosts
-        );
-       }
-        // this.displayedHosts= this.hosts.sort((a, b) => {
-        //   const parseDate = (dateString: string): number => {
-        //     const [day, month, year, time] = dateString.split(/[- :]/);
-        //     return new Date(`${year}-${month}-${day}T${time}:00`).getTime();
-        //   };
-        
-        //   const dateA = parseDate(a.fechaCheckout.toString());
-        //   const dateB = parseDate(b.fechaCheckout.toString());
+      //   if(this.invertirSeleccion){
+      //     this.managementService.searchHost("fechaCheckout", "DESC")
+      //     .subscribe(sortedHosts =>
+      //       this.displayedHosts = sortedHosts
+      //     );
 
-        //   if(this.invertirSeleccion)
-        //     return dateB - dateA; // Ordenar de más reciente a más antiguo
-        //   else
-        //     return dateA - dateB; // Ordenar de más reciente a más antiguo
-        // });
+      //  }else{
+      //   this.managementService.searchHost("fechaCheckout", "ASC")
+      //   .subscribe(sortedHosts =>
+      //     this.displayedHosts = sortedHosts
+      //   );
+      //  }
+  
         break;
 
 
     }
-    // this.managementService.getHostsRequest('huesped').subscribe();
 
   }
 
@@ -377,7 +318,7 @@ export class UserProfileComponent implements OnInit {
   //paginator
   loadData() {
 
-    this.managementService.getHostsRequest('huesped')
+    this.managementService.getAllRequest('huesped')
     .subscribe(hosts => {
       if(hosts)
         this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
@@ -409,9 +350,9 @@ export class UserProfileComponent implements OnInit {
     let mensaje = '';
 
     switch(tipo){
-      case 'DEL': mensaje = "Huésped eliminado correctamente";break;
-      case 'POST': mensaje = "Huésped creado correctamente";break;
-      case 'PUT': mensaje = "Huésped actualizado correctamente";break;
+      case 'DEL':  mensaje = "Huésped eliminado correctamente";     mensaje=this.translateService.instant("huesped_eliminado");   break;
+      case 'POST': mensaje = "Huésped creado correctamente";        mensaje=this.translateService.instant("huesped_creado");   break;
+      case 'PUT':  mensaje = "Huésped actualizado correctamente";   mensaje=this.translateService.instant("huesped_actualizado");   break;
 
     }
     

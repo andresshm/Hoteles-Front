@@ -60,6 +60,53 @@
     "gestion_servicios":"Services management",
     "historial":"Guests hystoric by hotel",
     "huesped_hotel":"Guests/Hotel",
-    "datos":"Data from last 15 days"
+    "datos":"Data from last 15 days",
+    "actualizar":"Update ",
+    "actualizar_huesped":"Update guest",
+    "actualizar_hotel":"Update hotel",
+    "actualizar_habitacion":"Update room",
+    "actualizar_servicio":"Update service",
+    "cancelar":"Cancel",
+    "hora":"Hour",
+    "eliminar": "Delete",
+    "atencion": "ATENTION",
+    "guardar": "Save",
+    "crear_huesped": "Create guest",
+    "crear_hotel": "Create hotel",
+    "crear_habitacion": "Create room",
+    "crear_servicio": "Create service",
+    "atras": "Back",
+    "eliminar_huesped": "Delete guest",
+    "eliminar_hotel": "Delete hotel",
+    "eliminar_habitacion": "Delete room",
+    "eliminar_servicio": "Delete service",
+    "esta_a_punto_de_borrar": "You are about to delete guest: ",
+    "esta_a_punto_de_borrar_hotel": "You are about to delete hotel: ",
+    "esta_a_punto_de_borrar_servicio": "You are about to delete service: ",
+    "esta_a_punto_de_borrar_habitación": "You are about to delete room: ",
+    "esta_operacion_es_irreversible": "This operation is irrevocable",
+    "permanente":" permanently. Do you want to make the operation anyway?",
+
+    "huesped_creado":"Guest succesfully created",
+    "hotel_creado":"Hotel succesfully created",
+    "servicio_creado":"Service succesfully created",
+    "habitacion_creado":"Room succesfully created",
+
+    "huesped_eliminado":"Guest succesfully created",
+    "hotel_eliminado":"Hotel succesfully created",
+    "servicio_eliminado":"Service succesfully created",
+    "habitacion_eliminado":"Room succesfully created",
+
+    "huesped_actualizado":"Guest succesfully created",
+    "hotel_actualizado":"Hotel succesfully created",
+    "servicio_actualizado":"Service succesfully created",
+    "habitacion_actualizado":"Room succesfully created",
+
+    "servicios_anadidos":"Services succesfully added",
+    "huespedes_anadidos":"Guests succesfully added"
+
+
+
+
 
 }

@@ -9,7 +9,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar hotel</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{"eliminar_hotel"|translate}}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -17,8 +17,8 @@
               <div class="mb-3">
                 <!-- <label for="recipient-name" class="col-form-label">ID:</label> -->
                 <!-- <input type="number" class="form-control" id="recipient-name" > -->
-                 <p>Está a punto de borrar el hotel: {{selectedIdHijo}}</p>
-                 <p class="warn">Esta operación es irreversible</p>
+                 <p>{{"esta_a_punto_de_borrar_hotel"|translate}} {{selectedIdHijo}}</p>
+                 <p class="warn">{{"esta_operacion_es_irreversible"|translate}}</p>
               </div>
               <!-- <div class="mb-3">
                 <label for="message-text" class="col-form-label">Message:</label>
@@ -27,8 +27,8 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2H" data-bs-toggle="modal">Eliminar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"cancelar"|translate}}</button>
+            <button type="submit" class="btn btn-primary" data-bs-target="#exampleModalToggle2H" data-bs-toggle="modal">{{"eliminar"|translate}}</button>
           </div>
         </div>
       </div>
@@ -41,18 +41,17 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">ATENCIÓN</h1>
+            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">{{"atencion"|translate}}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <p>
-              Está a punto de eliminar el hotel: {{selectedIdHijo}} de forma permanente.
-              ¿Quiere realizar la operación igualmente?
+              {{"esta_a_punto_de_borrar_hotel"|translate}} {{selectedIdHijo}} {{"permanente"|translate}}
             </p>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary"  data-bs-dismiss="modal">Atrás</button>
-            <button class="btn btn-primary" (click)=" onSubmitDEL('HOT'); recharge('DEL');"   data-bs-dismiss="modal">Eliminar</button>
+            <button class="btn btn-primary"  data-bs-dismiss="modal">{{"atras"|translate}}</button>
+            <button class="btn btn-primary" (click)=" onSubmitDEL('HOT'); recharge('DEL');"   data-bs-dismiss="modal">{{"eliminar"|translate}}</button>
           </div>
         </div>
       </div>
@@ -65,36 +64,36 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear hotel</h1>
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">{{"crear_hotel"|translate}}</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                <label for="recipient-name" class="col-form-label">{{"nombre"|translate}}:</label>
                 <input type="text" class="form-control" id="recipient-name" [(ngModel)]="hotel.nombre">
               </div>
               <div class="mb-3">
-                <label for="recipient-address" class="col-form-label">Dirección:</label>
+                <label for="recipient-address" class="col-form-label">{{"direccion"|translate}}:</label>
                 <input type="text" class="form-control" id="recipient-address" [(ngModel)]="hotel.direccion">
               </div>
               <div class="mb-3">
-                <label for="recipient-phone" class="col-form-label">Teléfono:</label>
+                <label for="recipient-phone" class="col-form-label">{{"telefono"|translate}}:</label>
                 <input type="text" class="form-control" id="recipient-phone" [(ngModel)]="hotel.telefono">
               </div>
               <div class="mb-3">
-                <label for="recipient-email" class="col-form-label">Email:</label>
+                <label for="recipient-email" class="col-form-label">{{"email"|translate}}:</label>
                 <input type="text" class="form-control" id="recipient-email" [(ngModel)]="hotel.email">
               </div>
               <div class="mb-3">
-                <label for="recipient-web" class="col-form-label">Sitio Web:</label>
+                <label for="recipient-web" class="col-form-label">{{"sitio_web"|translate}}:</label>
                 <input type="text" class="form-control" id="recipient-web" [(ngModel)]="hotel.sitioWeb">
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" (click)="postNewHotel('HOT'); recharge('POST');">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"cancelar"|translate}}</button>
+            <button type="button" class="btn btn-primary" (click)="postNewHotel('HOT'); recharge('POST');">{{"guardar"|translate}}</button>
           </div>
         </div>
       </div>
@@ -107,7 +106,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar hotel: {{selectedIdHijo}} </h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{"actualizar_hotel"|translate}}: {{selectedIdHijo}} </h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -117,32 +116,32 @@
                 <input type="text" class="form-control" id="recipient-name">
               </div> -->
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                <label for="recipient-name" class="col-form-label">{{"nombre"|translate}}:</label>
                 <!-- <input type="text" class="form-control" id="recipient-name" [(ngmodel)]="hotel.nombre"> -->
                 <input type="text" #inputName class="form-control" id="recipient-name" [value]="hotelAux.nombre">
               </div>
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label" >Dirección</label>
+                <label for="recipient-name" class="col-form-label" >{{"direccion"|translate}}</label>
                 <input type="text" #inputAddress class="form-control" id="recipient-name" [value]="hotelAux.direccion">
               </div>
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Teléfono:</label>
+                <label for="recipient-name" class="col-form-label">{{"telefono"|translate}}:</label>
                 <input type="text" #inputPhone class="form-control" id="recipient-name" [value]="hotelAux.telefono">
               </div>
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Email:</label>
+                <label for="recipient-name" class="col-form-label">{{"email"|translate}}:</label>
                 <input type="text" #inputEmail class="form-control" id="recipient-name" [value]="hotelAux.email">
               </div>
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Sitio Web:</label>
+                <label for="recipient-name" class="col-form-label">{{"sitio_web"|translate}}:</label>
                 <input type="text" class="form-control" id="recipient-name" [ngModel]="hotelAux.sitioWeb">
               </div>
               
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" (click)="onSubmitPut('HOT'); recharge('PUT')">Actualizar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"cancelar"|translate}}</button>
+            <button type="button" class="btn btn-primary" (click)="onSubmitPut('HOT'); recharge('PUT')">{{"actualizar"|translate}}</button>
           </div>
         </div>
       </div>

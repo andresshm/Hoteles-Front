@@ -60,6 +60,50 @@
     "gestion_servicios":"Gestión servicios",
     "historial":"Historial de huéspedes por hotel",
     "huesped_hotel":"Huéspedes/Hotel",
-    "datos":"Datos de la última quincena"
+    "datos":"Datos de la última quincena",
+    "actualizar":"Actualizar",
+    "actualizar_huesped":"Actualizar huésped",
+    "actualizar_hotel":"Actualizar hotel",
+    "actualizar_habitacion":"Actualizar habitación",
+    "actualizar_servicio":"Actualizar servicio",
+    "cancelar":"Cancelar",
+    "hora":"Hora",
+    "eliminar": "Eliminar",
+    "atencion": "ATENCIÓN",
+    "guardar": "Guardar",
+    "crear_huesped": "Crear huésped",
+    "crear_hotel": "Crear hotel",
+    "crear_habitacion": "Crear habitacion",
+    "crear_servicio": "Crear servicio",
+    "atras": "Atrás",
+    "eliminar_huesped": "Eliminar huésped",
+    "eliminar_hotel": "Eliminar hotel",
+    "eliminar_habitacion": "Eliminar habitacion",
+    "eliminar_servicio": "Eliminar servicio",
+    "esta_a_punto_de_borrar": "Está a punto de borrar el huésped: ",
+    "esta_a_punto_de_borrar_hotel": "Está a punto de borrar el hotel: ",
+    "esta_a_punto_de_borrar_servicio": "Está a punto de borrar el servicio: ",
+    "esta_a_punto_de_borrar_habitación": "Está a punto de borrar la habitación: ",
+    "esta_operacion_es_irreversible": "Esta operación es irreversible",
+    "permanente":"de forma permanente. ¿Quiere realizar la operación igualmente?",
+
+    "huesped_creado":"Huésped creado correctamente",
+    "hotel_creado":"Hotel creado correctamente",
+    "servicio_creado":"Servicio creado correctamente",
+    "habitacion_creado":"Habitación creado correctamente",
+
+    "huesped_eliminado":"Huésped eliminado correctamente",
+    "hotel_eliminado":"Hotel eliminado correctamente",
+    "servicio_eliminado":"Servicio eliminado correctamente",
+    "habitacion_eliminado":"Habitación eliminado correctamente",
+
+    "huesped_actualizado":"Huésped actualizado correctamente",
+    "hotel_actualizado":"Hotel actualizado correctamente",
+    "servicio_actualizado":"Servicio actualizado correctamente",
+    "habitacion_actualizado":"Habitación actualizado correctamente",
+
+    "servicios_anadidos":"Servicios añadidos correctamente",
+    "huespedes_anadidos":"Huéspedes añadidos correctamente"
+
 
 }
