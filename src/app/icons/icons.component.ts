@@ -148,77 +148,43 @@ export class IconsComponent implements OnInit {
 
 
 
+  //unused
+  // handleSelection(swap?:string) {
+  //   if(swap)
+  //     this.invertirSeleccion = !this.invertirSeleccion;
+  //   else
+  //     this.invertirSeleccion = false
   
-  handleSelection(swap?:string) {
-    if(swap)
-      this.invertirSeleccion = !this.invertirSeleccion;
-    else
-      this.invertirSeleccion = false
-  
-    switch(this.selectedOption){
-      case 'Numero':
-        this.managementService.searchRoom("numero", this.invertirSeleccion ? "DESC" : "ASC")
-          .subscribe(sortedRooms =>
-            this.displayedRooms = sortedRooms
-          );
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchRoom("nombre", "DESC")
-      //     .subscribe(sortedRooms =>
-      //       this.displayedRooms = sortedRooms
-      //     );
+  //   switch(this.selectedOption){
+  //     case 'Numero':
+  //       this.managementService.searchRoom("numero", this.invertirSeleccion ? "DESC" : "ASC")
+  //         .subscribe(sortedRooms =>
+  //           this.displayedRooms = sortedRooms
+  //         );
 
-      //  }else{
-      //   this.managementService.searchRoom("nombre", "ASC")
-      //   .subscribe(sortedRooms =>
-      //     this.displayedRooms = sortedRooms
-      //   );
-      //  }
-        break;
+  //       break;
 
-      case 'Tipo':
+  //     case 'Tipo':
 
-      this.managementService.searchRoom("tipo", this.invertirSeleccion ? "DESC" : "ASC")
-          .subscribe(sortedRooms =>
-            this.displayedRooms = sortedRooms
-          );
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchRoom("tipo", "DESC")
-      //     .subscribe(sortedRooms =>
-      //       this.displayedRooms = sortedRooms
-      //     );
+  //     this.managementService.searchRoom("tipo", this.invertirSeleccion ? "DESC" : "ASC")
+  //         .subscribe(sortedRooms =>
+  //           this.displayedRooms = sortedRooms
+  //         );
 
-      //  }else{
-      //   this.managementService.searchRoom("tipo", "ASC")
-      //   .subscribe(sortedRooms =>
-      //     this.displayedRooms = sortedRooms
-      //   );
-      //  }
-        break;
+  //       break;
 
 
-      case 'Precio':
-        this.managementService.searchRoom("precioNoche", this.invertirSeleccion ? "DESC" : "ASC")
-        .subscribe(sortedRooms =>
-          this.displayedRooms = sortedRooms
-        );
+  //     case 'Precio':
+  //       this.managementService.searchRoom("precioNoche", this.invertirSeleccion ? "DESC" : "ASC")
+  //       .subscribe(sortedRooms =>
+  //         this.displayedRooms = sortedRooms
+  //       );
 
-    //   if(this.invertirSeleccion){
-    //     this.managementService.searchRoom("precioNoche", "DESC")
-    //     .subscribe(sortedRooms =>
-    //       this.displayedRooms = sortedRooms
-    //     );
+  //     break;
 
-    //  }else{
-    //   this.managementService.searchRoom("precioNoche", "ASC")
-    //   .subscribe(sortedRooms =>
-    //     this.displayedRooms = sortedRooms
-    //   );
-    //  }
-      break;
+  //   }
 
-    }
-
-  }
+  // }
 
 
 
@@ -227,11 +193,14 @@ export class IconsComponent implements OnInit {
   loadData() {
     // Simula la carga de datos
 
-    this.managementService.getRoomsRequest('habitacion')
-    .subscribe(rooms => {
-      this.displayedRooms = rooms.sort((a, b)=>a.id-b.id);
-      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
-    });
+    // this.managementService.getAllRequest('habitacion')
+    // .subscribe(rooms => {
+    //   this.displayedRooms = rooms.sort((a, b)=>a.id-b.id);
+    //   //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+    // });
+
+
+    this.displayedRooms = this.rooms.sort((a, b)=>a.id-b.id);
     this.updateDisplayedHosts();
   }
 
@@ -260,8 +229,8 @@ export class IconsComponent implements OnInit {
     let mensaje = '';
 
     switch(tipo){
-      case 'DEL':  mensaje = "Habitación eliminada correctamente";    mensaje=this.translateService.instant("habitacion_eliminado");   break;
-      case 'POST': mensaje = "Habitación creada correctamente";       mensaje=this.translateService.instant("habitacion_creado");   break;
+      case 'DEL':  mensaje = "Habitación eliminada correctamente";    mensaje=this.translateService.instant("habitacion_eliminado");     break;
+      case 'POST': mensaje = "Habitación creada correctamente";       mensaje=this.translateService.instant("habitacion_creado");        break;
       case 'PUT':  mensaje = "Habitación actualizada correctamente";  mensaje=this.translateService.instant("habitacion_actualizado");   break;
     }
     

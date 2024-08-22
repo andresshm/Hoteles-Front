@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -170,147 +169,68 @@ export class UserProfileComponent implements OnInit {
 
 
 
-  //A priori funciona bn
-  handleSelection(swap?:string) {
-    if(swap)
-      this.invertirSeleccion = !this.invertirSeleccion;
-    else
-      this.invertirSeleccion = false
+  //unused
+  // handleSelection(swap?:string) {
+  //   if(swap)
+  //     this.invertirSeleccion = !this.invertirSeleccion;
+  //   else
+  //     this.invertirSeleccion = false
   
-    console.log(this.selectedOption)
-    switch(this.selectedOption){
-      case 'Nombre':
-        this.managementService.searchHost("nombre", this.invertirSeleccion ? "DESC" : "ASC")
-        .subscribe(sortedHosts =>
-          this.displayedHosts = sortedHosts
-        );
-          
-        //   if(this.invertirSeleccion){
-        //     this.managementService.searchHost("nombre", "DESC")
-        //     .subscribe(sortedHosts =>
-        //       this.displayedHosts = sortedHosts
-        //     );
-
-        //  }else{
-        //   this.managementService.searchHost("nombre", "ASC")
-        //   .subscribe(sortedHosts =>
-        //     this.displayedHosts = sortedHosts
-        //   );
-        //  }
+  
+  //   switch(this.selectedOption){
+  //     case 'Nombre':
+  //       this.managementService.searchHost("nombre", this.invertirSeleccion ? "DESC" : "ASC")
+  //       .subscribe(sortedHosts =>
+  //         this.displayedHosts = sortedHosts
+  //       );
          
-        break;
+  //       break;
 
-      case 'Apellido':
-        this.managementService.searchHost("apellido", this.invertirSeleccion ? "DESC" : "ASC")
-          .subscribe(sortedHosts =>
-            this.displayedHosts = sortedHosts
-          );
-
-
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchHost("apellido", "DESC")
-      //     .subscribe(sortedHosts =>
-      //       this.displayedHosts = sortedHosts
-      //     );
-
-      //  }else{
-      //   this.managementService.searchHost("apellido", "ASC")
-      //   .subscribe(sortedHosts =>
-      //     this.displayedHosts = sortedHosts
-      //   );
-      //  }
-        break;
+  //     case 'Apellido':
+  //       this.managementService.searchHost("apellido", this.invertirSeleccion ? "DESC" : "ASC")
+  //         .subscribe(sortedHosts =>
+  //           this.displayedHosts = sortedHosts
+  //         );
+  //       break;
 
 
-      case 'DNI/Pasaporte':
-        this.managementService.searchHost("dniPasaporte", this.invertirSeleccion ? "DESC" : "ASC")
-        .subscribe(sortedHosts =>
-          this.displayedHosts = sortedHosts
-        );
-
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchHost("dniPasaporte", "DESC")
-      //     .subscribe(sortedHosts =>
-      //       this.displayedHosts = sortedHosts
-      //     );
-
-      //  }else{
-      //   this.managementService.searchHost("dniPasaporte", "ASC")
-      //   .subscribe(sortedHosts =>
-      //     this.displayedHosts = sortedHosts
-      //   );
-      //  }
+  //     case 'DNI/Pasaporte':
+  //       this.managementService.searchHost("dniPasaporte", this.invertirSeleccion ? "DESC" : "ASC")
+  //       .subscribe(sortedHosts =>
+  //         this.displayedHosts = sortedHosts
+  //       );
      
-      break;
+  //     break;
     
-      case 'Procedencia':
-        this.managementService.searchHost("procedencia", this.invertirSeleccion ? "DESC" : "ASC")
-        .subscribe(sortedHosts =>
-          this.displayedHosts = sortedHosts
-        );
-
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchHost("procedencia", "DESC")
-      //     .subscribe(sortedHosts =>
-      //       this.displayedHosts = sortedHosts
-      //     );
-
-      //  }else{
-      //   this.managementService.searchHost("procedencia", "ASC")
-      //   .subscribe(sortedHosts =>
-      //     this.displayedHosts = sortedHosts
-      //   );
-      //  }
-
-      break;
+  //     case 'Procedencia':
+  //       this.managementService.searchHost("procedencia", this.invertirSeleccion ? "DESC" : "ASC")
+  //       .subscribe(sortedHosts =>
+  //         this.displayedHosts = sortedHosts
+  //       );
+  //     break;
 
 
-      case 'Check-in':
-        this.managementService.searchHost("fechaCheckin", this.invertirSeleccion ? "DESC" : "ASC")
-          .subscribe(sortedHosts =>
-            this.displayedHosts = sortedHosts
-          );
+  //     case 'Check-in':
+  //       this.managementService.searchHost("fechaCheckin", this.invertirSeleccion ? "DESC" : "ASC")
+  //         .subscribe(sortedHosts =>
+  //           this.displayedHosts = sortedHosts
+  //         );
 
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchHost("fechaCheckin", "DESC")
-      //     .subscribe(sortedHosts =>
-      //       this.displayedHosts = sortedHosts
-      //     );
-
-      //  }else{
-      //   this.managementService.searchHost("fechaCheckin", "ASC")
-      //   .subscribe(sortedHosts =>
-      //     this.displayedHosts = sortedHosts
-      //   );
-
-        break;
+  //       break;
 
 
-      case 'Check-out':
-        this.managementService.searchHost("fechaCheckout", this.invertirSeleccion ? "DESC" : "ASC")
-          .subscribe(sortedHosts =>
-            this.displayedHosts = sortedHosts
-          );
-
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchHost("fechaCheckout", "DESC")
-      //     .subscribe(sortedHosts =>
-      //       this.displayedHosts = sortedHosts
-      //     );
-
-      //  }else{
-      //   this.managementService.searchHost("fechaCheckout", "ASC")
-      //   .subscribe(sortedHosts =>
-      //     this.displayedHosts = sortedHosts
-      //   );
-      //  }
+  //     case 'Check-out':
+  //       this.managementService.searchHost("fechaCheckout", this.invertirSeleccion ? "DESC" : "ASC")
+  //         .subscribe(sortedHosts =>
+  //           this.displayedHosts = sortedHosts
+  //         );
   
-        break;
+  //       break;
 
 
-    }
+  //   }
 
-  }
+  // }
 
 
 
@@ -318,13 +238,14 @@ export class UserProfileComponent implements OnInit {
   //paginator
   loadData() {
 
-    this.managementService.getAllRequest('huesped')
-    .subscribe(hosts => {
-      if(hosts)
-        this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
-      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
-    });
-
+    // this.managementService.getAllRequest('huesped')
+    // .subscribe(hosts => {
+    //   if(hosts)
+    //     this.displayedHosts = hosts.sort((a, b)=>a.id-b.id);
+    //   //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+    // });
+    
+    this.displayedHosts = this.hosts.sort((a, b)=>a.id-b.id);
     this.updateDisplayedHosts();
   }
 

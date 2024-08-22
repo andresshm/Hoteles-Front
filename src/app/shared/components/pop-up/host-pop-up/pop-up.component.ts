@@ -1,10 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import { ManagementService } from "app/services/management.service";
-import { MatDialog } from "@angular/material/dialog";
 import { Host } from "app/interfaces/host.interface";
-import { Hotel } from "app/interfaces/hotel.interface";
-import { Room } from "app/interfaces/room.interface";
-import { Service } from "app/interfaces/service.interface";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
@@ -70,7 +66,7 @@ export class HostPopUpComponent implements OnInit, OnChanges{
   constructor(
     private managementService: ManagementService,
     private fb: FormBuilder
-  ) // public dialog: MatDialog
+  )
   {}
 
 
@@ -78,7 +74,7 @@ export class HostPopUpComponent implements OnInit, OnChanges{
     if(changes && this.selectedIdHijo!==0 && this.hostAux){
 
       console.log(this.selectedIdHijo);
-      this.managementService.getHostById(this.selectedIdHijo, 'huesped').subscribe(host => this.hostAux = host);
+      this.managementService.getById(this.selectedIdHijo, 'huesped').subscribe(host => this.hostAux = host);
       
       let originalDate = this.hostAux.fechaCheckin;
       let parts = originalDate.split(" ")[0].split("/"); // Split the date and then the parts
@@ -108,16 +104,16 @@ export class HostPopUpComponent implements OnInit, OnChanges{
     console.log(this.selectedIdHijo);
     switch (entity) {
       case "HOT":
-        this.managementService.deleteHotel(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'hotel').subscribe();
         break;
       case "HOS":
-        this.managementService.deleteHost(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'huesped').subscribe();
         break;
       case "ROO":
-        this.managementService.deleteRoom(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'habitacion').subscribe();
         break;
       case "SER":
-        this.managementService.deleteService(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'servicio').subscribe();
         break;
     }
   }
@@ -143,7 +139,7 @@ export class HostPopUpComponent implements OnInit, OnChanges{
         this.host.fechaCheckin =  (sIn);
 
 
-        this.managementService.postNewHost(this.host).subscribe();
+        this.managementService.post(this.host, 'huesped').subscribe();
         break;
      
     }
@@ -174,8 +170,7 @@ export class HostPopUpComponent implements OnInit, OnChanges{
         this.hostAux.procedencia=this.inputOrigin.nativeElement.value;
 
         this.managementService
-          .putHost(this.selectedIdHijo, this.hostAux)
-          .subscribe();
+          .put(this.selectedIdHijo, this.hostAux, 'huesped').subscribe();
         break;
     
     }

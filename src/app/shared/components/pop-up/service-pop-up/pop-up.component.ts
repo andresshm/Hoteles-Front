@@ -50,16 +50,16 @@ export class ServicePopUpComponent implements OnInit, OnChanges{
     console.log(this.selectedIdHijo);
     switch (entity) {
       case "HOT":
-        this.managementService.deleteHotel(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'hotel').subscribe();
         break;
       case "HOS":
-        this.managementService.deleteHost(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'huesped').subscribe();
         break;
       case "ROO":
-        this.managementService.deleteRoom(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'habitacion').subscribe();
         break;
       case "SER":
-        this.managementService.deleteService(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'servicio').subscribe();
         break;
     }
   }
@@ -68,7 +68,7 @@ export class ServicePopUpComponent implements OnInit, OnChanges{
     switch (entity) {
      
       case "SER":
-        this.managementService.postNewService(this.service).subscribe();
+        this.managementService.post(this.service, 'servicio').subscribe();
         break;
     }
   }
@@ -81,8 +81,7 @@ export class ServicePopUpComponent implements OnInit, OnChanges{
         const inputValue = this.myInput.nativeElement.value;
         this.serviceAux.nombre=inputValue;
         this.managementService
-          .putService(this.selectedIdHijo, this.serviceAux)
-          .subscribe();
+          .put(this.selectedIdHijo, this.serviceAux, 'servicio').subscribe();
         break;
     }
   }

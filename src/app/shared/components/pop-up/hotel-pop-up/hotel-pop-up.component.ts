@@ -1,11 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import { ManagementService } from "app/services/management.service";
-import { MatDialog } from "@angular/material/dialog";
-import { Host } from "app/interfaces/host.interface";
 import { Hotel } from "app/interfaces/hotel.interface";
-import { Room } from "app/interfaces/room.interface";
-import { Service } from "app/interfaces/service.interface";
-import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "hotel-pop-up",
@@ -53,7 +48,7 @@ export class HotelPopUpComponent implements OnInit, OnChanges{
     if(changes && this.selectedIdHijo!==0 && this.hotelAux){
 
       console.log(this.selectedIdHijo, ' onchanges');
-      this.managementService.getHotelById(this.selectedIdHijo, 'hotel').subscribe(hotel => this.hotelAux = hotel);
+      this.managementService.getById(this.selectedIdHijo, 'hotel').subscribe(hotel => this.hotelAux = hotel);
     }
 
   }
@@ -66,16 +61,16 @@ export class HotelPopUpComponent implements OnInit, OnChanges{
     console.log(this.selectedIdHijo);
     switch (entity) {
       case "HOT":
-        this.managementService.deleteHotel(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'hotel').subscribe();
         break;
       case "HOS":
-        this.managementService.deleteHost(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'huesped').subscribe();
         break;
       case "ROO":
-        this.managementService.deleteRoom(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'habitacion').subscribe();
         break;
       case "SER":
-        this.managementService.deleteService(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'servicio').subscribe();
         break;
     }
   }
@@ -83,7 +78,7 @@ export class HotelPopUpComponent implements OnInit, OnChanges{
   postNewHotel(entity: string) {
     switch (entity) {
       case "HOT":
-        this.managementService.postNewHotel(this.hotel).subscribe();
+        this.managementService.post(this.hotel, 'hotel').subscribe();
         break;
       
     }
@@ -101,8 +96,7 @@ export class HotelPopUpComponent implements OnInit, OnChanges{
 
 
         this.managementService
-          .putHotel(this.selectedIdHijo, this.hotelAux)
-          .subscribe();
+          .put(this.selectedIdHijo, this.hotelAux, 'hotel').subscribe();
         break;
       
     }

@@ -42,7 +42,7 @@ export class RoomPopUpComponent implements OnInit, OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
    
     if(changes && this.selectedIdHijo!==0 && this.roomAux){
-      this.managementService.getRoomById(this.selectedIdHijo, 'habitacion').subscribe(room => this.roomAux = room);
+      this.managementService.getById(this.selectedIdHijo, 'habitacion').subscribe(room => this.roomAux = room);
 
     }
   }
@@ -55,16 +55,16 @@ export class RoomPopUpComponent implements OnInit, OnChanges{
     console.log(this.selectedIdHijo);
     switch (entity) {
       case "HOT":
-        this.managementService.deleteHotel(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'hotel').subscribe();
         break;
       case "HOS":
-        this.managementService.deleteHost(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'huesped').subscribe();
         break;
       case "ROO":
-        this.managementService.deleteRoom(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'habitacion').subscribe();
         break;
       case "SER":
-        this.managementService.deleteService(this.selectedIdHijo).subscribe();
+        this.managementService.delete(this.selectedIdHijo, 'servicio').subscribe();
         break;
     }
   }
@@ -73,7 +73,7 @@ export class RoomPopUpComponent implements OnInit, OnChanges{
     switch (entity) {
      
       case "ROO":
-        this.managementService.postNewRoom(this.room).subscribe();
+        this.managementService.post(this.room, 'habitacion').subscribe();
         break;
     
     }
@@ -89,8 +89,7 @@ export class RoomPopUpComponent implements OnInit, OnChanges{
         this.roomAux.precioNoche=this.inputPrice.nativeElement.value;
         
         this.managementService
-          .putRoom(this.selectedIdHijo, this.roomAux)
-          .subscribe();
+          .put(this.selectedIdHijo, this.roomAux, 'habitacion').subscribe();
         break;
   
     }

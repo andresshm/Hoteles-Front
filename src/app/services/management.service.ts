@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Host } from "app/interfaces/host.interface";
-import { BehaviorSubject, Observable, catchError, forkJoin, map, of, tap } from "rxjs";
+import { Observable, catchError, of } from "rxjs";
 import { Service } from "app/interfaces/service.interface";
 import { Hotel } from "app/interfaces/hotel.interface";
 import { Room } from "app/interfaces/room.interface";
@@ -30,37 +30,34 @@ export class ManagementService {
 
 
   //borrar estas 4
-  public getHostsRequest(entity: string): Observable<Host[]> {
-    return this.httpClient
-      .get<Host[]>(`${this.url}${entity}`)
-      .pipe(catchError(() => of([])));
-  }
+  // public getHostsRequest(entity: string): Observable<Host[]> {
+  //   return this.httpClient
+  //     .get<Host[]>(`${this.url}${entity}`)
+  //     .pipe(catchError(() => of([])));
+  // }
 
 
-  public getRoomsRequest(entity: string): Observable<Room[]> {
-    return this.httpClient
-      .get<Room[]>(`${this.url}${entity}`)
-      .pipe(catchError(() => of([])));
-  }
+  // public getRoomsRequest(entity: string): Observable<Room[]> {
+  //   return this.httpClient
+  //     .get<Room[]>(`${this.url}${entity}`)
+  //     .pipe(catchError(() => of([])));
+  // }
 
-  public getHotelsRequest(entity: string): Observable<Hotel[]> {
-    return this.httpClient
-      .get<Hotel[]>(`${this.url}${entity}`)
-      .pipe(catchError(() => of([])));
-  }
+  // public getHotelsRequest(entity: string): Observable<Hotel[]> {
+  //   return this.httpClient
+  //     .get<Hotel[]>(`${this.url}${entity}`)
+  //     .pipe(catchError(() => of([])));
+  // }
   
-  public getServicesRequest(entity: string): Observable<Service[]> {
-    return this.httpClient
-      .get<Service[]>(`${this.url}${entity}`)
-      .pipe(catchError(() => of([])));
-  }
+  // public getServicesRequest(entity: string): Observable<Service[]> {
+  //   return this.httpClient
+  //     .get<Service[]>(`${this.url}${entity}`)
+  //     .pipe(catchError(() => of([])));
+  // }
 
 
   
   //get by id
-
-
-
   public getById(id: number, entity: string): Observable<any> {
     return this.httpClient
       .get<any>(`${this.url}${entity}/${id}`)
@@ -68,32 +65,29 @@ export class ManagementService {
   }
 
   //borrar estas 4
-  public getHostById(id: number, entity: string): Observable<Host> {
-    return this.httpClient
-      .get<Host>(`${this.url}${entity}/${id}`)
-      .pipe(catchError(() => of()));
-  }
-  public getHotelById(id: number, entity: string): Observable<Hotel> {
-    return this.httpClient
-      .get<Hotel>(`${this.url}${entity}/${id}`)
-      .pipe(catchError(() => of()));
-  }
-  public getRoomById(id: number, entity: string): Observable<Room> {
-    return this.httpClient
-      .get<Room>(`${this.url}${entity}/${id}`)
-      .pipe(catchError(() => of()));
-  }
-  public getServiceById(id: number, entity: string): Observable<Service> {
-    return this.httpClient
-      .get<Service>(`${this.url}${entity}/${id}`)
-      .pipe(catchError(() => of()));
-  }
+  // public getHostById(id: number, entity: string): Observable<Host> {
+  //   return this.httpClient
+  //     .get<Host>(`${this.url}${entity}/${id}`)
+  //     .pipe(catchError(() => of()));
+  // }
+  // public getHotelById(id: number, entity: string): Observable<Hotel> {
+  //   return this.httpClient
+  //     .get<Hotel>(`${this.url}${entity}/${id}`)
+  //     .pipe(catchError(() => of()));
+  // }
+  // public getRoomById(id: number, entity: string): Observable<Room> {
+  //   return this.httpClient
+  //     .get<Room>(`${this.url}${entity}/${id}`)
+  //     .pipe(catchError(() => of()));
+  // }
+  // public getServiceById(id: number, entity: string): Observable<Service> {
+  //   return this.httpClient
+  //     .get<Service>(`${this.url}${entity}/${id}`)
+  //     .pipe(catchError(() => of()));
+  // }
 
   //manejar errores
   //POST
-
-
-
   post(data: any, entity:string): Observable<any> {
     return this.httpClient
       .post<any>(`${this.url}${entity}`, data)
@@ -102,32 +96,31 @@ export class ManagementService {
 
   
   //borrar estas 4
-  postNewHost(data: Host): Observable<Host> {
-    return this.httpClient
-      .post<Host>(`${this.url}huesped`, data)
-      .pipe(catchError(() => of()));
-  }
+  // postNewHost(data: Host): Observable<Host> {
+  //   return this.httpClient
+  //     .post<Host>(`${this.url}huesped`, data)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  postNewHotel(data: Hotel): Observable<Hotel> {
-    return this.httpClient
-      .post<Hotel>(`${this.url}hotel`, data)
-      .pipe(catchError(() => of()));
-  }
+  // postNewHotel(data: Hotel): Observable<Hotel> {
+  //   return this.httpClient
+  //     .post<Hotel>(`${this.url}hotel`, data)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  postNewRoom(data: Room): Observable<Room> {
-    return this.httpClient
-      .post<Room>(`${this.url}habitacion`, data)
-      .pipe(catchError(() => of()));
-  }
+  // postNewRoom(data: Room): Observable<Room> {
+  //   return this.httpClient
+  //     .post<Room>(`${this.url}habitacion`, data)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  postNewService(data: Service): Observable<Service> {
-    return this.httpClient
-      .post<Service>(`${this.url}servicio`, data)
-      .pipe(catchError(() => of()));
-  }
+  // postNewService(data: Service): Observable<Service> {
+  //   return this.httpClient
+  //     .post<Service>(`${this.url}servicio`, data)
+  //     .pipe(catchError(() => of()));
+  // }
 
   //PUT
-
   put(id: number, data: any, entity:string): Observable<any> {
     return this.httpClient
       .put<any>(`${this.url}${entity}/${id}`, data)
@@ -136,40 +129,37 @@ export class ManagementService {
 
 
   //borrar estas 4
-  putHost(id: number, data: Host): Observable<Host> {
-    return this.httpClient
-      .put<Host>(`${this.url}huesped/${id}`, data)
-      .pipe(catchError(() => of()));
-  }
+  // putHost(id: number, data: Host): Observable<Host> {
+  //   return this.httpClient
+  //     .put<Host>(`${this.url}huesped/${id}`, data)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  patchHost(id: number, data: Host): Observable<Host> {
-    return this.httpClient
-      .patch<Host>(`${this.url}huesped/${id}`, data)
-      .pipe(catchError(() => of()));
-  }
+  // patchHost(id: number, data: Host): Observable<Host> {
+  //   return this.httpClient
+  //     .patch<Host>(`${this.url}huesped/${id}`, data)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  putHotel(id: number, data: Hotel): Observable<Hotel> {
-    return this.httpClient
-      .put<Hotel>(`${this.url}hotel/${id}`, data)
-      .pipe(catchError(() => of()));
-  }
+  // putHotel(id: number, data: Hotel): Observable<Hotel> {
+  //   return this.httpClient
+  //     .put<Hotel>(`${this.url}hotel/${id}`, data)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  putRoom(id: number, data: Room): Observable<Room> {
-    return this.httpClient
-      .put<Room>(`${this.url}habitacion/${id}`, data)
-      .pipe(catchError(() => of()));
-  }
+  // putRoom(id: number, data: Room): Observable<Room> {
+  //   return this.httpClient
+  //     .put<Room>(`${this.url}habitacion/${id}`, data)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  putService(id: number, data: Service): Observable<Service> {
-    return this.httpClient
-      .put<Service>(`${this.url}servicio/${id}`, data)
-      .pipe(catchError(() => of()));
-  }
+  // putService(id: number, data: Service): Observable<Service> {
+  //   return this.httpClient
+  //     .put<Service>(`${this.url}servicio/${id}`, data)
+  //     .pipe(catchError(() => of()));
+  // }
 
   //DELETE
-
-
-
   delete(id: number, entity:string): Observable<any> {
     return this.httpClient
       .delete<any>(`${this.url}${entity}/${id}`)
@@ -178,29 +168,29 @@ export class ManagementService {
 
 
   //borrar estas 4
-  deleteHost(id: number): Observable<Host> {
-    return this.httpClient
-      .delete<Host>(`${this.url}huesped/${id}`)
-      .pipe(catchError(() => of()));
-  }
+  // deleteHost(id: number): Observable<Host> {
+  //   return this.httpClient
+  //     .delete<Host>(`${this.url}huesped/${id}`)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  deleteHotel(id: number): Observable<Hotel> {
-    return this.httpClient
-      .delete<Hotel>(`${this.url}hotel/${id}`)
-      .pipe(catchError(() => of()));
-  }
+  // deleteHotel(id: number): Observable<Hotel> {
+  //   return this.httpClient
+  //     .delete<Hotel>(`${this.url}hotel/${id}`)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  deleteRoom(id: number): Observable<Room> {
-    return this.httpClient
-      .delete<Room>(`${this.url}habitacion/${id}`)
-      .pipe(catchError(() => of()));
-  }
+  // deleteRoom(id: number): Observable<Room> {
+  //   return this.httpClient
+  //     .delete<Room>(`${this.url}habitacion/${id}`)
+  //     .pipe(catchError(() => of()));
+  // }
 
-  deleteService(id: number): Observable<Service> {
-    return this.httpClient
-      .delete<Service>(`${this.url}servicio/${id}`)
-      .pipe(catchError(() => of()));
-  }
+  // deleteService(id: number): Observable<Service> {
+  //   return this.httpClient
+  //     .delete<Service>(`${this.url}servicio/${id}`)
+  //     .pipe(catchError(() => of()));
+  // }
 
 
 
@@ -325,16 +315,9 @@ export class ManagementService {
       page
     }
 
-    console.log(data)
-
-
-    return this.httpClient
+   return this.httpClient
     .post<Hotel[]>(`${this.url}hotel/filterv2`, data)
     .pipe(catchError(()=>of([])))
-
-
-
-
     
   }
 
@@ -380,17 +363,10 @@ export class ManagementService {
       page
     }
 
-    console.log(data)
-
-
     return this.httpClient
     .post<Service[]>(`${this.url}servicio/filterv2`, data)
     .pipe(catchError(()=>of([])))
 
-
-
-
-    
   }
 
 
@@ -436,16 +412,9 @@ export class ManagementService {
       page
     }
 
-    console.log(data)
-
-
     return this.httpClient
     .post<Room[]>(`${this.url}habitacion/filterv2`, data)
     .pipe(catchError(()=>of([])))
-
-
-
-
     
   }
 

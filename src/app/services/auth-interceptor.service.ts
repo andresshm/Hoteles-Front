@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ManagementService } from './management.service';
-import { environment } from 'environments/environment';
 
 
 @Injectable()
@@ -11,7 +9,7 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // Obtener el token JWT de localStorage
         const token = localStorage.getItem('jwt');
-        console.log(token)
+        // console.log(token)
     
         if (req.url.includes('/login') || req.url.includes('/register') ) {
           // Si la URL contiene /login o /register, no añadas el token

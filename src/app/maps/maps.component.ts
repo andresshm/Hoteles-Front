@@ -149,56 +149,34 @@ export class MapsComponent implements OnInit {
 
 
 
-  //A priori funciona bn
-  handleSelection(swap?:string) {
-    if(swap)
-      this.invertirSeleccion = !this.invertirSeleccion;
-    else
-      this.invertirSeleccion = false
+  //unused
+  // handleSelection(swap?:string) {
+  //   if(swap)
+  //     this.invertirSeleccion = !this.invertirSeleccion;
+  //   else
+  //     this.invertirSeleccion = false
   
-    switch(this.selectedOption){
-      case 'Nombre':
-        this.managementService.searchService("nombre", this.invertirSeleccion ? "DESC" : "ASC")
-          .subscribe(sortedServices =>
-            this.displayedServices = sortedServices
-          );
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchService("nombre", "DESC")
-      //     .subscribe(sortedServices =>
-      //       this.displayedServices = sortedServices
-      //     );
+  //   switch(this.selectedOption){
+  //     case 'Nombre':
+  //       this.managementService.searchService("nombre", this.invertirSeleccion ? "DESC" : "ASC")
+  //         .subscribe(sortedServices =>
+  //           this.displayedServices = sortedServices
+  //         );
 
-      //  }else{
-      //   this.managementService.searchService("nombre", "ASC")
-      //   .subscribe(sortedServices =>
-      //     this.displayedServices = sortedServices
-      //   );
-      //  }
-        break;
+  //       break;
 
-      case 'Descripcion':
-        this.managementService.searchService("descripcion", this.invertirSeleccion ? "DESC" : "ASC")
-          .subscribe(sortedServices =>
-            this.displayedServices = sortedServices
-          );
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchService("descripcion", "DESC")
-      //     .subscribe(sortedServices =>
-      //       this.displayedServices = sortedServices
-      //     );
+  //     case 'Descripcion':
+  //       this.managementService.searchService("descripcion", this.invertirSeleccion ? "DESC" : "ASC")
+  //         .subscribe(sortedServices =>
+  //           this.displayedServices = sortedServices
+  //         );
+  
+  //       break;
 
-      //  }else{
-      //   this.managementService.searchService("descripcion", "ASC")
-      //   .subscribe(sortedServices =>
-      //     this.displayedServices = sortedServices
-      //   );
-      //  }
-        break;
-
-    }
+  //   }
 
 
-  }
+  // }
 
 
 
@@ -206,11 +184,13 @@ export class MapsComponent implements OnInit {
   loadData() {
     // Simula la carga de datos
 
-    this.managementService.getAllRequest('servicio')
-    .subscribe(services => {
-      this.displayedServices = services.sort((a, b)=>a.id-b.id);
-      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
-    });
+    // this.managementService.getAllRequest('servicio')
+    // .subscribe(services => {
+    //   this.displayedServices = services.sort((a, b)=>a.id-b.id);
+    //   //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+    // });
+
+    this.displayedServices = this.services.sort((a, b)=>a.id-b.id);
     this.updateDisplayedHosts();
   }
 

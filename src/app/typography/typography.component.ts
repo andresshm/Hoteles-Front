@@ -1,4 +1,4 @@
-import { Component, Host, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,21 +14,6 @@ declare var $: any;
   styleUrls: ['./typography.component.css']
 })
 export class TypographyComponent implements OnInit {
-
-  // @Input()
-  // nombre = '';
-  
-  // @Input()
-  // direccion='';
-
-  // @Input()
-  // telefono='';
-
-  // @Input()
-  // email='';
-
-  // @Input()
-  // sitioWeb= '';
 
   @Input()
   selectedId: number = 0;
@@ -116,9 +101,7 @@ export class TypographyComponent implements OnInit {
   }
 
   onSubmitDEL(id:number){
-    console.log('llega')
-    this.managementService.delete(id, 'hotel')
-    .subscribe();
+    this.managementService.delete(id, 'hotel').subscribe();
   }
 
   getHoteles() {
@@ -133,7 +116,7 @@ export class TypographyComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.router.url);
+    
     // Esta parte gestiona las notificaciones despues de 
     // borrar un huesped. Se añade una señal por asi decirlo
     // en el localStorage y si la encontramos al recargar
@@ -161,11 +144,6 @@ export class TypographyComponent implements OnInit {
     }
 
 
-
-
-    // this.router.events.subscribe(() => {
-    //   this.checkRoute();
-    // });
     this.checkRoute();
 
 
@@ -187,8 +165,7 @@ export class TypographyComponent implements OnInit {
 
 
   toggleFilter(){
-    console.log(this.hotels.length)
-
+    // console.log(this.hotels.length)
     this.showFilters = !this.showFilters;
   }
 
@@ -198,7 +175,7 @@ export class TypographyComponent implements OnInit {
 
 
   filter(name?:string, direccion?:string, telefono?:string, email?:string, sitioWeb?:string){
-    // this.managementService.filterHotel(name, direccion, telefono, email, sitioWeb).subscribe(matchHotels => this.displayedHotels = matchHotels);
+    
     const valuesAux : Criterio[] = [
       {name:"nombre", value:name},
       {name:"direccion", value:direccion},
@@ -220,135 +197,73 @@ export class TypographyComponent implements OnInit {
 
 
 
-  //A priori funciona bn
-  handleSelection(swap?:string) {
-    if(swap)
-      this.invertirSeleccion = !this.invertirSeleccion;
-    else
-      this.invertirSeleccion = false
+  //unused
+  // handleSelection(swap?:string) {
+  //   if(swap)
+  //     this.invertirSeleccion = !this.invertirSeleccion;
+  //   else
+  //     this.invertirSeleccion = false
   
     
-    switch(this.selectedOption){
-      case 'Nombre':
-        this.managementService.searchHotel("nombre", this.invertirSeleccion ? "DESC" : "ASC")
-        .subscribe(sortedHotels =>
-          this.displayedHotels = sortedHotels
-        );
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchHotel("nombre", "DESC")
-      //     .subscribe(sortedHotels =>
-      //       this.displayedHotels = sortedHotels
-      //     );
+  //   switch(this.selectedOption){
+  //     case 'Nombre':
+  //       this.managementService.searchHotel("nombre", this.invertirSeleccion ? "DESC" : "ASC")
+  //       .subscribe(sortedHotels =>
+  //         this.displayedHotels = sortedHotels
+  //       );
+  //       break;
 
-      //  }else{
-      //   this.managementService.searchHotel("nombre", "ASC")
-      //   .subscribe(sortedHotels =>
-      //     this.displayedHotels = sortedHotels
-      //   );
-      //  }
-        break;
+  //     case 'Direccion':
+  //       this.managementService.searchHotel("direccion", this.invertirSeleccion ? "DESC" : "ASC")
+  //       .subscribe(sortedHotels =>
+  //         this.displayedHotels = sortedHotels
+  //       );
 
-      case 'Direccion':
-        this.managementService.searchHotel("direccion", this.invertirSeleccion ? "DESC" : "ASC")
-        .subscribe(sortedHotels =>
-          this.displayedHotels = sortedHotels
-        );
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchHotel("direccion", "DESC")
-      //     .subscribe(sortedHotels =>
-      //       this.displayedHotels = sortedHotels
-      //     );
-
-      //  }else{
-      //   this.managementService.searchHotel("direccion", "ASC")
-      //   .subscribe(sortedHotels =>
-      //     this.displayedHotels = sortedHotels
-      //   );
-      //  }
-        break;
+  //       break;
 
 
-      case 'Telefono':
-        this.managementService.searchHotel("telefono", this.invertirSeleccion ? "DESC" : "ASC")
-        .subscribe(sortedHotels =>
-          this.displayedHotels = sortedHotels
-        );
+  //     case 'Telefono':
+  //       this.managementService.searchHotel("telefono", this.invertirSeleccion ? "DESC" : "ASC")
+  //       .subscribe(sortedHotels =>
+  //         this.displayedHotels = sortedHotels
+  //       );
 
-    //   if(this.invertirSeleccion){
-    //     this.managementService.searchHotel("telefono", "DESC")
-    //     .subscribe(sortedHotels =>
-    //       this.displayedHotels = sortedHotels
-    //     );
-
-    //  }else{
-    //   this.managementService.searchHotel("telefono", "ASC")
-    //   .subscribe(sortedHotels =>
-    //     this.displayedHotels = sortedHotels
-    //   );
-    //  }
-      break;
+  //     break;
     
-      case 'Email':
-        this.managementService.searchHotel("email", this.invertirSeleccion ? "DESC" : "ASC")
-        .subscribe(sortedHotels =>
-          this.displayedHotels = sortedHotels
-        );
+  //     case 'Email':
+  //       this.managementService.searchHotel("email", this.invertirSeleccion ? "DESC" : "ASC")
+  //       .subscribe(sortedHotels =>
+  //         this.displayedHotels = sortedHotels
+  //       );
 
-    //   if(this.invertirSeleccion){
-    //     this.managementService.searchHotel("email", "DESC")
-    //     .subscribe(sortedHotels =>
-    //       this.displayedHotels = sortedHotels
-    //     );
-
-    //  }else{
-    //   this.managementService.searchHotel("email", "ASC")
-    //   .subscribe(sortedHotels =>
-    //     this.displayedHotels = sortedHotels
-    //   );
-    //  }
-      break;
+  //     break;
 
 
-      case 'Sitio-Web':
-        this.managementService.searchHotel("sitioWeb", this.invertirSeleccion ? "DESC" : "ASC")
-        .subscribe(sortedHotels =>
-          this.displayedHotels = sortedHotels
-        );
+  //     case 'Sitio-Web':
+  //       this.managementService.searchHotel("sitioWeb", this.invertirSeleccion ? "DESC" : "ASC")
+  //       .subscribe(sortedHotels =>
+  //         this.displayedHotels = sortedHotels
+  //       );
 
-      //   if(this.invertirSeleccion){
-      //     this.managementService.searchHotel("sitioWeb", "DESC")
-      //     .subscribe(sortedHotels =>
-      //       this.displayedHotels = sortedHotels
-      //     );
+  //       break;
+  //   }
 
-      //  }else{
-      //   this.managementService.searchHotel("sitioWeb", "ASC")
-      //   .subscribe(sortedHotels =>
-      //     this.displayedHotels = sortedHotels
-      //   );
-      //  }
-        break;
-
-
-    }
-
-  }
+  // }
 
 
 
 
   //paginator
   loadData() {
-    // Simula la carga de datos
+    
+    this.displayedHotels = this.hotels.sort((a, b)=>a.id-b.id);
 
-    this.managementService.getAllRequest('hotel')
-    .subscribe(hotels => {
-      this.displayedHotels = hotels.sort((a, b)=>a.id-b.id);
-      //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
-    });
+    // this.managementService.getAllRequest('hotel')
+    // .subscribe(hotels => {
+    //   this.displayedHotels = hotels.sort((a, b)=>a.id-b.id);
+    //   //pongo el sort xq al hacer un put del primer id por ej. este se va a la ultima pos en el get
+    // });
 
-
-    // this.displayedHotels = this.hosts;
     this.updateDisplayedHosts();
   }
 
@@ -372,9 +287,6 @@ export class TypographyComponent implements OnInit {
 
 
   showNotification(from :string, align:string, tipo:string){
-    // const type = ['','info','success','warning','danger'];
-
-    // const color = Math.floor((Math.random() * 4) + 1);
     let mensaje = '';
 
     switch(tipo){

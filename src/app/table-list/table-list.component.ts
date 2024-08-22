@@ -1,6 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Host } from 'app/interfaces/host.interface';
 import { Hotel } from 'app/interfaces/hotel.interface';
@@ -18,8 +16,6 @@ declare var $: any;
 })
 export class TableListComponent implements OnInit {
  
-
-
   public hosts: Host[]= [];
   public rooms: Room[]= [];
   public hotels: Hotel[]= [];
@@ -42,24 +38,9 @@ export class TableListComponent implements OnInit {
   public checkin:string=''
   public checkout:string=''
   
-
-
-  // public showHostTable = false;
-  // public showRoomTable = false;
-  // public showHotelTable = false;
-  // public showServiceTable = false;
-
-//   public selectedId: number=0;
-//   public showButton: boolean = false;
-//   public showFilters: boolean = false;
-//   public showSorters: boolean = false;
-//   public invertirSeleccion: boolean = false;
-//  public selectedOption:string='';
-
-
  
-selectedHotelId: number;
-selectedServiceIds: number[] = [];
+  selectedHotelId: number;
+  selectedServiceIds: number[] = [];
 
   constructor(
     private managementService : ManagementService,
@@ -92,23 +73,14 @@ selectedServiceIds: number[] = [];
   onHotelChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedHotelId = parseInt(selectElement.value, 10);
-    // console.log('Selected hotel ID:', this.selectedHotelId);
     if(this.selectedHotelId)
       this.managementService.getById(this.selectedHotelId, 'hotel').subscribe(hotelAux => this.hotel = hotelAux)
 
   }
-  // onRoomChange(event: Event) {
-  //   const selectElement = event.target as HTMLSelectElement;
-  //   this.selectedHotelId = parseInt(selectElement.value, 10);
-  //   console.log('Selected hotel ID:', this.selectedHotelId);
-  //   if(this.selectedHotelId)
-  //     this.managementService.getHotelById(this.selectedHotelId, 'hotel').subscribe(hotelAux => this.hotel = hotelAux)
 
-  // }
 
   toggleService(serviceId: number) {
-    // console.log('Selected service ID:', serviceId);
-    // console.log('Selected hotel ID:', this.selectedHotelId);
+
 
     const index = this.selectedServiceIds.indexOf(serviceId);
     if (index === -1) {
@@ -124,7 +96,7 @@ selectedServiceIds: number[] = [];
     this.managementService.getById(this.selectedHotelId, 'hotel').subscribe(hotelAux => {
       hotel = hotelAux;
       hotel.services=this.selectedServiceIds;
-      this.managementService.putHotel(this.selectedHotelId, hotel).subscribe();
+      this.managementService.put(this.selectedHotelId, hotel, 'hotel').subscribe();
     });
 
     

@@ -236,7 +236,7 @@ export class DashboardComponent implements OnInit {
   onHotelChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedHotelId = parseInt(selectElement.value, 10);
-    console.log("Selected hotel ID:", this.selectedHotelId);
+    // console.log("Selected hotel ID:", this.selectedHotelId);
     this.updateHistoryGraph(this.selectedHotelId);
   }
 
